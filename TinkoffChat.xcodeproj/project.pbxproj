@@ -12,6 +12,8 @@
 		ECC26938250C6FEC001C08A0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ECC26936250C6FEC001C08A0 /* Main.storyboard */; };
 		ECC2693A250C6FEE001C08A0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ECC26939250C6FEE001C08A0 /* Assets.xcassets */; };
 		ECC2693D250C6FEE001C08A0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ECC2693B250C6FEE001C08A0 /* LaunchScreen.storyboard */; };
+		ECC26946250C76BE001C08A0 /* UIApplication.State + description.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC26945250C76BE001C08A0 /* UIApplication.State + description.swift */; };
+		ECC26949250C77D2001C08A0 /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC26948250C77D2001C08A0 /* Log.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +24,8 @@
 		ECC26939250C6FEE001C08A0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		ECC2693C250C6FEE001C08A0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		ECC2693E250C6FEE001C08A0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		ECC26945250C76BE001C08A0 /* UIApplication.State + description.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication.State + description.swift"; sourceTree = "<group>"; };
+		ECC26948250C77D2001C08A0 /* Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +58,8 @@
 		ECC2692F250C6FEC001C08A0 /* TinkoffChat */ = {
 			isa = PBXGroup;
 			children = (
+				ECC26947250C77C8001C08A0 /* Utils */,
+				ECC26944250C768D001C08A0 /* Extensions */,
 				ECC26930250C6FEC001C08A0 /* AppDelegate.swift */,
 				ECC26934250C6FEC001C08A0 /* ViewController.swift */,
 				ECC26936250C6FEC001C08A0 /* Main.storyboard */,
@@ -62,6 +68,22 @@
 				ECC2693E250C6FEE001C08A0 /* Info.plist */,
 			);
 			path = TinkoffChat;
+			sourceTree = "<group>";
+		};
+		ECC26944250C768D001C08A0 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				ECC26945250C76BE001C08A0 /* UIApplication.State + description.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		ECC26947250C77C8001C08A0 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				ECC26948250C77D2001C08A0 /* Log.swift */,
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -135,7 +157,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ECC26946250C76BE001C08A0 /* UIApplication.State + description.swift in Sources */,
 				ECC26935250C6FEC001C08A0 /* ViewController.swift in Sources */,
+				ECC26949250C77D2001C08A0 /* Log.swift in Sources */,
 				ECC26931250C6FEC001C08A0 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
