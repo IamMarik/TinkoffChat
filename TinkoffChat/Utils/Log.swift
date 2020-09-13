@@ -6,11 +6,9 @@
 //  Copyright © 2020 Tinkoff. All rights reserved.
 //
 
-import Foundation
-
 public class Log {
 
-    static var isEnabled: Bool = true
+    static var isEnabled: Bool = false
 
     static func d(_ message: String) {
         guard isEnabled else { return }
