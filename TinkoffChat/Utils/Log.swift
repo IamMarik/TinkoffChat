@@ -27,7 +27,7 @@ public class Log {
     }()
 
     /// Print  message to console
-    static func d(_ message: String, tag: String = "") {
+    static func info(_ message: String, tag: String = "") {
         guard isEnabled, !disabledLogTags.contains(tag) else { return }
         print((tag.isEmpty ? "" : "[\(tag)] ") + message)
     }

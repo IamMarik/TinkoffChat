@@ -1,14 +1,14 @@
 //
-//  ViewController.swift
+//  ProfileViewController.swift
 //  TinkoffChat
 //
-//  Created by Dzhanybaev Marat on 12.09.2020.
+//  Created by Marik on 18.09.2020.
 //  Copyright © 2020 Tinkoff. All rights reserved.
 //
 
 import UIKit
 
-class ViewController: UIViewController {
+class ProfileViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EC73E3052514AF57006D5ADF /* Profile.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EC73E3042514AF57006D5ADF /* Profile.storyboard */; };
+		EC73E3082514AF6C006D5ADF /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC73E3072514AF6C006D5ADF /* ProfileViewController.swift */; };
 		EC89FDC6250E07CF00B22EC4 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = EC89FDC5250E07CF00B22EC4 /* README.md */; };
 		ECC26931250C6FEC001C08A0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC26930250C6FEC001C08A0 /* AppDelegate.swift */; };
 		ECC26935250C6FEC001C08A0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC26934250C6FEC001C08A0 /* ViewController.swift */; };
@@ -18,6 +20,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		EC73E3042514AF57006D5ADF /* Profile.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Profile.storyboard; sourceTree = "<group>"; };
+		EC73E3072514AF6C006D5ADF /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		EC89FDC5250E07CF00B22EC4 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		ECC2692D250C6FEC001C08A0 /* TinkoffChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TinkoffChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ECC26930250C6FEC001C08A0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -41,6 +45,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		EC73E3022514AF0F006D5ADF /* Modules */ = {
+			isa = PBXGroup;
+			children = (
+				EC73E3032514AF1F006D5ADF /* Profile */,
+			);
+			path = Modules;
+			sourceTree = "<group>";
+		};
+		EC73E3032514AF1F006D5ADF /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				EC73E3042514AF57006D5ADF /* Profile.storyboard */,
+				EC73E3072514AF6C006D5ADF /* ProfileViewController.swift */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
 		ECC26924250C6FEC001C08A0 = {
 			isa = PBXGroup;
 			children = (
@@ -63,6 +84,7 @@
 			children = (
 				ECC26947250C77C8001C08A0 /* Utils */,
 				ECC26944250C768D001C08A0 /* Extensions */,
+				EC73E3022514AF0F006D5ADF /* Modules */,
 				ECC26930250C6FEC001C08A0 /* AppDelegate.swift */,
 				ECC26934250C6FEC001C08A0 /* ViewController.swift */,
 				ECC26936250C6FEC001C08A0 /* Main.storyboard */,
@@ -149,6 +171,7 @@
 			files = (
 				ECC2693D250C6FEE001C08A0 /* LaunchScreen.storyboard in Resources */,
 				ECC2693A250C6FEE001C08A0 /* Assets.xcassets in Resources */,
+				EC73E3052514AF57006D5ADF /* Profile.storyboard in Resources */,
 				EC89FDC6250E07CF00B22EC4 /* README.md in Resources */,
 				ECC26938250C6FEC001C08A0 /* Main.storyboard in Resources */,
 			);
@@ -163,6 +186,7 @@
 			files = (
 				ECC26946250C76BE001C08A0 /* UIApplication.State + description.swift in Sources */,
 				ECC26935250C6FEC001C08A0 /* ViewController.swift in Sources */,
+				EC73E3082514AF6C006D5ADF /* ProfileViewController.swift in Sources */,
 				ECC26949250C77D2001C08A0 /* Log.swift in Sources */,
 				ECC26931250C6FEC001C08A0 /* AppDelegate.swift in Sources */,
 			);
