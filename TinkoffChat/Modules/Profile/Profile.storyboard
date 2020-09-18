@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="1gW-vA-Q6F">
-    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
@@ -9,20 +9,93 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Profile View Controller-->
         <scene sceneID="pES-DP-Cs7">
             <objects>
-                <viewController id="1gW-vA-Q6F" sceneMemberID="viewController">
+                <viewController id="1gW-vA-Q6F" customClass="ProfileViewController" customModule="TinkoffChat" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="yxa-Gv-KXq">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="iKP-79-8Ay">
+                                <rect key="frame" x="67.5" y="45" width="240" height="240"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="240" id="9hS-dB-XDc"/>
+                                    <constraint firstAttribute="width" constant="240" id="X5K-r6-rtJ"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="120"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="shadowColor">
+                                        <color key="value" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Марина Дударенко" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VB7-rK-p9S">
+                                <rect key="frame" x="37.5" y="317" width="300" height="24"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="300" id="hjc-mY-IkQ"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="UX/UI designer, web-designer Moscow, Russia" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8qZ-HG-SVa">
+                                <rect key="frame" x="78.5" y="373" width="218" height="38.5"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="218" id="mAK-3H-3gw"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QeV-6n-lcT">
+                                <rect key="frame" x="56" y="597" width="263" height="40"/>
+                                <color key="backgroundColor" red="0.96470588235294119" green="0.96470588235294119" blue="0.96470588235294119" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="263" id="avs-Gp-6X4"/>
+                                    <constraint firstAttribute="height" constant="40" id="bS4-M6-BgJ"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="19"/>
+                                <state key="normal" title="Save"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="252" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vdz-1o-EWh">
+                                <rect key="frame" x="277.5" y="264" width="30" height="32"/>
+                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="16"/>
+                                <state key="normal" title="Edit"/>
+                                <connections>
+                                    <action selector="editButtonDidTap:" destination="1gW-vA-Q6F" eventType="touchUpInside" id="SSX-SN-SOi"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="E50-uI-Brd"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="8qZ-HG-SVa" firstAttribute="centerX" secondItem="yxa-Gv-KXq" secondAttribute="centerX" id="GTb-fQ-bGO"/>
+                            <constraint firstItem="iKP-79-8Ay" firstAttribute="baseline" secondItem="Vdz-1o-EWh" secondAttribute="firstBaseline" id="IBL-bW-XNN"/>
+                            <constraint firstItem="Vdz-1o-EWh" firstAttribute="trailing" secondItem="iKP-79-8Ay" secondAttribute="trailing" id="J2w-Xx-2MC"/>
+                            <constraint firstItem="VB7-rK-p9S" firstAttribute="top" secondItem="iKP-79-8Ay" secondAttribute="bottom" constant="32" id="Tb1-Br-nMg"/>
+                            <constraint firstItem="iKP-79-8Ay" firstAttribute="centerX" secondItem="yxa-Gv-KXq" secondAttribute="centerX" id="W5B-j8-CRY"/>
+                            <constraint firstItem="iKP-79-8Ay" firstAttribute="top" secondItem="E50-uI-Brd" secondAttribute="top" constant="45" id="bYc-7e-Hmh"/>
+                            <constraint firstItem="VB7-rK-p9S" firstAttribute="centerX" secondItem="yxa-Gv-KXq" secondAttribute="centerX" id="bwg-z3-g0G"/>
+                            <constraint firstItem="8qZ-HG-SVa" firstAttribute="top" secondItem="VB7-rK-p9S" secondAttribute="bottom" constant="32" id="fST-B9-ent"/>
+                            <constraint firstItem="QeV-6n-lcT" firstAttribute="centerX" secondItem="yxa-Gv-KXq" secondAttribute="centerX" id="oRj-70-Kna"/>
+                            <constraint firstItem="E50-uI-Brd" firstAttribute="bottom" secondItem="QeV-6n-lcT" secondAttribute="bottom" constant="30" id="zFP-jT-Sq7"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="editButton" destination="Vdz-1o-EWh" id="NwM-Kt-Y8G"/>
+                        <outlet property="profileDescriptionLabel" destination="8qZ-HG-SVa" id="AOk-wZ-ej4"/>
+                        <outlet property="profileNameLabel" destination="VB7-rK-p9S" id="hcL-jn-XcE"/>
+                        <outlet property="profilePhotoImageView" destination="iKP-79-8Ay" id="mhH-eT-ESs"/>
+                        <outlet property="saveButton" destination="QeV-6n-lcT" id="iNt-f9-TKf"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9q9-D8-Ur8" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="238" y="34"/>
+            <point key="canvasLocation" x="237.59999999999999" y="33.733133433283363"/>
         </scene>
     </scenes>
     <resources>
