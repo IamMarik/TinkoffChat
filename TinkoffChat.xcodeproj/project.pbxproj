@@ -17,6 +17,9 @@
 		ECC2693D250C6FEE001C08A0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ECC2693B250C6FEE001C08A0 /* LaunchScreen.storyboard */; };
 		ECC26946250C76BE001C08A0 /* UIApplication.State + description.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC26945250C76BE001C08A0 /* UIApplication.State + description.swift */; };
 		ECC26949250C77D2001C08A0 /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC26948250C77D2001C08A0 /* Log.swift */; };
+		ECF7B6A225177781006DDB81 /* ProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECF7B6A125177781006DDB81 /* ProfileModel.swift */; };
+		ECF7B6A625177A4B006DDB81 /* Roboto-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = ECF7B6A525177A4B006DDB81 /* Roboto-Medium.ttf */; };
+		ECF7B6A925177FA0006DDB81 /* AvatarRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECF7B6A825177FA0006DDB81 /* AvatarRenderer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +35,9 @@
 		ECC2693E250C6FEE001C08A0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		ECC26945250C76BE001C08A0 /* UIApplication.State + description.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication.State + description.swift"; sourceTree = "<group>"; };
 		ECC26948250C77D2001C08A0 /* Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
+		ECF7B6A125177781006DDB81 /* ProfileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileModel.swift; sourceTree = "<group>"; };
+		ECF7B6A525177A4B006DDB81 /* Roboto-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Medium.ttf"; sourceTree = "<group>"; };
+		ECF7B6A825177FA0006DDB81 /* AvatarRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarRenderer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +64,7 @@
 			children = (
 				EC73E3042514AF57006D5ADF /* Profile.storyboard */,
 				EC73E3072514AF6C006D5ADF /* ProfileViewController.swift */,
+				ECF7B6A125177781006DDB81 /* ProfileModel.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -82,6 +89,7 @@
 		ECC2692F250C6FEC001C08A0 /* TinkoffChat */ = {
 			isa = PBXGroup;
 			children = (
+				ECF7B6A425177A2B006DDB81 /* Fonts */,
 				ECC26947250C77C8001C08A0 /* Utils */,
 				ECC26944250C768D001C08A0 /* Extensions */,
 				EC73E3022514AF0F006D5ADF /* Modules */,
@@ -107,8 +115,17 @@
 			isa = PBXGroup;
 			children = (
 				ECC26948250C77D2001C08A0 /* Log.swift */,
+				ECF7B6A825177FA0006DDB81 /* AvatarRenderer.swift */,
 			);
 			path = Utils;
+			sourceTree = "<group>";
+		};
+		ECF7B6A425177A2B006DDB81 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				ECF7B6A525177A4B006DDB81 /* Roboto-Medium.ttf */,
+			);
+			path = Fonts;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -138,7 +155,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1170;
-				LastUpgradeCheck = 1170;
+				LastUpgradeCheck = 1200;
 				ORGANIZATIONNAME = Tinkoff;
 				TargetAttributes = {
 					ECC2692C250C6FEC001C08A0 = {
@@ -171,6 +188,7 @@
 			files = (
 				ECC2693D250C6FEE001C08A0 /* LaunchScreen.storyboard in Resources */,
 				ECC2693A250C6FEE001C08A0 /* Assets.xcassets in Resources */,
+				ECF7B6A625177A4B006DDB81 /* Roboto-Medium.ttf in Resources */,
 				EC73E3052514AF57006D5ADF /* Profile.storyboard in Resources */,
 				EC89FDC6250E07CF00B22EC4 /* README.md in Resources */,
 				ECC26938250C6FEC001C08A0 /* Main.storyboard in Resources */,
@@ -187,7 +205,9 @@
 				ECC26946250C76BE001C08A0 /* UIApplication.State + description.swift in Sources */,
 				ECC26935250C6FEC001C08A0 /* ViewController.swift in Sources */,
 				EC73E3082514AF6C006D5ADF /* ProfileViewController.swift in Sources */,
+				ECF7B6A225177781006DDB81 /* ProfileModel.swift in Sources */,
 				ECC26949250C77D2001C08A0 /* Log.swift in Sources */,
+				ECF7B6A925177FA0006DDB81 /* AvatarRenderer.swift in Sources */,
 				ECC26931250C6FEC001C08A0 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -240,6 +260,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -300,6 +321,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
