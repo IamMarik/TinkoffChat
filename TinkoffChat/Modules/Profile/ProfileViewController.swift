@@ -10,14 +10,16 @@ import UIKit
 
 class ProfileViewController: UIViewController {
 
+    static var logTag = "\(ProfileViewController.self)"
+
+    var profile: ProfileViewModel?
+
     lazy var imagePickerController: UIImagePickerController = {
         let imagePicker = UIImagePickerController()
         imagePicker.delegate = self
         imagePicker.allowsEditing = false
         return imagePicker
     }()
-
-    var profile: ProfileViewModel?
 
     @IBOutlet var profilePhotoImageView: UIImageView!
 
@@ -32,21 +34,22 @@ class ProfileViewController: UIViewController {
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        // В конструкторе IBOutlet-ы ещё не проинициализированы, опционал развернется с ошибкой
+        // В конструкторе IBOutlet-ы ещё не проинициализированы, опционал аутлета развернется с ошибкой
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Здесь вью загружены в память, но размеры ещё не расчитывались
-        Log.info("Edit button frame in viewDidLoad: \(editButton.frame)", tag: "\(Self.self)")
+        // Здесь вью загружены в память, но размеры и позиция по констрейтам ещё не расчитывались.
+        // Размеры фрейма будут соответствовать начальным (со сториборда в данном случае)
+        Log.info("Save button frame in viewDidLoad: \(saveButton.frame)", tag: Self.logTag)
         profile = ProfileViewModel(fullName: "Marina Dudarenko", description: "UX/UI designer, web-designer Moscow, Russia", photo: nil)
         setupView()
     }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        // Здесь все вью в уже иерархии с пересчитанными размерами согласно констрейтам
-        Log.info("Edit button frame in viewDidAppear: \(editButton.frame)", tag: "\(Self.self)")
+        // Здесь все вью уже иерархии с пересчитанными согласно констрейтам размерами
+        Log.info("Save button frame in viewDidAppear: \(saveButton.frame)", tag: Self.logTag)
     }
 
     private func setupView() {
@@ -57,17 +60,19 @@ class ProfileViewController: UIViewController {
             if let photo = profile.photo {
                 profilePhotoImageView.image = photo
             } else {
-                let image = AvatarRenderer.draw(withName: "Marina Dud", size: .init(width: 240, height: 240))
+                let image = ProfilePlaceholderImageRenderer.drawProfilePlaceholderImage(forName: profile.fullName, inRectangleOfSize: .init(width: 240, height: 240))
                 profilePhotoImageView.image = image
             }
         }
-
     }
 
     private func openGallery() {
         if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
             imagePickerController.sourceType = .photoLibrary
             present(imagePickerController, animated: true, completion: nil)
+        } else {
+            Log.error("Photo library source is not available", tag: Self.logTag)
+            showErrorAlert(withMessage: "Фотогалерея не доступна")
         }
     }
 
@@ -75,7 +80,17 @@ class ProfileViewController: UIViewController {
         if UIImagePickerController.isSourceTypeAvailable(.camera) {
             imagePickerController.sourceType = .camera
             present(imagePickerController, animated: true, completion: nil)
+        } else {
+            Log.error("Camera source is not available", tag: Self.logTag)
+            showErrorAlert(withMessage: "Камера не доступна")
         }
+    }
+
+    private func showErrorAlert(withMessage message: String) {
+        let alert = UIAlertController(title: "Ошибка", message: message, preferredStyle: .alert)
+        let closeAction = UIAlertAction(title: "Понятно", style: .cancel, handler: nil)
+        alert.addAction(closeAction)
+        present(alert, animated: true, completion: nil)
     }
 
     @IBAction func editButtonDidTap(_ sender: Any) {
@@ -96,24 +111,21 @@ class ProfileViewController: UIViewController {
         alertController.addAction(cancelAction)
 
         present(alertController, animated: true)
-
     }
 
     @IBAction func saveButtonDidTap(_ sender: Any) {
-        profileNameLabel.text = profileNameLabel.text! + "some more text"
-        profileDescriptionLabel.text = profileDescriptionLabel.text! + "more more more a lot fo fucking more text yeeeaaaah"
-
+        // Do nothing for now
     }
 }
 
 extension ProfileViewController: UINavigationControllerDelegate, UIImagePickerControllerDelegate {
 
-
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        picker.dismiss(animated: true, completion: nil)
-        guard let image = info[.originalImage] as? UIImage else {
-            return
+        if let image = info[.originalImage] as? UIImage {
+            self.profilePhotoImageView.image = image
+        } else {
+            Log.error("Awaited an image from UIImagePickerController, but got nil")
         }
-        profilePhotoImageView.image = image
+        picker.dismiss(animated: true, completion: nil)
     }
 }

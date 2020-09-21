@@ -30,23 +30,15 @@
                                                     <constraint firstAttribute="height" constant="240" id="2QZ-3o-jsT"/>
                                                     <constraint firstAttribute="width" constant="240" id="c7h-ZL-ZQa"/>
                                                 </constraints>
-                                                <userDefinedRuntimeAttributes>
-                                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                        <real key="value" value="120"/>
-                                                    </userDefinedRuntimeAttribute>
-                                                    <userDefinedRuntimeAttribute type="color" keyPath="shadowColor">
-                                                        <color key="value" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    </userDefinedRuntimeAttribute>
-                                                </userDefinedRuntimeAttributes>
                                             </imageView>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="253" verticalCompressionResistancePriority="1000" text="Marina Dudarenko" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bqa-TX-wuR">
-                                                <rect key="frame" x="20" y="292" width="335" height="24"/>
-                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="253" verticalCompressionResistancePriority="1000" text="Marina Dudarenko" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bqa-TX-wuR">
+                                                <rect key="frame" x="20" y="292" width="335" height="29"/>
+                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="24"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" verticalCompressionResistancePriority="1000" text="UX/UI designer, web-designer Moscow, Russia" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IDd-Yl-Ppx">
-                                                <rect key="frame" x="78.5" y="348" width="218" height="38.5"/>
+                                                <rect key="frame" x="78.5" y="353" width="218" height="38.5"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="218" id="83N-md-bs6"/>
                                                 </constraints>
@@ -68,7 +60,11 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="252" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UcA-G8-QD5">
-                                                <rect key="frame" x="277.5" y="239" width="30" height="32"/>
+                                                <rect key="frame" x="267.5" y="235" width="40" height="40"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="40" id="6W7-Ay-PbE"/>
+                                                    <constraint firstAttribute="width" constant="40" id="cS8-IH-6iq"/>
+                                                </constraints>
                                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="16"/>
                                                 <state key="normal" title="Edit"/>
                                                 <connections>
