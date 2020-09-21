@@ -31,6 +31,11 @@ class ProfileViewController: UIViewController {
 
     @IBOutlet var saveButton: UIButton!
 
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        get {
+            return .portrait
+        }
+    }
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
