@@ -11,4 +11,5 @@ import UIKit
 
 enum Colors {
     static let sunFlower = UIColor(hex: 0xE4E82B)
+    static let paleYellow = UIColor(hex: 0xF0F0E6)
 }

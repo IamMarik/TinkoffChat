@@ -13,13 +13,14 @@ class ProfilePlaceholderImageRenderer {
 
     static var xOffset: CGFloat = 32
 
-    static var font = UIFont(name: "Roboto Medium", size: 120)
-
     static var colors: [UIColor] = [.systemBlue, .systemPink, .systemTeal, Colors.sunFlower, .systemGreen]
 
 
     static func drawProfilePlaceholderImage(forName name: String, inRectangleOfSize rectangleSize: CGSize) -> UIImage? {
-        guard let font = font else { return nil }
+        
+        guard let font = UIFont(name: "Roboto Medium", size: rectangleSize.width / 2) else {
+            return nil
+        }
 
         let nameParts = name.split(separator: " ")
 
