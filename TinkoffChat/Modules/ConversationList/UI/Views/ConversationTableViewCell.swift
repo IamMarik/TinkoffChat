@@ -40,8 +40,8 @@ extension ConversationTableViewCell: ConfigurableView {
     func configure(with model: ConversationCellModel) {
         nameLabel.text = model.name
         
-        messageLabel.text = model.message ?? "No messages yet"
-        if model.message == nil {
+        messageLabel.text = !model.message.isEmpty ? model.message : "No messages yet"
+        if model.message.isEmpty {
             messageLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 13, weight: .medium)
         } else if model.hasUnreadMessage {
             messageLabel.font = UIFont.systemFont(ofSize: 13, weight: .bold)

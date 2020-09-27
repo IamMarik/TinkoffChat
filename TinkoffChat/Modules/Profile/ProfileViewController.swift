@@ -47,7 +47,6 @@ class ProfileViewController: UIViewController {
         // Здесь вью загружены в память, но размеры и позиция по констрейтам ещё не расчитывались.
         // Размеры фрейма будут соответствовать начальным (со сториборда в данном случае)
         Log.info("Save button frame in viewDidLoad: \(saveButton.frame)", tag: Self.logTag)
-        profile = ProfileViewModel(fullName: "Marina Dudarenko", description: "UX/UI designer, web-designer Moscow, Russia", photo: nil)
         setupView()
     }
 
@@ -68,6 +67,8 @@ class ProfileViewController: UIViewController {
                 let image = ProfilePlaceholderImageRenderer.drawProfilePlaceholderImage(forName: profile.fullName, inRectangleOfSize: .init(width: 240, height: 240))
                 profilePhotoImageView.image = image
             }
+            profileNameLabel.text = profile.fullName
+            profileDescriptionLabel.text = profile.description
         }
     }
 
@@ -119,7 +120,7 @@ class ProfileViewController: UIViewController {
     }
 
     @IBAction func saveButtonDidTap(_ sender: Any) {
-        // Do nothing for now
+        dismiss(animated: true, completion: nil)
     }
 }
 

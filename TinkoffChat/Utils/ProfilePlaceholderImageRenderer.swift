@@ -11,7 +11,7 @@ import CoreText
 
 class ProfilePlaceholderImageRenderer {
 
-    static var xOffset: CGFloat = 32
+    // static var xOffset: CGFloat = 32
 
     static var colors: [UIColor] = [.systemBlue, .systemPink, .systemTeal, Colors.sunFlower, .systemGreen]
 
@@ -21,6 +21,8 @@ class ProfilePlaceholderImageRenderer {
         guard let font = UIFont(name: "Roboto Medium", size: rectangleSize.width / 2) else {
             return nil
         }
+        
+        let xOffset = rectangleSize.width / 7.5
 
         let nameParts = name.split(separator: " ")
 
@@ -66,7 +68,11 @@ class ProfilePlaceholderImageRenderer {
             let image = renderer.image { ctx in
                 let backgroundRect = CGRect(origin: .zero, size: rectangleSize)
                 backgroundColor.setFill()
-                ctx.fill(backgroundRect)
+                ctx.cgContext.setStrokeColor(backgroundColor.cgColor)
+                ctx.cgContext.setLineWidth(0)
+                ctx.cgContext.addEllipse(in: backgroundRect)
+                ctx.cgContext.drawPath(using: .fillStroke)
+               //ctx.fill(backgroundRect)
 
                 let firstTextRect = CGRect(x: (rectangleSize.width - (firstLetterSize.width + secondLetterSize.width - xOffset)) / 2,
                                            y: (rectangleSize.height - firstLetterSize.height) / 2,
