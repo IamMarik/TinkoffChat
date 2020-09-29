@@ -20,7 +20,10 @@ class ProfileViewController: UIViewController {
         imagePicker.allowsEditing = false
         return imagePicker
     }()
-
+    
+    
+    @IBOutlet var profileNavigationBar: ProfileNavigationBar!
+    
     @IBOutlet var profilePhotoImageView: UIImageView!
 
     @IBOutlet var profileNameLabel: UILabel!
@@ -44,6 +47,7 @@ class ProfileViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        profileNavigationBar.delegate = self
         // Здесь вью загружены в память, но размеры и позиция по констрейтам ещё не расчитывались.
         // Размеры фрейма будут соответствовать начальным (со сториборда в данном случае)
         Log.info("Save button frame in viewDidLoad: \(saveButton.frame)", tag: Self.logTag)
@@ -134,4 +138,12 @@ extension ProfileViewController: UINavigationControllerDelegate, UIImagePickerCo
         }
         picker.dismiss(animated: true, completion: nil)
     }
+}
+
+extension ProfileViewController: ProfileNavigationBarDelegate {
+    
+    func closeButtonDidTapped() {
+        dismiss(animated: true, completion: nil)
+    }
+    
 }

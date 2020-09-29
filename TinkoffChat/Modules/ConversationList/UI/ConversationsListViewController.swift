@@ -14,10 +14,12 @@ class ConversationsListViewController: UIViewController {
     
     var userProfile: ProfileViewModel = {
         let profile = ProfileViewModel(fullName: "Marat Dzhanybaev",
-                                       description: "a lot of description",
+                                       description: "Love coding, bbq and beer",
                                        photo: nil)
         return profile
     }()
+    
+    private let cellId = String(describing: ConversationTableViewCell.self)
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -26,13 +28,20 @@ class ConversationsListViewController: UIViewController {
     @IBOutlet var profileBarButtonItem: UIBarButtonItem!
     
     
-    let cellId = String(describing: ConversationTableViewCell.self)
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.title = "Tinkoff chat"
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         setupTableView()
         setupNavigationBar()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
     }
     
     private func setupTableView() {

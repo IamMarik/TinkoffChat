@@ -40,6 +40,7 @@
                     <constraint firstItem="y3a-xw-wP5" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="HA7-1s-3JA"/>
                     <constraint firstItem="y3a-xw-wP5" firstAttribute="width" secondItem="H2p-sc-9uM" secondAttribute="width" multiplier="0.75" id="WdU-1x-KCY"/>
                     <constraint firstAttribute="trailing" secondItem="y3a-xw-wP5" secondAttribute="trailing" constant="16" id="XNX-xf-S3w"/>
+                    <constraint firstItem="y3a-xw-wP5" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" priority="999" constant="16" id="cdU-iD-Wqo"/>
                     <constraint firstAttribute="bottom" secondItem="y3a-xw-wP5" secondAttribute="bottom" constant="10" id="dLY-Af-Cwz"/>
                 </constraints>
             </tableViewCellContentView>
@@ -47,6 +48,7 @@
             <connections>
                 <outlet property="containerView" destination="y3a-xw-wP5" id="Dlq-no-LKg"/>
                 <outlet property="messageLabel" destination="vF6-hA-mve" id="4rc-Ya-C2J"/>
+                <outlet property="trailingContainerConstraint" destination="XNX-xf-S3w" id="NRY-yR-ycU"/>
             </connections>
             <point key="canvasLocation" x="-201.44927536231884" y="125.89285714285714"/>
         </tableViewCell>

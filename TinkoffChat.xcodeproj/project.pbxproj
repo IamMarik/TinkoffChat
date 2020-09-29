@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EC17F38325235EF000C6C2A7 /* ProfileNavigationBar.xib in Resources */ = {isa = PBXBuildFile; fileRef = EC17F38225235EF000C6C2A7 /* ProfileNavigationBar.xib */; };
+		EC17F3862523601F00C6C2A7 /* ProfileNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC17F3852523601F00C6C2A7 /* ProfileNavigationBar.swift */; };
 		EC3B4951251F659E002A93A8 /* Conversations.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EC3B4950251F659E002A93A8 /* Conversations.storyboard */; };
 		EC3B4954251F65C4002A93A8 /* ConversationsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC3B4953251F65C4002A93A8 /* ConversationsListViewController.swift */; };
 		EC3B4958251F662E002A93A8 /* ConfigurableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC3B4957251F662E002A93A8 /* ConfigurableView.swift */; };
@@ -38,6 +40,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		EC17F38225235EF000C6C2A7 /* ProfileNavigationBar.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProfileNavigationBar.xib; sourceTree = "<group>"; };
+		EC17F3852523601F00C6C2A7 /* ProfileNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileNavigationBar.swift; sourceTree = "<group>"; };
 		EC3B4950251F659E002A93A8 /* Conversations.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Conversations.storyboard; sourceTree = "<group>"; };
 		EC3B4953251F65C4002A93A8 /* ConversationsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationsListViewController.swift; sourceTree = "<group>"; };
 		EC3B4957251F662E002A93A8 /* ConfigurableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurableView.swift; sourceTree = "<group>"; };
@@ -81,6 +85,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		EC17F38125235EAF00C6C2A7 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				EC17F38225235EF000C6C2A7 /* ProfileNavigationBar.xib */,
+				EC17F3852523601F00C6C2A7 /* ProfileNavigationBar.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		EC3B494F251F6587002A93A8 /* ConversationList */ = {
 			isa = PBXGroup;
 			children = (
@@ -168,6 +181,7 @@
 		EC73E3032514AF1F006D5ADF /* Profile */ = {
 			isa = PBXGroup;
 			children = (
+				EC17F38125235EAF00C6C2A7 /* Views */,
 				EC73E3042514AF57006D5ADF /* Profile.storyboard */,
 				EC73E3072514AF6C006D5ADF /* ProfileViewController.swift */,
 				ECF7B6A125177781006DDB81 /* ProfileModel.swift */,
@@ -304,6 +318,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				ECC2693D250C6FEE001C08A0 /* LaunchScreen.storyboard in Resources */,
+				EC17F38325235EF000C6C2A7 /* ProfileNavigationBar.xib in Resources */,
 				EC6794632520295000DB8002 /* Conversation.storyboard in Resources */,
 				ECC2693A250C6FEE001C08A0 /* Assets.xcassets in Resources */,
 				EC3B4969251F6940002A93A8 /* ConversationTableViewCell.xib in Resources */,
@@ -341,6 +356,7 @@
 				ECC26949250C77D2001C08A0 /* Log.swift in Sources */,
 				ECC26931250C6FEC001C08A0 /* AppDelegate.swift in Sources */,
 				EC3B4963251F6824002A93A8 /* ConversationSectionsMockData.swift in Sources */,
+				EC17F3862523601F00C6C2A7 /* ProfileNavigationBar.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

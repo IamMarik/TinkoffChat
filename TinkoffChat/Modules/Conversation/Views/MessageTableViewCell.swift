@@ -15,6 +15,9 @@ class MessageTableViewCell: UITableViewCell {
     
     @IBOutlet var messageLabel: UILabel!
     
+    
+    @IBOutlet var trailingContainerConstraint: NSLayoutConstraint!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         containerView.layer.cornerRadius = 8
@@ -29,5 +32,8 @@ class MessageTableViewCell: UITableViewCell {
 extension MessageTableViewCell: ConfigurableView {
     func configure(with model: MessageCellModel) {
         messageLabel.text = model.text
+        trailingContainerConstraint.isActive = model.direction == .outgoing
+        let backgroundColor = model.direction == .incoming ? Colors.altoGrey : Colors.gossipGreen
+        containerView.backgroundColor = backgroundColor
     }
 }

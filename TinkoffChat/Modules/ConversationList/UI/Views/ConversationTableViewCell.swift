@@ -32,6 +32,7 @@ class ConversationTableViewCell: UITableViewCell {
         isOnlineIndicatorView.layer.cornerRadius = isOnlineIndicatorView.frame.width / 2
         photoImageView.layer.cornerRadius = photoImageView.frame.width / 2
         photoImageView.clipsToBounds = true
+
     }
 }
 
@@ -41,21 +42,21 @@ extension ConversationTableViewCell: ConfigurableView {
         nameLabel.text = model.name
         
         messageLabel.text = !model.message.isEmpty ? model.message : "No messages yet"
+        let dateFormatter = Calendar.current.isDateInToday(model.date) ? Self.todayDateFormatter : Self.commonDateFormatter
+        receivedDateLabel.text = !model.message.isEmpty ? dateFormatter.string(from: model.date) : ""
+        
         if model.message.isEmpty {
-            messageLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 13, weight: .medium)
+            messageLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 13, weight: .thin)
         } else if model.hasUnreadMessage {
             messageLabel.font = UIFont.systemFont(ofSize: 13, weight: .bold)
         } else {
-            messageLabel.font = UIFont.systemFont(ofSize: 13, weight: .medium)
+            messageLabel.font = UIFont.systemFont(ofSize: 13, weight: .regular)
         }
-       
-        let dateFormatter = Calendar.current.isDateInToday(model.date) ? Self.todayDateFormatter : Self.commonDateFormatter
-        receivedDateLabel.text = dateFormatter.string(from: model.date)
         
         photoImageView.image = ProfilePlaceholderImageRenderer.drawProfilePlaceholderImage(forName: model.name, inRectangleOfSize: .init(width: 240, height: 240))
         
         isOnlineContainerView.isHidden = !model.isOnline
-        contentView.backgroundColor = model.hasUnreadMessage ? Colors.paleYellow : UIColor.white
+        contentView.backgroundColor = model.isOnline ? Colors.paleYellow : UIColor.white
     }
 
     

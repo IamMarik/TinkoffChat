@@ -18,7 +18,7 @@ class ProfilePlaceholderImageRenderer {
 
     static func drawProfilePlaceholderImage(forName name: String, inRectangleOfSize rectangleSize: CGSize) -> UIImage? {
         
-        guard let font = UIFont(name: "Roboto Medium", size: rectangleSize.width / 2) else {
+        guard let font = UIFont(name: "Roboto-Medium", size: rectangleSize.width / 2) else {
             return nil
         }
         
