@@ -15,6 +15,12 @@ public class Log {
     /// Set false to disable logging
     static var isEnabled: Bool = true
 
+    static var isInfoEnabled: Bool = true
+
+    static var isWarningEnabled: Bool = true
+
+    static var isErrorEnabled: Bool = true
+
     /**
      Множество строковых ключей tag, которые будут исключены из логирования.
      Тэги устанавливаются в `Enviroment Variables` под ключём `disabled_log_tags` разделенных запятой
@@ -27,9 +33,19 @@ public class Log {
     }()
 
     /// Print  message to console
-    static func d(_ message: String, tag: String = "") {
-        guard isEnabled, !disabledLogTags.contains(tag) else { return }
-        print((tag.isEmpty ? "" : "[\(tag)] ") + message)
+    static func info(_ message: String, tag: String = "") {
+        guard isEnabled, isInfoEnabled, !disabledLogTags.contains(tag) else { return }
+        print("[Info] " + (tag.isEmpty ? "" : "[\(tag)] ") + message)
+    }
+
+    static func warning(_ message: String, tag: String = "") {
+        guard isEnabled, isWarningEnabled, !disabledLogTags.contains(tag) else { return }
+        print("[Warning] " + (tag.isEmpty ? "" : "[\(tag)] ") + message)
+    }
+
+    static func error(_ message: String, tag: String = "") {
+        guard isEnabled, isErrorEnabled, !disabledLogTags.contains(tag) else { return }
+        print("[Error] " + (tag.isEmpty ? "" : "[\(tag)] ") + message)
     }
 
 }
