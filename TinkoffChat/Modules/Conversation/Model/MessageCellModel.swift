@@ -6,15 +6,13 @@
 //  Copyright © 2020 Tinkoff. All rights reserved.
 //
 
-import Foundation
-
 
 struct MessageCellModel {
     let text: String
-    let direction: MessageCellType
+    let direction: MessageDirection
 }
 
-enum MessageCellType {
+enum MessageDirection {
     case incoming
     case outgoing
 }

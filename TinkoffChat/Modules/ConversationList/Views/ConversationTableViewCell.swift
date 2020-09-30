@@ -33,7 +33,7 @@ class ConversationTableViewCell: UITableViewCell {
         photoImageView.layer.cornerRadius = photoImageView.frame.width / 2
         photoImageView.clipsToBounds = true
     }
-    
+        
 }
 
 extension ConversationTableViewCell: ConfigurableView {
