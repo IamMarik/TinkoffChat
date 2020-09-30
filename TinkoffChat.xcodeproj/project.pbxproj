@@ -32,6 +32,7 @@
 		ECC2693D250C6FEE001C08A0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ECC2693B250C6FEE001C08A0 /* LaunchScreen.storyboard */; };
 		ECC26946250C76BE001C08A0 /* UIApplication.State + description.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC26945250C76BE001C08A0 /* UIApplication.State + description.swift */; };
 		ECC26949250C77D2001C08A0 /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC26948250C77D2001C08A0 /* Log.swift */; };
+		ECCC90C625249979001C68F9 /* Date + RandomTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECCC90C525249979001C68F9 /* Date + RandomTime.swift */; };
 		ECED1CA42518CFB20069EB71 /* ProfilePlaceholderImageRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECF7B6A825177FA0006DDB81 /* ProfilePlaceholderImageRenderer.swift */; };
 		ECED1CA92518E3EC0069EB71 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECED1CA82518E3EC0069EB71 /* Colors.swift */; };
 		ECED1CAD2518E5270069EB71 /* UIColor + hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECED1CAC2518E5270069EB71 /* UIColor + hex.swift */; };
@@ -67,6 +68,7 @@
 		ECC2693E250C6FEE001C08A0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		ECC26945250C76BE001C08A0 /* UIApplication.State + description.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication.State + description.swift"; sourceTree = "<group>"; };
 		ECC26948250C77D2001C08A0 /* Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
+		ECCC90C525249979001C68F9 /* Date + RandomTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date + RandomTime.swift"; sourceTree = "<group>"; };
 		ECED1CA82518E3EC0069EB71 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		ECED1CAC2518E5270069EB71 /* UIColor + hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor + hex.swift"; sourceTree = "<group>"; };
 		ECF7B6A125177781006DDB81 /* ProfileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileModel.swift; sourceTree = "<group>"; };
@@ -97,9 +99,10 @@
 		EC3B494F251F6587002A93A8 /* ConversationList */ = {
 			isa = PBXGroup;
 			children = (
-				EC3B495B251F6668002A93A8 /* UI */,
+				EC3B4965251F6924002A93A8 /* Views */,
 				EC3B495A251F6663002A93A8 /* Model */,
 				EC3B4950251F659E002A93A8 /* Conversations.storyboard */,
+				EC3B4953251F65C4002A93A8 /* ConversationsListViewController.swift */,
 			);
 			path = ConversationList;
 			sourceTree = "<group>";
@@ -120,15 +123,6 @@
 				EC3B4962251F6824002A93A8 /* ConversationSectionsMockData.swift */,
 			);
 			path = Model;
-			sourceTree = "<group>";
-		};
-		EC3B495B251F6668002A93A8 /* UI */ = {
-			isa = PBXGroup;
-			children = (
-				EC3B4965251F6924002A93A8 /* Views */,
-				EC3B4953251F65C4002A93A8 /* ConversationsListViewController.swift */,
-			);
-			path = UI;
 			sourceTree = "<group>";
 		};
 		EC3B4965251F6924002A93A8 /* Views */ = {
@@ -182,9 +176,9 @@
 			isa = PBXGroup;
 			children = (
 				EC17F38125235EAF00C6C2A7 /* Views */,
-				EC73E3042514AF57006D5ADF /* Profile.storyboard */,
+				ECCC90C82524A314001C68F9 /* Model */,
 				EC73E3072514AF6C006D5ADF /* ProfileViewController.swift */,
-				ECF7B6A125177781006DDB81 /* ProfileModel.swift */,
+				EC73E3042514AF57006D5ADF /* Profile.storyboard */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -230,6 +224,7 @@
 				ECED1CAC2518E5270069EB71 /* UIColor + hex.swift */,
 				ECAB8610251F80D600BA7845 /* DateFormatter + dateOrNow.swift */,
 				ECAB8615251F85E900BA7845 /* DateFormatter + init.swift */,
+				ECCC90C525249979001C68F9 /* Date + RandomTime.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -241,6 +236,14 @@
 				ECF7B6A825177FA0006DDB81 /* ProfilePlaceholderImageRenderer.swift */,
 			);
 			path = Utils;
+			sourceTree = "<group>";
+		};
+		ECCC90C82524A314001C68F9 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				ECF7B6A125177781006DDB81 /* ProfileModel.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		ECED1CA72518E3DE0069EB71 /* Style */ = {
@@ -339,6 +342,7 @@
 			files = (
 				EC3B4960251F67D6002A93A8 /* ConversationSection.swift in Sources */,
 				EC3B495D251F667C002A93A8 /* ConverationCellModel.swift in Sources */,
+				ECCC90C625249979001C68F9 /* Date + RandomTime.swift in Sources */,
 				ECED1CA42518CFB20069EB71 /* ProfilePlaceholderImageRenderer.swift in Sources */,
 				ECC26946250C76BE001C08A0 /* UIApplication.State + description.swift in Sources */,
 				EC3B4954251F65C4002A93A8 /* ConversationsListViewController.swift in Sources */,

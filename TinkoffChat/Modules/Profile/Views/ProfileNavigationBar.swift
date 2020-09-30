@@ -8,7 +8,6 @@
 
 import UIKit
 
-@IBDesignable
 class ProfileNavigationBar: UIView {
     
     weak var delegate: ProfileNavigationBarDelegate?
@@ -18,7 +17,11 @@ class ProfileNavigationBar: UIView {
     @IBOutlet var titleLabel: UILabel!
     
     @IBOutlet var closeButton: UIButton!
-
+    
+    override var intrinsicContentSize: CGSize {
+        return CGSize(width: 0, height: 55)
+    }
+    
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -28,6 +31,11 @@ class ProfileNavigationBar: UIView {
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         configureView()
+    }
+    
+    override func prepareForInterfaceBuilder() {
+        super.prepareForInterfaceBuilder()
+        invalidateIntrinsicContentSize()
     }
 
     private func configureView() {

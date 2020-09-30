@@ -32,8 +32,8 @@ class ConversationTableViewCell: UITableViewCell {
         isOnlineIndicatorView.layer.cornerRadius = isOnlineIndicatorView.frame.width / 2
         photoImageView.layer.cornerRadius = photoImageView.frame.width / 2
         photoImageView.clipsToBounds = true
-
     }
+    
 }
 
 extension ConversationTableViewCell: ConfigurableView {
@@ -46,14 +46,14 @@ extension ConversationTableViewCell: ConfigurableView {
         receivedDateLabel.text = !model.message.isEmpty ? dateFormatter.string(from: model.date) : ""
         
         if model.message.isEmpty {
-            messageLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 13, weight: .thin)
+            messageLabel.font = UIFont.italicSystemFont(ofSize: 13)  
         } else if model.hasUnreadMessage {
             messageLabel.font = UIFont.systemFont(ofSize: 13, weight: .bold)
         } else {
             messageLabel.font = UIFont.systemFont(ofSize: 13, weight: .regular)
         }
         
-        photoImageView.image = ProfilePlaceholderImageRenderer.drawProfilePlaceholderImage(forName: model.name, inRectangleOfSize: .init(width: 240, height: 240))
+        photoImageView.image = ProfilePlaceholderImageRenderer.drawProfilePlaceholderImage(forName: model.name, inRectangleOfSize: .init(width: 120, height: 120))
         
         isOnlineContainerView.isHidden = !model.isOnline
         contentView.backgroundColor = model.isOnline ? Colors.paleYellow : UIColor.white

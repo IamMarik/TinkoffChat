@@ -54,16 +54,26 @@ class ConversationsListViewController: UIViewController {
     }
     
     private func setupNavigationBar() {
-        let photo = userProfile.photo ?? ProfilePlaceholderImageRenderer.drawProfilePlaceholderImage(forName: userProfile.fullName, inRectangleOfSize: CGSize(width: 40, height: 40))
+        let photo = userProfile.photo ?? ProfilePlaceholderImageRenderer.drawProfilePlaceholderImage(forName: userProfile.fullName, inRectangleOfSize: CGSize(width: 36, height: 36))
         
         let button = UIButton()
-        button.frame = CGRect(x: 0, y: 0, width: 40, height: 40)
+        button.frame = CGRect(x: 0, y: 0, width: 36, height: 36)
         button.setImage(photo, for: .normal)
         button.addTarget(self, action: #selector(profileItemDidTap), for: .touchUpInside)
 
         let barButton = UIBarButtonItem()
         barButton.customView = button
         self.navigationItem.rightBarButtonItem = barButton
+   
+        if #available(iOS 13.0, *) {
+            let navBarAppearance = UINavigationBarAppearance()
+            navBarAppearance.configureWithOpaqueBackground()
+            navBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.black]
+            navBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.black]
+            navBarAppearance.backgroundColor = Colors.navGrey
+            navigationController?.navigationBar.standardAppearance = navBarAppearance
+            navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
+        }
     }
     
     @objc private func profileItemDidTap() {
