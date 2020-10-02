@@ -74,6 +74,20 @@ class ConversationsListViewController: UIViewController {
         navigationController?.present(profileViewController, animated: true, completion: nil)
     }
     
+    
+    @IBAction func settingsItemDidTap(_ sender: Any) {
+        guard let themesViewController = UIStoryboard(name: "ThemeSettings", bundle: nil).instantiateViewController(withIdentifier: "ThemeSettingsId") as? ThemesViewController else { return }
+        
+        themesViewController.delegate = self
+        
+        themesViewController.onThemeDidChanged = { themeOption in
+            ThemeManager.shared.themeDidChanged(on: themeOption)
+        }
+        
+        
+        navigationController?.pushViewController(themesViewController, animated: true)
+    }
+    
 }
 
 
@@ -115,6 +129,15 @@ extension ConversationsListViewController: UITableViewDelegate {
         let conversation = sections[indexPath.section].conversations[indexPath.row]
         conversationViewController.title = conversation.name
         navigationController?.pushViewController(conversationViewController, animated: true)
+    }
+    
+}
+
+
+extension ConversationsListViewController: ThemesPickerDelegate {
+    
+    func themeDidChanged(on themeOption: ThemeOptions) {
+        
     }
     
 }

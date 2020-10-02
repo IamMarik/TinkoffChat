@@ -33,7 +33,11 @@
                     </view>
                     <navigationItem key="navigationItem" title="Tinkoff Chat" largeTitleDisplayMode="always" id="6jF-Xa-bZU">
                         <barButtonItem key="backBarButtonItem" title=" " id="Lhg-WZ-MZR"/>
-                        <barButtonItem key="leftBarButtonItem" title="Item" image="settings" id="07f-gJ-nHq"/>
+                        <barButtonItem key="leftBarButtonItem" title="Item" image="settings" id="07f-gJ-nHq">
+                            <connections>
+                                <action selector="settingsItemDidTap:" destination="Ejp-RB-G5P" id="HRD-pD-BxW"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title=" " id="7mg-Ho-2OC">
                             <connections>
                                 <action selector="profileItemDidTap:" destination="Ejp-RB-G5P" id="cD6-iV-sYc"/>
