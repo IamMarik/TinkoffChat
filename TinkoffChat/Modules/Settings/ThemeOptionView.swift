@@ -8,7 +8,7 @@
 
 import UIKit
 
-@IBDesignable
+
 class ThemeOptionView: UIView {
     
     weak var delegate: ThemeOptionViewDelegate?
@@ -25,7 +25,7 @@ class ThemeOptionView: UIView {
         }
     }
     
-    private var themeOption: ThemeOptions = .classic
+    private(set) var themeOption: ThemeOptions = .classic
     
     private var containerButton = UIButton()
     
@@ -62,7 +62,7 @@ class ThemeOptionView: UIView {
         containerButton.layer.borderWidth = 1
         containerButton.layer.borderColor = UIColor(hex: 0x979797).cgColor
         containerButton.layer.cornerRadius = 14
-        containerButton.backgroundColor = theme.colors.background
+        containerButton.backgroundColor = theme.colors.primaryBackground
         
         addSubview(incomingMessageSampleView)
         incomingMessageSampleView.translatesAutoresizingMaskIntoConstraints = false
@@ -71,7 +71,7 @@ class ThemeOptionView: UIView {
         incomingMessageSampleView.heightAnchor.constraint(equalToConstant: 25).isActive = true
         incomingMessageSampleView.layer.cornerRadius = 6
         
-        incomingMessageSampleView.backgroundColor = theme.colors.imcomingMessage
+        incomingMessageSampleView.backgroundColor = theme.colors.conversation.cell.imcomingMessageBackground
                 
         addSubview(outgoingMessageSampleView)
         outgoingMessageSampleView.translatesAutoresizingMaskIntoConstraints = false
@@ -82,7 +82,7 @@ class ThemeOptionView: UIView {
         outgoingMessageSampleView.widthAnchor.constraint(equalTo: incomingMessageSampleView.widthAnchor).isActive = true
         outgoingMessageSampleView.layer.cornerRadius = 6
         
-        outgoingMessageSampleView.backgroundColor = theme.colors.outgoingMessage
+        outgoingMessageSampleView.backgroundColor = theme.colors.conversation.cell.outgoingMessageBackground
         
         addSubview(themeNameLabel)
         themeNameLabel.translatesAutoresizingMaskIntoConstraints = false

@@ -22,6 +22,8 @@ class ConversationTableViewCell: UITableViewCell {
     
     @IBOutlet var receivedDateLabel: UILabel!
 
+    @IBOutlet var disclosureImageView: UIImageView!
+    
     @IBOutlet var isOnlineContainerView: UIView!
     
     @IBOutlet var isOnlineIndicatorView: UIView!
@@ -39,6 +41,8 @@ class ConversationTableViewCell: UITableViewCell {
 extension ConversationTableViewCell: ConfigurableView {
     
     func configure(with model: ConversationCellModel) {
+        let theme = ThemeManager.shared.theme
+        
         nameLabel.text = model.name
         
         messageLabel.text = !model.message.isEmpty ? model.message : "No messages yet"
@@ -56,7 +60,14 @@ extension ConversationTableViewCell: ConfigurableView {
         photoImageView.image = ProfilePlaceholderImageRenderer.drawProfilePlaceholderImage(forName: model.name, inRectangleOfSize: .init(width: 120, height: 120))
         
         isOnlineContainerView.isHidden = !model.isOnline
-        contentView.backgroundColor = model.isOnline ? Colors.paleYellow : UIColor.white
+        //contentView.backgroundColor = model.isOnline ? Colors.paleYellow : .clear
+        nameLabel.textColor = theme.colors.conversationList.cell.name
+        messageLabel.textColor = theme.colors.conversationList.cell.message
+        receivedDateLabel.textColor = theme.colors.conversationList.cell.receivedDate
+        disclosureImageView.tintColor = theme.colors.conversationList.cell.receivedDate
+        let selectedBackgroundView = UIView()
+        selectedBackgroundView.backgroundColor = theme.colors.conversationList.cell.cellSelected
+        self.selectedBackgroundView = selectedBackgroundView
     }
 
     

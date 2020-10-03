@@ -14,6 +14,8 @@ class ProfileNavigationBar: UIView {
 
     @IBOutlet var contentView: UIView!
         
+    @IBOutlet var navigationBarView: UIView!
+    
     @IBOutlet var titleLabel: UILabel!
     
     @IBOutlet var closeButton: UIButton!
@@ -44,6 +46,13 @@ class ProfileNavigationBar: UIView {
         addSubview(contentView)
         contentView.frame = self.bounds
         contentView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        
+        let theme = ThemeManager.shared.theme
+        navigationBarView.backgroundColor = theme.colors.navigationBar.background
+        titleLabel.textColor = theme.colors.navigationBar.title
+        
+        
+        
     }
     
     @IBAction func closeButtonDidTapped(_ sender: Any) {

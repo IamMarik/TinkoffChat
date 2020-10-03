@@ -31,9 +31,12 @@ class MessageTableViewCell: UITableViewCell {
 
 extension MessageTableViewCell: ConfigurableView {
     func configure(with model: MessageCellModel) {
+        let themeColors = ThemeManager.shared.theme.colors.conversation.cell
+        
         messageLabel.text = model.text
         trailingContainerConstraint.isActive = model.direction == .outgoing
-        let backgroundColor = model.direction == .incoming ? Colors.altoGrey : Colors.gossipGreen
+        let backgroundColor = model.direction == .incoming ? themeColors.imcomingMessageBackground : themeColors.outgoingMessageBackground
         containerView.backgroundColor = backgroundColor
+        
     }
 }

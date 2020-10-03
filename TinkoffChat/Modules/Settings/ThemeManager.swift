@@ -9,26 +9,34 @@
 import Foundation
 
 
-class ThemeManager: ThemesPickerDelegate {
+class ThemeManager {
 
-    
-    
     static let shared = ThemeManager()
     
-    var theme: ApplicationTheme {
-        themeOption.theme
+    private(set) var themeOption: ThemeOptions = .classic {
+        didSet {
+            theme = themeOption.theme
+        }
     }
     
-    private var themeOption: ThemeOptions = .classic
+    private(set) var theme: ApplicationTheme
     
-    private init() { }
-    
-    func themeDidChanged(_ viewController: ConversationsListViewController, on themeOption: ThemeOptions) {
+    private var themeStoreKey = "application_theme"
+  
+
+    private init() {
+        let themeOption: ThemeOptions
+        if let storedKey = UserDefaults.standard.string(forKey: themeStoreKey) {
+            themeOption = ThemeOptions(storedKey: storedKey)
+        } else {
+            themeOption = .classic
+        }
         self.themeOption = themeOption
-        
+        self.theme = themeOption.theme
     }
     
-    func themeDidChanged(on themeOption: ThemeOptions) {
+    func setApplicationTheme(_ themeOption: ThemeOptions) {
+        UserDefaults.standard.set(themeOption.rawValue, forKey: themeStoreKey)
         self.themeOption = themeOption
     }
     

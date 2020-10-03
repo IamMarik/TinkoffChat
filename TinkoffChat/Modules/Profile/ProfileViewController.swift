@@ -52,12 +52,14 @@ class ProfileViewController: UIViewController {
         // Размеры фрейма будут соответствовать начальным (со сториборда в данном случае)
         Log.info("Save button frame in viewDidLoad: \(saveButton.frame)", tag: Self.logTag)
         setupView()
+        setupTheme()
     }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         // Здесь все вью уже иерархии с пересчитанными согласно констрейтам размерами
         Log.info("Save button frame in viewDidAppear: \(saveButton.frame)", tag: Self.logTag)
+       
     }
 
     private func setupView() {
@@ -74,6 +76,14 @@ class ProfileViewController: UIViewController {
             profileNameLabel.text = profile.fullName
             profileDescriptionLabel.text = profile.description
         }
+    }
+    
+    private func setupTheme() {
+        let theme = ThemeManager.shared.theme
+        view.backgroundColor = theme.colors.primaryBackground
+        profileNameLabel.textColor = theme.colors.profile.name
+        profileDescriptionLabel.textColor = theme.colors.profile.description
+        saveButton.backgroundColor = theme.colors.profile.saveButtonBackground
     }
 
     private func openGallery() {
@@ -119,6 +129,9 @@ class ProfileViewController: UIViewController {
         alertController.addAction(chooseFromGalleryAction)
         alertController.addAction(takeShotAction)
         alertController.addAction(cancelAction)
+        
+        let contentView = alertController.view.subviews.first?.subviews.first?.subviews.first
+        contentView?.backgroundColor = .darkGray
 
         present(alertController, animated: true)
     }

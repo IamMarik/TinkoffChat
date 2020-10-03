@@ -69,7 +69,7 @@
                         </constraints>
                     </view>
                 </subviews>
-                <color key="backgroundColor" red="0.94117647058823528" green="0.94117647058823528" blue="0.90196078431372551" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 <constraints>
                     <constraint firstItem="h6H-Kn-RtH" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="16" id="3Go-mg-8tH"/>
                     <constraint firstItem="yTt-oC-PsJ" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="6Lf-LY-l5n"/>
@@ -90,7 +90,9 @@
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <connections>
+                <outlet property="disclosureImageView" destination="vap-Ho-CCD" id="rcw-S8-2du"/>
                 <outlet property="isOnlineContainerView" destination="Aet-pj-A4b" id="sgm-3j-mBt"/>
                 <outlet property="isOnlineIndicatorView" destination="MUT-6v-aJs" id="IRn-e9-bu5"/>
                 <outlet property="messageLabel" destination="12w-Gb-fVN" id="XkH-qK-DEm"/>

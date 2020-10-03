@@ -29,14 +29,18 @@ class ConversationViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupTableView()      
+        setupTableView()
+        setupTheme()
     }
     
     private func setupTableView() {
         tableView.dataSource = self
         tableView.tableFooterView = UIView()
         tableView.register(UINib(nibName: "\(MessageTableViewCell.self)", bundle: nil), forCellReuseIdentifier: cellId)
-
+    }
+    
+    private func setupTheme() {
+        view.backgroundColor = ThemeManager.shared.theme.colors.primaryBackground
     }
 }
 

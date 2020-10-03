@@ -13,6 +13,7 @@
             <connections>
                 <outlet property="closeButton" destination="gz7-Ht-TfV" id="umt-IZ-XQJ"/>
                 <outlet property="contentView" destination="iN0-l3-epB" id="I9a-4F-f2i"/>
+                <outlet property="navigationBarView" destination="XhY-i5-Rqx" id="brU-NS-xlj"/>
                 <outlet property="titleLabel" destination="qUb-EY-QKj" id="kMP-Y4-hhA"/>
             </connections>
         </placeholder>

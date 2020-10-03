@@ -30,7 +30,11 @@
                     </view>
                     <navigationItem key="navigationItem" title="Settings" largeTitleDisplayMode="never" id="AxZ-38-Pdv">
                         <barButtonItem key="backBarButtonItem" title="Chat" id="enc-Ds-ifJ"/>
-                        <barButtonItem key="rightBarButtonItem" title="Cancel" id="C7R-QE-n4M"/>
+                        <barButtonItem key="rightBarButtonItem" title="Cancel" id="C7R-QE-n4M">
+                            <connections>
+                                <action selector="cancelBarButtonDidTap:" destination="Dku-1F-Mfs" id="x5E-I1-N82"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
