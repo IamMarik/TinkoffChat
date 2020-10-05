@@ -47,12 +47,9 @@ class ProfileNavigationBar: UIView {
         contentView.frame = self.bounds
         contentView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         
-        let theme = ThemeManager.shared.theme
-        navigationBarView.backgroundColor = theme.colors.navigationBar.background
-        titleLabel.textColor = theme.colors.navigationBar.title
-        
-        
-        
+        navigationBarView.backgroundColor = Themes.current.colors.navigationBar.background
+        titleLabel.textColor = Themes.current.colors.navigationBar.title
+  
     }
     
     @IBAction func closeButtonDidTapped(_ sender: Any) {

@@ -28,7 +28,7 @@ class ConversationsListViewController: UIViewController {
     @IBOutlet var profileBarButtonItem: UIBarButtonItem!
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
-        ThemeManager.shared.theme.statusBarStyle
+        Themes.current.statusBarStyle
     }
     
     
@@ -38,7 +38,7 @@ class ConversationsListViewController: UIViewController {
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         setupTableView()
         setupNavigationBar()
-        setupTheme(ThemeManager.shared.theme)
+        setupTheme()
     }
 
         
@@ -51,7 +51,8 @@ class ConversationsListViewController: UIViewController {
         tableView.rowHeight = UITableView.automaticDimension
     }
     
-    private func setupTheme(_ theme: ApplicationTheme) {
+    private func setupTheme() {
+        let theme = Themes.current
         view.backgroundColor = theme.colors.primaryBackground
         if #available(iOS 13.0, *) {
             let navBarAppearance = UINavigationBarAppearance()
@@ -95,8 +96,8 @@ class ConversationsListViewController: UIViewController {
         themesViewController.delegate = self
         
         themesViewController.onThemeDidChanged = { [weak self] themeOption in
-            ThemeManager.shared.setApplicationTheme(themeOption)
-            self?.setupTheme(themeOption.theme)
+            Themes.saveApplicationTheme(themeOption)
+            self?.setupTheme()
             self?.tableView.reloadData()
         }
         navigationController?.pushViewController(themesViewController, animated: true)
@@ -147,8 +148,8 @@ extension ConversationsListViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         guard let headerView = view as? UITableViewHeaderFooterView else { return }
-        headerView.contentView.backgroundColor = ThemeManager.shared.theme.colors.conversationList.table.sectionHeaderBackground
-        headerView.textLabel?.textColor = ThemeManager.shared.theme.colors.conversationList.table.sectionHeaderTitle
+        headerView.contentView.backgroundColor = Themes.current.colors.conversationList.table.sectionHeaderBackground
+        headerView.textLabel?.textColor = Themes.current.colors.conversationList.table.sectionHeaderTitle
         
     }
     
@@ -158,8 +159,8 @@ extension ConversationsListViewController: UITableViewDelegate {
 extension ConversationsListViewController: ThemesPickerDelegate {
     
     func themeDidChanged(on themeOption: ThemeOptions) {
-        ThemeManager.shared.setApplicationTheme(themeOption)
-        setupTheme(themeOption.theme)
+        Themes.saveApplicationTheme(themeOption)
+        setupTheme()
         tableView.reloadData()
     }
     

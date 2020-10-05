@@ -40,7 +40,7 @@ class ConversationViewController: UIViewController {
     }
     
     private func setupTheme() {
-        view.backgroundColor = ThemeManager.shared.theme.colors.primaryBackground
+        view.backgroundColor = Themes.current.colors.primaryBackground
     }
 }
 

@@ -15,7 +15,6 @@ class MessageTableViewCell: UITableViewCell {
     
     @IBOutlet var messageLabel: UILabel!
     
-    
     @IBOutlet var trailingContainerConstraint: NSLayoutConstraint!
     
     override func awakeFromNib() {
@@ -31,12 +30,15 @@ class MessageTableViewCell: UITableViewCell {
 
 extension MessageTableViewCell: ConfigurableView {
     func configure(with model: MessageCellModel) {
-        let themeColors = ThemeManager.shared.theme.colors.conversation.cell
-        
         messageLabel.text = model.text
         trailingContainerConstraint.isActive = model.direction == .outgoing
-        let backgroundColor = model.direction == .incoming ? themeColors.imcomingMessageBackground : themeColors.outgoingMessageBackground
-        containerView.backgroundColor = backgroundColor
-        
+        setupTheme(for: model.direction)
+    }
+    
+    func setupTheme(for direction: MessageDirection) {
+        let themeColors = Themes.current.colors.conversation.cell
+        let directionTheme = direction == .incoming ? themeColors.incoming : themeColors.outgoing
+        containerView.backgroundColor = directionTheme.background
+        messageLabel.textColor = directionTheme.text
     }
 }

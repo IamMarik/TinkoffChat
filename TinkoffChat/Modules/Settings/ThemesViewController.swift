@@ -18,20 +18,20 @@ class ThemesViewController: UIViewController {
     
     var onThemeDidChanged: ((ThemeOptions) -> Void)?
     
-    let initialThemeOption = ThemeManager.shared.themeOption
-    
+    let initialThemeOption = Themes.currentThemeOption
+
     
     @IBOutlet var stackView: UIStackView!
 
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let currentTheme = ThemeManager.shared.themeOption
+        let currentThemeOption = Themes.currentThemeOption
         
         ThemeOptions.allCases.forEach {
             let themeView = ThemeOptionView(themeOption: $0)
             themeView.delegate = self
-            themeView.isSelected = $0 == currentTheme
+            themeView.isSelected = $0 == currentThemeOption
             self.stackView.addArrangedSubview(themeView)
         }
         

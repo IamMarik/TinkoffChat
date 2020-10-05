@@ -71,7 +71,7 @@ class ThemeOptionView: UIView {
         incomingMessageSampleView.heightAnchor.constraint(equalToConstant: 25).isActive = true
         incomingMessageSampleView.layer.cornerRadius = 6
         
-        incomingMessageSampleView.backgroundColor = theme.colors.conversation.cell.imcomingMessageBackground
+        incomingMessageSampleView.backgroundColor = theme.colors.conversation.cell.incoming.background
                 
         addSubview(outgoingMessageSampleView)
         outgoingMessageSampleView.translatesAutoresizingMaskIntoConstraints = false
@@ -82,7 +82,7 @@ class ThemeOptionView: UIView {
         outgoingMessageSampleView.widthAnchor.constraint(equalTo: incomingMessageSampleView.widthAnchor).isActive = true
         outgoingMessageSampleView.layer.cornerRadius = 6
         
-        outgoingMessageSampleView.backgroundColor = theme.colors.conversation.cell.outgoingMessageBackground
+        outgoingMessageSampleView.backgroundColor = theme.colors.conversation.cell.outgoing.background
         
         addSubview(themeNameLabel)
         themeNameLabel.translatesAutoresizingMaskIntoConstraints = false

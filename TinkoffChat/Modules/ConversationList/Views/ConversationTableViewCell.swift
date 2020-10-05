@@ -41,7 +41,7 @@ class ConversationTableViewCell: UITableViewCell {
 extension ConversationTableViewCell: ConfigurableView {
     
     func configure(with model: ConversationCellModel) {
-        let theme = ThemeManager.shared.theme
+        let theme = Themes.current
         
         nameLabel.text = model.name
         
