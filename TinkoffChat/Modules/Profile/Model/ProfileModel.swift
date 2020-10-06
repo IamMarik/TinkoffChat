@@ -8,7 +8,6 @@
 
 import UIKit
 
-
 struct ProfileViewModel {
     let fullName: String
     let description: String

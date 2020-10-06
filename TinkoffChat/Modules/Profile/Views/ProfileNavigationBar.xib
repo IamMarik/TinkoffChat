@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ProfileNavigationBar" customModule="TinkoffChat" customModuleProvider="target">
+            <connections>
+                <outlet property="closeButton" destination="gz7-Ht-TfV" id="umt-IZ-XQJ"/>
+                <outlet property="contentView" destination="iN0-l3-epB" id="I9a-4F-f2i"/>
+                <outlet property="titleLabel" destination="qUb-EY-QKj" id="kMP-Y4-hhA"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="400" height="140"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XhY-i5-Rqx">
+                    <rect key="frame" x="0.0" y="44" width="400" height="96"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="My profile" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qUb-EY-QKj">
+                            <rect key="frame" x="16" y="32" width="117" height="32"/>
+                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="26"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gz7-Ht-TfV">
+                            <rect key="frame" x="337" y="31.5" width="46" height="33"/>
+                            <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                            <state key="normal" title="Close">
+                                <color key="titleColor" systemColor="systemBlueColor"/>
+                            </state>
+                            <connections>
+                                <action selector="closeButtonDidTapped:" destination="-1" eventType="touchUpInside" id="6dI-SX-Oas"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" red="0.96862745098039216" green="0.96862745098039216" blue="0.96862745098039216" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="bottom" secondItem="qUb-EY-QKj" secondAttribute="bottom" constant="32" id="7oh-H2-dEB"/>
+                        <constraint firstAttribute="height" constant="96" id="I1g-Cx-d1Z"/>
+                        <constraint firstAttribute="trailing" secondItem="gz7-Ht-TfV" secondAttribute="trailing" constant="17" id="N2y-G7-hSj"/>
+                        <constraint firstItem="gz7-Ht-TfV" firstAttribute="centerY" secondItem="XhY-i5-Rqx" secondAttribute="centerY" id="wRR-oD-93V"/>
+                        <constraint firstItem="qUb-EY-QKj" firstAttribute="leading" secondItem="XhY-i5-Rqx" secondAttribute="leading" constant="16" id="wcZ-wT-9uD"/>
+                        <constraint firstItem="qUb-EY-QKj" firstAttribute="centerY" secondItem="XhY-i5-Rqx" secondAttribute="centerY" id="xye-WX-900"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="GOK-Ml-IhP"/>
+            <constraints>
+                <constraint firstItem="XhY-i5-Rqx" firstAttribute="top" secondItem="GOK-Ml-IhP" secondAttribute="top" id="13q-pu-AKl"/>
+                <constraint firstItem="GOK-Ml-IhP" firstAttribute="bottom" secondItem="XhY-i5-Rqx" secondAttribute="bottom" id="NEp-jR-UOO"/>
+                <constraint firstItem="XhY-i5-Rqx" firstAttribute="leading" secondItem="GOK-Ml-IhP" secondAttribute="leading" id="Z71-Xg-WFF"/>
+                <constraint firstItem="XhY-i5-Rqx" firstAttribute="trailing" secondItem="GOK-Ml-IhP" secondAttribute="trailing" id="cE3-Ii-1I4"/>
+            </constraints>
+            <nil key="simulatedTopBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="165.21739130434784" y="15.401785714285714"/>
+        </view>
+    </objects>
+    <resources>
+        <systemColor name="systemBlueColor">
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>
