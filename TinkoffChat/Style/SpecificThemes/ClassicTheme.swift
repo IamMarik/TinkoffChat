@@ -24,6 +24,7 @@ struct ClassicTheme: ApplicationTheme {
         ),
         conversationList: .init(
             table: .init(
+                separator: .lightGray,
                 sectionHeaderBackground: .lightGray,
                 sectionHeaderTitle: .black
             ),
@@ -53,7 +54,10 @@ struct ClassicTheme: ApplicationTheme {
                 background: .white,
                 text: .black
             )
-        )
+        ),
+        settings: .init(
+            background: UIColor(hex: 0xA8D4AD)
+        )        
     )
     
 }

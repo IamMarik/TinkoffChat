@@ -12,7 +12,7 @@ import UIKit
 protocol ApplicationTheme {
     
     var name: String { get }
-    
+        
     var statusBarStyle: UIStatusBarStyle { get }
     
     var colors: ThemeColors { get }
@@ -25,12 +25,17 @@ struct ThemeColors {
     let conversationList: ConversationListThemeColors
     let conversation: ConversationThemeColors
     let profile: ProfileThemeColors
+    let settings: SettingsThemeColors
 }
 
 struct NavigationBarThemeColors {
     let background: UIColor
     let title: UIColor
     let tint: UIColor
+}
+
+struct SettingsThemeColors {
+    let background: UIColor
 }
 
 struct ConversationListThemeColors {
@@ -40,6 +45,7 @@ struct ConversationListThemeColors {
     let cell: CellTheme
     
     struct TableTheme {
+        let separator: UIColor
         let sectionHeaderBackground: UIColor
         let sectionHeaderTitle: UIColor
     }
@@ -59,7 +65,6 @@ struct ConversationThemeColors {
     struct CellTheme {
         let incoming: MessageTheme
         let outgoing: MessageTheme
-        
     }
     
     struct MessageTheme {

@@ -17,6 +17,8 @@
 		EC3B4963251F6824002A93A8 /* ConversationSectionsMockData.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC3B4962251F6824002A93A8 /* ConversationSectionsMockData.swift */; };
 		EC3B4968251F6940002A93A8 /* ConversationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC3B4966251F6940002A93A8 /* ConversationTableViewCell.swift */; };
 		EC3B4969251F6940002A93A8 /* ConversationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EC3B4967251F6940002A93A8 /* ConversationTableViewCell.xib */; };
+		EC53DCAA252C9BF7000227E3 /* ThemesPickerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC53DCA9252C9BF7000227E3 /* ThemesPickerDelegate.swift */; };
+		EC53DCAF252C9D09000227E3 /* ThemeOptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECD9CB7B25274043003FB027 /* ThemeOptionView.swift */; };
 		EC6794632520295000DB8002 /* Conversation.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EC6794622520295000DB8002 /* Conversation.storyboard */; };
 		EC6794662520298000DB8002 /* ConversationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC6794652520298000DB8002 /* ConversationViewController.swift */; };
 		EC67946B252029B600DB8002 /* MessageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC679469252029B600DB8002 /* MessageTableViewCell.swift */; };
@@ -34,7 +36,6 @@
 		ECC26949250C77D2001C08A0 /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC26948250C77D2001C08A0 /* Log.swift */; };
 		ECCC90C625249979001C68F9 /* Date + RandomTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECCC90C525249979001C68F9 /* Date + RandomTime.swift */; };
 		ECD9CB7925273F56003FB027 /* ThemeSettings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ECD9CB7825273F56003FB027 /* ThemeSettings.storyboard */; };
-		ECD9CB7C25274043003FB027 /* ThemeOptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECD9CB7B25274043003FB027 /* ThemeOptionView.swift */; };
 		ECD9CB7F2527453A003FB027 /* ThemesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECD9CB7E2527453A003FB027 /* ThemesViewController.swift */; };
 		ECD9CB822527566D003FB027 /* ThemeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECD9CB812527566D003FB027 /* ThemeModel.swift */; };
 		ECE295C22528AE2100F30BAA /* RootNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECE295C12528AE2100F30BAA /* RootNavigationController.swift */; };
@@ -60,6 +61,7 @@
 		EC3B4962251F6824002A93A8 /* ConversationSectionsMockData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationSectionsMockData.swift; sourceTree = "<group>"; };
 		EC3B4966251F6940002A93A8 /* ConversationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationTableViewCell.swift; sourceTree = "<group>"; };
 		EC3B4967251F6940002A93A8 /* ConversationTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ConversationTableViewCell.xib; sourceTree = "<group>"; };
+		EC53DCA9252C9BF7000227E3 /* ThemesPickerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemesPickerDelegate.swift; sourceTree = "<group>"; };
 		EC6794622520295000DB8002 /* Conversation.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Conversation.storyboard; sourceTree = "<group>"; };
 		EC6794652520298000DB8002 /* ConversationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationViewController.swift; sourceTree = "<group>"; };
 		EC679469252029B600DB8002 /* MessageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageTableViewCell.swift; sourceTree = "<group>"; };
@@ -149,6 +151,14 @@
 			children = (
 				EC3B4966251F6940002A93A8 /* ConversationTableViewCell.swift */,
 				EC3B4967251F6940002A93A8 /* ConversationTableViewCell.xib */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		EC53DCAC252C9CBD000227E3 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				ECD9CB7B25274043003FB027 /* ThemeOptionView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -269,9 +279,10 @@
 		ECD9CB7725273F3E003FB027 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
-				ECD9CB7825273F56003FB027 /* ThemeSettings.storyboard */,
+				EC53DCAC252C9CBD000227E3 /* Views */,
 				ECD9CB7E2527453A003FB027 /* ThemesViewController.swift */,
-				ECD9CB7B25274043003FB027 /* ThemeOptionView.swift */,
+				EC53DCA9252C9BF7000227E3 /* ThemesPickerDelegate.swift */,
+				ECD9CB7825273F56003FB027 /* ThemeSettings.storyboard */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -403,11 +414,12 @@
 				EC6794662520298000DB8002 /* ConversationViewController.swift in Sources */,
 				EC67946B252029B600DB8002 /* MessageTableViewCell.swift in Sources */,
 				ECED1CA92518E3EC0069EB71 /* Colors.swift in Sources */,
+				EC53DCAF252C9D09000227E3 /* ThemeOptionView.swift in Sources */,
 				ECF7B6A225177781006DDB81 /* ProfileModel.swift in Sources */,
 				EC3B4968251F6940002A93A8 /* ConversationTableViewCell.swift in Sources */,
 				ECE295C22528AE2100F30BAA /* RootNavigationController.swift in Sources */,
 				ECF5BBC8252B485700B829B0 /* Themes.swift in Sources */,
-				ECD9CB7C25274043003FB027 /* ThemeOptionView.swift in Sources */,
+				EC53DCAA252C9BF7000227E3 /* ThemesPickerDelegate.swift in Sources */,
 				ECC26949250C77D2001C08A0 /* Log.swift in Sources */,
 				ECC26931250C6FEC001C08A0 /* AppDelegate.swift in Sources */,
 				EC3B4963251F6824002A93A8 /* ConversationSectionsMockData.swift in Sources */,

@@ -57,6 +57,7 @@
         <!--Root Navigation Controller-->
         <scene sceneID="4xH-SO-L1H">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="uYZ-F9-pf5" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="wPP-no-qjE" customClass="RootNavigationController" customModule="TinkoffChat" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="BMp-3h-mSZ">
@@ -69,7 +70,6 @@
                         <segue destination="Ejp-RB-G5P" kind="relationship" relationship="rootViewController" id="7Km-0m-xQY"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="uYZ-F9-pf5" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="644.92753623188412" y="32.8125"/>
         </scene>

@@ -51,13 +51,13 @@ class ThemeOptionView: UIView {
     private func setupView() {
         let theme = themeOption.theme
         
-        self.backgroundColor = .clear
+        backgroundColor = .clear
     
         addSubview(containerButton)
         containerButton.translatesAutoresizingMaskIntoConstraints = false
-        containerButton.topAnchor.constraint(equalTo: self.topAnchor, constant: 0).isActive = true
-        containerButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 0).isActive = true
-        containerButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 0).isActive = true
+        containerButton.topAnchor.constraint(equalTo: topAnchor, constant: 0).isActive = true
+        containerButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 0).isActive = true
+        containerButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 0).isActive = true
         containerButton.heightAnchor.constraint(equalToConstant: 57).isActive = true
         containerButton.layer.borderWidth = 1
         containerButton.layer.borderColor = UIColor(hex: 0x979797).cgColor
@@ -87,8 +87,8 @@ class ThemeOptionView: UIView {
         addSubview(themeNameLabel)
         themeNameLabel.translatesAutoresizingMaskIntoConstraints = false
         themeNameLabel.topAnchor.constraint(equalTo: containerButton.bottomAnchor, constant: 16).isActive = true
-        themeNameLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
-        themeNameLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -16).isActive = true
+        themeNameLabel.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+        themeNameLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -16).isActive = true
         
         themeNameLabel.textAlignment = .center
         themeNameLabel.font = UIFont.systemFont(ofSize: 19, weight: .medium)
@@ -98,9 +98,9 @@ class ThemeOptionView: UIView {
         
         incomingMessageSampleView.isUserInteractionEnabled = false
         outgoingMessageSampleView.isUserInteractionEnabled = false
-        containerButton.addTarget(self, action: #selector(self.viewDidSelected), for: .touchDown)
+        containerButton.addTarget(self, action: #selector(viewDidSelected), for: .touchDown)
        
-        let tap = UITapGestureRecognizer(target: self, action: #selector(self.viewDidSelected))
+        let tap = UITapGestureRecognizer(target: self, action: #selector(viewDidSelected))
         themeNameLabel.addGestureRecognizer(tap)
         themeNameLabel.isUserInteractionEnabled = true
     }

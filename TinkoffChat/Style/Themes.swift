@@ -8,11 +8,15 @@
 
 import Foundation
 
-
+/**
+    Изначально писался ThemesManager. Но доставание текущей темы выглядело не лаконично,
+    поэтому было решено сделать доступ к конкретной теме через статичное поле.
+ */
 struct Themes {
     
     static private(set) var current: ApplicationTheme = ThemeOptions.classic.theme
     
+    /// Заприватил поля чтобы исключить проблемы с shared state
     static private(set) var currentThemeOption: ThemeOptions = .classic {
         didSet {
             current = currentThemeOption.theme
@@ -28,12 +32,12 @@ struct Themes {
         } else {
             themeOption = .classic
         }
-        Self.currentThemeOption = themeOption
+        currentThemeOption = themeOption
     }
     
     static func saveApplicationTheme(_ themeOption: ThemeOptions) {
         UserDefaults.standard.set(themeOption.rawValue, forKey: themeStoreKey)
-        Self.currentThemeOption = themeOption
+        currentThemeOption = themeOption
     }
     
 }

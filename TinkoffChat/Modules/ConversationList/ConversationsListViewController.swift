@@ -34,7 +34,7 @@ class ConversationsListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "Tinkoff chat"
+        title = "Tinkoff chat"
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         setupTableView()
         setupNavigationBar()
@@ -49,6 +49,7 @@ class ConversationsListViewController: UIViewController {
         tableView.tableFooterView = UIView()
         tableView.estimatedRowHeight = 44
         tableView.rowHeight = UITableView.automaticDimension
+        
     }
     
     private func setupTheme() {
@@ -60,13 +61,19 @@ class ConversationsListViewController: UIViewController {
             navBarAppearance.titleTextAttributes = [.foregroundColor: theme.colors.navigationBar.title]
             navBarAppearance.largeTitleTextAttributes = [.foregroundColor:theme.colors.navigationBar.title]
             navBarAppearance.backgroundColor = theme.colors.navigationBar.background
-          
             navigationController?.navigationBar.standardAppearance = navBarAppearance
             navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
-            
+        } else {
+            UINavigationBar.appearance().isTranslucent = false
+            UINavigationBar.appearance().barTintColor = theme.colors.navigationBar.background
+            UINavigationBar.appearance().titleTextAttributes = [.foregroundColor: theme.colors.navigationBar.title]
+            UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor: theme.colors.navigationBar.title]
         }
+       
+        navigationController?.isNavigationBarHidden = true
+        navigationController?.isNavigationBarHidden = false
         setNeedsStatusBarAppearanceUpdate()        
-        
+        tableView.separatorColor = Themes.current.colors.conversationList.table.separator
         settingsBarButtonItem.tintColor = theme.colors.navigationBar.tint
     }
     
@@ -80,13 +87,13 @@ class ConversationsListViewController: UIViewController {
 
         let barButton = UIBarButtonItem()
         barButton.customView = button
-        self.navigationItem.rightBarButtonItem = barButton
+        navigationItem.rightBarButtonItem = barButton
    
     }
     
     @objc private func profileItemDidTap() {
         guard let profileViewController = UIStoryboard(name: "Profile", bundle: nil).instantiateViewController(withIdentifier: "profileId") as? ProfileViewController else { return }
-        profileViewController.profile = self.userProfile
+        profileViewController.profile = userProfile
         navigationController?.present(profileViewController, animated: true, completion: nil)
     }
     
@@ -100,6 +107,7 @@ class ConversationsListViewController: UIViewController {
             self?.setupTheme()
             self?.tableView.reloadData()
         }
+        
         navigationController?.pushViewController(themesViewController, animated: true)
     }
     
@@ -159,9 +167,9 @@ extension ConversationsListViewController: UITableViewDelegate {
 extension ConversationsListViewController: ThemesPickerDelegate {
     
     func themeDidChanged(on themeOption: ThemeOptions) {
-        Themes.saveApplicationTheme(themeOption)
-        setupTheme()
-        tableView.reloadData()
+//        Themes.saveApplicationTheme(themeOption)
+//        setupTheme()
+//        tableView.reloadData()
     }
     
 }

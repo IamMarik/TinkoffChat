@@ -24,6 +24,7 @@ struct DayTheme: ApplicationTheme {
         ),
         conversationList: .init(
             table: .init(
+                separator: .lightGray,
                 sectionHeaderBackground: .lightGray,
                 sectionHeaderTitle: .black
             ),
@@ -31,7 +32,7 @@ struct DayTheme: ApplicationTheme {
                 name: .black,
                 message: UIColor(hex: 0x3C3C43).withAlphaComponent(0.6),
                 receivedDate: UIColor(hex: 0x3C3C43).withAlphaComponent(0.6),
-                cellSelected: .white
+                cellSelected: .lightGray
             )
         ),
         conversation: .init(
@@ -53,6 +54,9 @@ struct DayTheme: ApplicationTheme {
                 background: .white,
                 text: .darkGray
             )
+        ),
+        settings: .init(
+            background: UIColor(hex: 0x92B9BD)
         )
     )
     
