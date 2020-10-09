@@ -11,9 +11,11 @@ import UIKit
 class ProfileViewController: UIViewController {
 
     static var logTag = "\(ProfileViewController.self)"
+    
+    var diskManager = ProfileDiskManager()
 
     var profile: ProfileViewModel?
-
+    
     lazy var imagePickerController: UIImagePickerController = {
         let imagePicker = UIImagePickerController()
         imagePicker.delegate = self
@@ -21,69 +23,70 @@ class ProfileViewController: UIViewController {
         return imagePicker
     }()
     
-    
+    var currentState: ProfileViewState = .view
+
     @IBOutlet var profileNavigationBar: ProfileNavigationBar!
     
     @IBOutlet var profilePhotoImageView: UIImageView!
 
     @IBOutlet var profileNameLabel: UILabel!
 
-    @IBOutlet var profileDescriptionLabel: UILabel!
+    @IBOutlet var profileNameTextField: UITextField!
+    
+    @IBOutlet var profileDescriptionTextView: UITextView!
+    
+    // @IBOutlet var profileDescriptionLabel: UILabel!
 
     @IBOutlet var editButton: UIButton!
 
-    @IBOutlet var saveButton: UIButton!
+    @IBOutlet var editSaveButton: UIButton!
+    
+    @IBOutlet var loadingView: UIView!
+    
 
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         get {
             return .portrait
         }
     }
-
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        // В конструкторе IBOutlet-ы ещё не проинициализированы, опционал аутлета развернется с ошибкой
+    
+    enum ProfileViewState {
+        case updating
+        case view
+        case editing
+        case changing
+        case saving
+        case done
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         profileNavigationBar.delegate = self
-        // Здесь вью загружены в память, но размеры и позиция по констрейтам ещё не расчитывались.
-        // Размеры фрейма будут соответствовать начальным (со сториборда в данном случае)
-        Log.info("Save button frame in viewDidLoad: \(saveButton.frame)", tag: Self.logTag)
+        profileNameTextField.addTarget(self, action: #selector(profileDataDidChange), for: .editingChanged)
+        profileDescriptionTextView.delegate = self
         setupView()
         setupTheme()
-    }
-
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        // Здесь все вью уже иерархии с пересчитанными согласно констрейтам размерами
-        Log.info("Save button frame in viewDidAppear: \(saveButton.frame)", tag: Self.logTag)
-       
+        changeView(state: .updating)
     }
 
     private func setupView() {
-        saveButton.layer.cornerRadius = 14
+        editSaveButton.layer.cornerRadius = 14
         profilePhotoImageView.layer.cornerRadius = 120
-
-        if let profile = self.profile {
-            if let photo = profile.photo {
-                profilePhotoImageView.image = photo
-            } else {
-                let image = ProfilePlaceholderImageRenderer.drawProfilePlaceholderImage(forName: profile.fullName, inRectangleOfSize: .init(width: 240, height: 240))
-                profilePhotoImageView.image = image
-            }
-            profileNameLabel.text = profile.fullName
-            profileDescriptionLabel.text = profile.description
-        }
+        loadingView.layer.cornerRadius = 14
+    }
+    
+    private func updateData() {
+        profileNameLabel.text = profile?.fullName
+        profileDescriptionTextView.text = profile?.description
+        profilePhotoImageView.image = profile?.avatar
     }
     
     private func setupTheme() {
         let theme = Themes.current
         view.backgroundColor = theme.colors.primaryBackground
         profileNameLabel.textColor = theme.colors.profile.name
-        profileDescriptionLabel.textColor = theme.colors.profile.description
-        saveButton.backgroundColor = theme.colors.profile.saveButtonBackground
+        //profileDescriptionLabel.textColor = theme.colors.profile.description
+        editSaveButton.backgroundColor = theme.colors.profile.saveButtonBackground
     }
 
     private func openGallery() {
@@ -147,9 +150,101 @@ class ProfileViewController: UIViewController {
         contentView?.backgroundColor = Themes.current.colors.profile.actionSheet.background
         present(alertController, animated: true)
     }
+    
+    private func changeView(state: ProfileViewState) {
+        if currentState == state { return }
+        currentState = state
+        switch state {
+        case .updating:
+            updateData()
+            changeView(state: .view)
+        case .view:
+            editSaveButton.isEnabled = true
+            editSaveButton.setTitle("Edit", for: .normal)
+            profileNameTextField.isHidden = true
+            profileNameLabel.isHidden = false
+            profileDescriptionTextView.isEditable = false
+            profileDescriptionTextView.isSelectable = false
+        case .editing:
+            editSaveButton.isEnabled = false
+            editSaveButton.setTitle("Save", for: .normal)
+            profileNameLabel.isHidden = true
+            profileNameTextField.isHidden = false
+            profileNameTextField.text = profile?.fullName
+            profileDescriptionTextView.isEditable = true
+            profileDescriptionTextView.isSelectable = true
+        case .changing:
+            editSaveButton.isEnabled = true
+        case .saving:
+            loadingView.isHidden = false
+            editSaveButton.isEnabled = false
+        case .done:
+            loadingView.isHidden = true
+        }
+    }
+    
+    private func saveProfileChanges() {
+        //show loading
+        changeView(state: .saving)
+        guard let oldProfile = profile else { return }
+        let newProfile = ProfileViewModel(
+            fullName: profileNameTextField.text ?? "",
+            description: profileDescriptionTextView.text ?? "",
+            avatar: profilePhotoImageView.image)
+        diskManager.writeToDisk(newProfile: newProfile, oldProfile: oldProfile) { [weak self] (success) in
+            self?.changeView(state: .done)
+            if success {
+                let alert = UIAlertController(title: "Success", message: "Profile was succesful saved", preferredStyle: .alert)
+                alert.addAction(.init(title: "OK", style: .default, handler: { _ in
+                    self?.profile = newProfile
+                    self?.changeView(state: .updating)
+                }))
+                self?.present(alert, animated: true, completion: nil)
+            } else {
+                let alert = UIAlertController(title: "Error", message: "Error during saving profile", preferredStyle: .alert)
+                alert.addAction(.init(title: "OK", style: .default, handler: { _ in
+                    self?.changeView(state: .view)
+                }))
+                alert.addAction(.init(title: "Retry", style: .cancel, handler: { _ in
+                    self?.saveProfileChanges()
+                }))
+                self?.present(alert, animated: true, completion: nil)
+            }
+        }
+        
+    }
 
     @IBAction func saveButtonDidTap(_ sender: Any) {
+        switch currentState {
+        case .updating, .editing, .saving, .done:
+            break;
+        case .view:
+            changeView(state: .editing)
+        case .changing:
+            saveProfileChanges()
+        }
+    }
+    
+    @objc func profileDataDidChange() {
+        let isDataChanged =
+            profile?.fullName != profileNameTextField.text ||
+            profile?.avatar !== profilePhotoImageView.image ||
+            profile?.description != profileDescriptionTextView.text
         
+        if currentState == .editing && isDataChanged {
+            changeView(state: .changing)
+        } else if currentState == .changing && !isDataChanged {
+            changeView(state: .editing)
+        }
+    }
+}
+
+extension ProfileViewController: UITextViewDelegate {
+    
+    func textViewDidChange(_ textView: UITextView) {
+        if textView === profileDescriptionTextView {
+            profileDataDidChange()
+        }
     }
 }
 
@@ -161,7 +256,9 @@ extension ProfileViewController: UINavigationControllerDelegate, UIImagePickerCo
         } else {
             Log.error("Awaited an image from UIImagePickerController, but got nil")
         }
-        picker.dismiss(animated: true, completion: nil)
+        picker.dismiss(animated: true) {
+            self.profileDataDidChange()
+        }
     }
 }
 
@@ -170,5 +267,6 @@ extension ProfileViewController: ProfileNavigationBarDelegate {
     func closeButtonDidTapped() {
         dismiss(animated: true, completion: nil)
     }
-    
 }
+
+

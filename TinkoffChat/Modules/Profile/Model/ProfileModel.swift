@@ -11,5 +11,15 @@ import UIKit
 struct ProfileViewModel {
     let fullName: String
     let description: String
-    let photo: UIImage?
+    let avatar: UIImage?
+    
+    init(fullName: String, description: String, avatar: UIImage?) {
+        self.fullName = fullName
+        self.description = description
+        self.avatar = avatar ?? ProfilePlaceholderImageRenderer.drawProfilePlaceholderImage(
+            forName: fullName,
+            inRectangleOfSize: .init(width: 240, height: 240)
+        )
+    }
 }
+

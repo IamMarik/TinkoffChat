@@ -15,7 +15,7 @@ class ConversationsListViewController: UIViewController {
     var userProfile: ProfileViewModel = {
         let profile = ProfileViewModel(fullName: "Marat Dzhanybaev",
                                        description: "Love coding, bbq and beer",
-                                       photo: nil)
+                                       avatar: nil)
         return profile
     }()
     
@@ -78,17 +78,15 @@ class ConversationsListViewController: UIViewController {
     }
     
     private func setupNavigationBar() {
-        let photo = userProfile.photo ?? ProfilePlaceholderImageRenderer.drawProfilePlaceholderImage(forName: userProfile.fullName, inRectangleOfSize: CGSize(width: 36, height: 36))
-        
+        let avatar = userProfile.avatar
         let button = UIButton()
         button.frame = CGRect(x: 0, y: 0, width: 36, height: 36)
-        button.setImage(photo, for: .normal)
+        button.imageView?.contentMode = .scaleAspectFit  
+        button.setImage(avatar, for: .normal)
         button.addTarget(self, action: #selector(profileItemDidTap), for: .touchUpInside)
-
-        let barButton = UIBarButtonItem()
-        barButton.customView = button
-        navigationItem.rightBarButtonItem = barButton
-   
+        let barItem = UIBarButtonItem(customView: button)
+        barItem.customView?.widthAnchor.constraint(equalToConstant: 36).isActive = true
+        navigationItem.rightBarButtonItem = barItem   
     }
     
     @objc private func profileItemDidTap() {
