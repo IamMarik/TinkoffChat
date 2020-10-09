@@ -9,7 +9,7 @@
 import UIKit
 
 
-final class GCDDataManager {
+final class GCDDataManager: DataManagerProtocol {
     
     private let nameFileName = "profile_name"
     private let descriptionFileName = "profile_description"
@@ -92,7 +92,7 @@ final class GCDDataManager {
         let url = getDocumentsDirectory().appendingPathComponent(fileName)
         do {
             try data?.write(to: url)
-            return false
+            return true
         } catch {
             return false
         }

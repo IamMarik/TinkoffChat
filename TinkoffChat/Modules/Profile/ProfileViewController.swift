@@ -12,8 +12,6 @@ class ProfileViewController: UIViewController {
 
     static var logTag = "\(ProfileViewController.self)"
     
-    var diskManager = ProfileDiskManager()
-
     var profile: ProfileViewModel?
     
     lazy var imagePickerController: UIImagePickerController = {
@@ -23,7 +21,7 @@ class ProfileViewController: UIViewController {
         return imagePicker
     }()
     
-    var currentState: ProfileViewState = .view
+    var currentState: ProfileViewState = .initial
 
     @IBOutlet var profileNavigationBar: ProfileNavigationBar!
     
@@ -35,8 +33,6 @@ class ProfileViewController: UIViewController {
     
     @IBOutlet var profileDescriptionTextView: UITextView!
     
-    // @IBOutlet var profileDescriptionLabel: UILabel!
-
     @IBOutlet var editButton: UIButton!
 
     @IBOutlet var editSaveButton: UIButton!
@@ -51,7 +47,7 @@ class ProfileViewController: UIViewController {
     }
     
     enum ProfileViewState {
-        case updating
+        case initial
         case view
         case editing
         case changing
@@ -66,7 +62,8 @@ class ProfileViewController: UIViewController {
         profileDescriptionTextView.delegate = self
         setupView()
         setupTheme()
-        changeView(state: .updating)
+        updateData()
+        changeView(state: .view)
     }
 
     private func setupView() {
@@ -85,7 +82,6 @@ class ProfileViewController: UIViewController {
         let theme = Themes.current
         view.backgroundColor = theme.colors.primaryBackground
         profileNameLabel.textColor = theme.colors.profile.name
-        //profileDescriptionLabel.textColor = theme.colors.profile.description
         editSaveButton.backgroundColor = theme.colors.profile.saveButtonBackground
     }
 
@@ -155,8 +151,7 @@ class ProfileViewController: UIViewController {
         if currentState == state { return }
         currentState = state
         switch state {
-        case .updating:
-            updateData()
+        case .initial:
             changeView(state: .view)
         case .view:
             editSaveButton.isEnabled = true
@@ -183,21 +178,21 @@ class ProfileViewController: UIViewController {
         }
     }
     
-    private func saveProfileChanges() {
-        //show loading
+    private func saveProfileChanges(with dataManager: DataManagerProtocol) {
         changeView(state: .saving)
         guard let oldProfile = profile else { return }
         let newProfile = ProfileViewModel(
             fullName: profileNameTextField.text ?? "",
             description: profileDescriptionTextView.text ?? "",
             avatar: profilePhotoImageView.image)
-        diskManager.writeToDisk(newProfile: newProfile, oldProfile: oldProfile) { [weak self] (success) in
+        dataManager.writeToDisk(newProfile: newProfile, oldProfile: oldProfile) { [weak self] (success) in
             self?.changeView(state: .done)
             if success {
                 let alert = UIAlertController(title: "Success", message: "Profile was succesful saved", preferredStyle: .alert)
                 alert.addAction(.init(title: "OK", style: .default, handler: { _ in
                     self?.profile = newProfile
-                    self?.changeView(state: .updating)
+                    self?.loadProfile(with: dataManager)
+                    self?.changeView(state: .view)
                 }))
                 self?.present(alert, animated: true, completion: nil)
             } else {
@@ -206,22 +201,29 @@ class ProfileViewController: UIViewController {
                     self?.changeView(state: .view)
                 }))
                 alert.addAction(.init(title: "Retry", style: .cancel, handler: { _ in
-                    self?.saveProfileChanges()
+                    self?.saveProfileChanges(with: dataManager)
                 }))
                 self?.present(alert, animated: true, completion: nil)
             }
         }
-        
+    }
+    
+    private func loadProfile(with dataManager: DataManagerProtocol) {
+        changeView(state: .saving)
+        dataManager.readProfileFromDisk { [weak self] (profile) in
+            self?.profile = profile
+            self?.updateData()
+        }
     }
 
     @IBAction func saveButtonDidTap(_ sender: Any) {
         switch currentState {
-        case .updating, .editing, .saving, .done:
+        case .initial, .editing, .saving, .done:
             break;
         case .view:
             changeView(state: .editing)
         case .changing:
-            saveProfileChanges()
+            saveProfileChanges(with: GCDDataManager())
         }
     }
     

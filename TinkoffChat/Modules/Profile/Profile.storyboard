@@ -41,7 +41,7 @@
                                                             <constraint firstAttribute="width" constant="240" id="c7h-ZL-ZQa"/>
                                                         </constraints>
                                                     </imageView>
-                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Marina Dudarenko" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="g9o-2C-yab">
+                                                    <textField hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Marina Dudarenko" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="g9o-2C-yab">
                                                         <rect key="frame" x="20" y="287" width="374" height="38.5"/>
                                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="24"/>
                                                         <textInputTraits key="textInputTraits"/>
@@ -77,7 +77,7 @@
                                                             <action selector="editButtonDidTap:" destination="yHK-Rd-4co" eventType="touchUpInside" id="6OB-gz-6q4"/>
                                                         </connections>
                                                     </button>
-                                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Moscow, Russia UX/UI " textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="zJ2-sI-2CI">
+                                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="Moscow, Russia UX/UI " textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zJ2-sI-2CI">
                                                         <rect key="frame" x="98" y="353" width="218" height="306"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>

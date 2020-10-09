@@ -7,7 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		EC14A87B25307BD1007AEB5F /* ProfileDiskManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC14A87A25307BD1007AEB5F /* ProfileDiskManager.swift */; };
+		EC14A87B25307BD1007AEB5F /* GCDDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC14A87A25307BD1007AEB5F /* GCDDataManager.swift */; };
+		EC14A88025309EFB007AEB5F /* DataManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC14A87F25309EFB007AEB5F /* DataManagerProtocol.swift */; };
 		EC17F38325235EF000C6C2A7 /* ProfileNavigationBar.xib in Resources */ = {isa = PBXBuildFile; fileRef = EC17F38225235EF000C6C2A7 /* ProfileNavigationBar.xib */; };
 		EC17F3862523601F00C6C2A7 /* ProfileNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC17F3852523601F00C6C2A7 /* ProfileNavigationBar.swift */; };
 		EC3B4951251F659E002A93A8 /* Conversations.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EC3B4950251F659E002A93A8 /* Conversations.storyboard */; };
@@ -52,7 +53,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		EC14A87A25307BD1007AEB5F /* ProfileDiskManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileDiskManager.swift; sourceTree = "<group>"; };
+		EC14A87A25307BD1007AEB5F /* GCDDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GCDDataManager.swift; sourceTree = "<group>"; };
+		EC14A87F25309EFB007AEB5F /* DataManagerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManagerProtocol.swift; sourceTree = "<group>"; };
 		EC17F38225235EF000C6C2A7 /* ProfileNavigationBar.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProfileNavigationBar.xib; sourceTree = "<group>"; };
 		EC17F3852523601F00C6C2A7 /* ProfileNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileNavigationBar.swift; sourceTree = "<group>"; };
 		EC3B4950251F659E002A93A8 /* Conversations.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Conversations.storyboard; sourceTree = "<group>"; };
@@ -210,7 +212,7 @@
 				EC17F38125235EAF00C6C2A7 /* Views */,
 				ECCC90C82524A314001C68F9 /* Model */,
 				EC73E3072514AF6C006D5ADF /* ProfileViewController.swift */,
-				EC14A87A25307BD1007AEB5F /* ProfileDiskManager.swift */,
+				EC14A87A25307BD1007AEB5F /* GCDDataManager.swift */,
 				EC73E3042514AF57006D5ADF /* Profile.storyboard */,
 			);
 			path = Profile;
@@ -275,6 +277,7 @@
 			isa = PBXGroup;
 			children = (
 				ECF7B6A125177781006DDB81 /* ProfileModel.swift */,
+				EC14A87F25309EFB007AEB5F /* DataManagerProtocol.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -400,7 +403,7 @@
 			files = (
 				EC3B4960251F67D6002A93A8 /* ConversationSection.swift in Sources */,
 				EC3B495D251F667C002A93A8 /* ConverationCellModel.swift in Sources */,
-				EC14A87B25307BD1007AEB5F /* ProfileDiskManager.swift in Sources */,
+				EC14A87B25307BD1007AEB5F /* GCDDataManager.swift in Sources */,
 				ECCC90C625249979001C68F9 /* Date + RandomTime.swift in Sources */,
 				ECED1CA42518CFB20069EB71 /* ProfilePlaceholderImageRenderer.swift in Sources */,
 				ECC26946250C76BE001C08A0 /* UIApplication.State + description.swift in Sources */,
@@ -425,6 +428,7 @@
 				ECF5BBC8252B485700B829B0 /* Themes.swift in Sources */,
 				EC53DCAA252C9BF7000227E3 /* ThemesPickerDelegate.swift in Sources */,
 				ECC26949250C77D2001C08A0 /* Log.swift in Sources */,
+				EC14A88025309EFB007AEB5F /* DataManagerProtocol.swift in Sources */,
 				ECC26931250C6FEC001C08A0 /* AppDelegate.swift in Sources */,
 				EC3B4963251F6824002A93A8 /* ConversationSectionsMockData.swift in Sources */,
 				ECD9CB7F2527453A003FB027 /* ThemesViewController.swift in Sources */,
