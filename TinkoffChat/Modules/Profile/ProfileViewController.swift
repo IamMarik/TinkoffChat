@@ -16,6 +16,10 @@ class ProfileViewController: UIViewController {
     
     var onProfileChanged: ((ProfileViewModel) -> Void)?
     
+    var gcdDataManager = GCDDataManager()
+    
+    var operationDataManager = OperationDataManager()
+    
     lazy var imagePickerController: UIImagePickerController = {
         let imagePicker = UIImagePickerController()
         imagePicker.delegate = self
@@ -36,12 +40,15 @@ class ProfileViewController: UIViewController {
     @IBOutlet var profileDescriptionTextView: UITextView!
     
     @IBOutlet var editAvatarButton: UIButton!
-
-    @IBOutlet var editSaveButton: UIButton!
-    
+ 
     @IBOutlet var loadingView: UIView!
     
-
+    @IBOutlet var saveButtonsStackView: UIStackView!
+    
+    @IBOutlet var saveGCDButton: UIButton!
+ 
+    @IBOutlet var saveOperationButton: UIButton!
+    
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         get {
             return .portrait
@@ -60,6 +67,7 @@ class ProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         profileNavigationBar.delegate = self
+        profileNameTextField.delegate = self
         profileNameTextField.addTarget(self, action: #selector(profileDataDidChange), for: .editingChanged)
         profileDescriptionTextView.delegate = self
         setupView()
@@ -69,7 +77,8 @@ class ProfileViewController: UIViewController {
     }
 
     private func setupView() {
-        editSaveButton.layer.cornerRadius = 14
+        saveGCDButton.layer.cornerRadius = 14
+        saveOperationButton.layer.cornerRadius = 14
         profilePhotoImageView.layer.cornerRadius = 120
         loadingView.layer.cornerRadius = 14
         loadingView.layer.shadowColor = UIColor.black.withAlphaComponent(0.4).cgColor
@@ -87,7 +96,10 @@ class ProfileViewController: UIViewController {
         let theme = Themes.current
         view.backgroundColor = theme.colors.primaryBackground
         profileNameLabel.textColor = theme.colors.profile.name
-        editSaveButton.backgroundColor = theme.colors.profile.saveButtonBackground
+        profileDescriptionTextView.textColor = theme.colors.profile.description
+        saveGCDButton.backgroundColor = theme.colors.profile.saveButtonBackground
+        saveOperationButton.backgroundColor = theme.colors.profile.saveButtonBackground
+        loadingView.backgroundColor = theme.colors.profile.loadingViewBackground
     }
 
     private func openGallery() {
@@ -159,18 +171,22 @@ class ProfileViewController: UIViewController {
         case .initial:
             changeView(state: .view)
         case .view:
-            editSaveButton.isEnabled = true
-            editSaveButton.setTitle("Edit", for: .normal)
             editAvatarButton.isHidden = true
+            saveGCDButton.isEnabled = true
+            saveGCDButton.setTitle("Edit", for: .normal)
+            saveOperationButton.isHidden = true
+            saveOperationButton.isEnabled = true
             profileNameTextField.isHidden = true
             profileNameLabel.isHidden = false
             profileDescriptionTextView.isEditable = false
             profileDescriptionTextView.isSelectable = false
             loadingView.isHidden = true
         case .editing:
-            editSaveButton.isEnabled = false
-            editSaveButton.setTitle("Save", for: .normal)
             editAvatarButton.isHidden = false
+            saveGCDButton.isEnabled = false
+            saveGCDButton.setTitle("Save GCD", for: .normal)
+            saveOperationButton.isEnabled = false
+            saveOperationButton.isHidden = false
             profileNameLabel.isHidden = true
             profileNameTextField.isHidden = false
             profileNameTextField.text = profile?.fullName
@@ -178,16 +194,19 @@ class ProfileViewController: UIViewController {
             profileDescriptionTextView.isSelectable = true
             loadingView.isHidden = true
         case .changing:
-            editSaveButton.isEnabled = true
+            saveGCDButton.isEnabled = true
+            saveOperationButton.isEnabled = true
         case .loading:
             loadingView.isHidden = false
-            editSaveButton.isEnabled = false
+            saveGCDButton.isEnabled = false
+            saveOperationButton.isEnabled = false
         case .hasLoadingResult:
             loadingView.isHidden = true
         }
     }
     
     private func saveProfileChanges(with dataManager: DataManagerProtocol) {
+        Log.info("Saving profile with \(dataManager.self)")
         changeView(state: .loading)
         guard let oldProfile = profile else { return }
         let newProfile = ProfileViewModel(
@@ -230,16 +249,18 @@ class ProfileViewController: UIViewController {
         }
     }
 
-    @IBAction func saveButtonDidTap(_ sender: Any) {
+    @IBAction func saveButtonDidTap(_ sender: UIButton) {
         switch currentState {
         case .initial, .editing, .loading, .hasLoadingResult:
             break;
         case .view:
             changeView(state: .editing)
         case .changing:
-            saveProfileChanges(with: OperationDataManager())
+            let dataManager: DataManagerProtocol = sender === saveGCDButton ? gcdDataManager : operationDataManager
+            saveProfileChanges(with: dataManager)
         }
     }
+        
     
     @objc func profileDataDidChange() {
         let isDataChanged =
@@ -252,6 +273,14 @@ class ProfileViewController: UIViewController {
         } else if currentState == .changing && !isDataChanged {
             changeView(state: .editing)
         }
+    }
+}
+
+extension ProfileViewController: UITextFieldDelegate {
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return false
     }
 }
 

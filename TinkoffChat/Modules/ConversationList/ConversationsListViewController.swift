@@ -12,13 +12,14 @@ class ConversationsListViewController: UIViewController {
     
     let sections: [ConversationSection] = ConversationSectionsMockData.sections
         
-    var userProfile: ProfileViewModel = {
-        let profile = ProfileViewModel(fullName: "Marat Dzhanybaev",
-                                       description: "Love coding, bbq and beer",
-                                       avatar: nil)
-        return profile
-    }()
+    var userProfile: ProfileViewModel?
     
+    static let mockDefaultProfile = ProfileViewModel(fullName: "Marat Dzhanybaev",
+                                                     description: "Love coding, bbq and beer",
+                                                     avatar: nil)
+    
+    
+  
     var profileDataManager: DataManagerProtocol = GCDDataManager()
     
     private let cellId = String(describing: ConversationTableViewCell.self)
@@ -26,7 +27,7 @@ class ConversationsListViewController: UIViewController {
     lazy var profileAvatarButton: UIButton = {
         let button = UIButton()
         button.frame = CGRect(x: 0, y: 0, width: 36, height: 36)
-        button.imageView?.contentMode = .scaleToFill
+        button.imageView?.contentMode = .scaleAspectFill
         button.imageView?.layer.cornerRadius = 18
         button.imageView?.clipsToBounds = true
         button.addTarget(self, action: #selector(profileItemDidTap), for: .touchUpInside)
@@ -94,19 +95,23 @@ class ConversationsListViewController: UIViewController {
         let barItem = UIBarButtonItem(customView: profileAvatarButton)
         barItem.customView?.widthAnchor.constraint(equalToConstant: 36).isActive = true
         barItem.customView?.heightAnchor.constraint(equalToConstant: 36).isActive = true
-        navigationItem.rightBarButtonItem = barItem   
+        navigationItem.rightBarButtonItem = barItem
+        profileAvatarButton.isEnabled = false
     }
     
     private func loadProfile() {
         profileDataManager.readProfileFromDisk { [weak self] (profile) in
-            guard let profile = profile else { return }
+            let profile = profile ?? Self.mockDefaultProfile
             self?.updateProfile(profile: profile)
         }
     }
     
     private func updateProfile(profile: ProfileViewModel) {
-        self.userProfile = profile
-        profileAvatarButton.setImage(profile.avatar, for: .normal)
+        DispatchQueue.main.async { [weak self] in
+            self?.userProfile = profile
+            self?.profileAvatarButton.isEnabled = true
+            self?.profileAvatarButton.setImage(profile.avatar, for: .normal)
+        }
     }
     
     @objc private func profileItemDidTap() {

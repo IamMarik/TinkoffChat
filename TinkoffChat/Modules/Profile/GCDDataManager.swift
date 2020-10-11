@@ -17,7 +17,8 @@ final class GCDDataManager: DataManagerProtocol {
         var successWritingDescription = true
         var successWritingAvatar = true
         
-        if newProfile.fullName != oldProfile?.fullName {
+        if newProfile.fullName != oldProfile?.fullName ||
+            !FileUtils.fileExist(fileName: ProfileItemsStoreKeys.fullName.rawValue) {
             group.enter()
             DispatchQueue.global(qos: .utility).async {
                 successWritingName = FileUtils.writeToDisk(
@@ -28,7 +29,8 @@ final class GCDDataManager: DataManagerProtocol {
             }
         }
         
-        if newProfile.description != oldProfile?.description {
+        if newProfile.description != oldProfile?.description ||
+            !FileUtils.fileExist(fileName: ProfileItemsStoreKeys.description.rawValue) {
             group.enter()
             DispatchQueue.global(qos: .utility).async {
                 successWritingDescription = FileUtils.writeToDisk(
@@ -39,7 +41,8 @@ final class GCDDataManager: DataManagerProtocol {
             }
         }
         
-        if newProfile.avatar !== oldProfile?.avatar {
+        if newProfile.avatar !== oldProfile?.avatar ||
+            !FileUtils.fileExist(fileName: ProfileItemsStoreKeys.avatar.rawValue) {
             group.enter()
             DispatchQueue.global(qos: .utility).async {
                 if let imageData = newProfile.avatar?.pngData() {
@@ -71,13 +74,10 @@ final class GCDDataManager: DataManagerProtocol {
                 
                 let profile = ProfileViewModel(fullName: name, description: description, avatar: avatar)
                 
-                DispatchQueue.main.async {
-                    completion(profile)
-                }
+                completion(profile)
+              
             } else {
-                DispatchQueue.main.async {
-                    completion(nil)
-                }
+                completion(nil)
             }
         }
     }

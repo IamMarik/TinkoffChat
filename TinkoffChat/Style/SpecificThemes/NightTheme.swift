@@ -53,7 +53,8 @@ struct NightTheme: ApplicationTheme {
             actionSheet: .init(
                 background: UIColor(hex: 0x1B1B1B),
                 text: .green
-            )
+            ),
+            loadingViewBackground: UIColor(hex: 0x1B1B1B)
         ),
         settings: .init(
             background: UIColor(hex: 0x2D3047)

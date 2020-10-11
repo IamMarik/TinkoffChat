@@ -53,7 +53,8 @@ struct DayTheme: ApplicationTheme {
             actionSheet: .init(
                 background: .white,
                 text: .darkGray
-            )
+            ),
+            loadingViewBackground: UIColor.white
         ),
         settings: .init(
             background: UIColor(hex: 0x92B9BD)
