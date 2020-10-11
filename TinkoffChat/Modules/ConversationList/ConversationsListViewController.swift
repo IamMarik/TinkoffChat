@@ -11,7 +11,7 @@ import UIKit
 class ConversationsListViewController: UIViewController {
     
     let sections: [ConversationSection] = ConversationSectionsMockData.sections
-    
+        
     var userProfile: ProfileViewModel = {
         let profile = ProfileViewModel(fullName: "Marat Dzhanybaev",
                                        description: "Love coding, bbq and beer",
@@ -19,7 +19,19 @@ class ConversationsListViewController: UIViewController {
         return profile
     }()
     
+    var profileDataManager: DataManagerProtocol = GCDDataManager()
+    
     private let cellId = String(describing: ConversationTableViewCell.self)
+    
+    lazy var profileAvatarButton: UIButton = {
+        let button = UIButton()
+        button.frame = CGRect(x: 0, y: 0, width: 36, height: 36)
+        button.imageView?.contentMode = .scaleToFill
+        button.imageView?.layer.cornerRadius = 18
+        button.imageView?.clipsToBounds = true
+        button.addTarget(self, action: #selector(profileItemDidTap), for: .touchUpInside)
+        return button
+    }()
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -39,6 +51,7 @@ class ConversationsListViewController: UIViewController {
         setupTableView()
         setupNavigationBar()
         setupTheme()
+        loadProfile()
     }
 
         
@@ -78,20 +91,30 @@ class ConversationsListViewController: UIViewController {
     }
     
     private func setupNavigationBar() {
-        let avatar = userProfile.avatar
-        let button = UIButton()
-        button.frame = CGRect(x: 0, y: 0, width: 36, height: 36)
-        button.imageView?.contentMode = .scaleAspectFit  
-        button.setImage(avatar, for: .normal)
-        button.addTarget(self, action: #selector(profileItemDidTap), for: .touchUpInside)
-        let barItem = UIBarButtonItem(customView: button)
+        let barItem = UIBarButtonItem(customView: profileAvatarButton)
         barItem.customView?.widthAnchor.constraint(equalToConstant: 36).isActive = true
+        barItem.customView?.heightAnchor.constraint(equalToConstant: 36).isActive = true
         navigationItem.rightBarButtonItem = barItem   
+    }
+    
+    private func loadProfile() {
+        profileDataManager.readProfileFromDisk { [weak self] (profile) in
+            guard let profile = profile else { return }
+            self?.updateProfile(profile: profile)
+        }
+    }
+    
+    private func updateProfile(profile: ProfileViewModel) {
+        self.userProfile = profile
+        profileAvatarButton.setImage(profile.avatar, for: .normal)
     }
     
     @objc private func profileItemDidTap() {
         guard let profileViewController = UIStoryboard(name: "Profile", bundle: nil).instantiateViewController(withIdentifier: "profileId") as? ProfileViewController else { return }
         profileViewController.profile = userProfile
+        profileViewController.onProfileChanged = { [weak self] (profile) in
+            self?.updateProfile(profile: profile)
+        }
         navigationController?.present(profileViewController, animated: true, completion: nil)
     }
     

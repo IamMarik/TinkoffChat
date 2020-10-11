@@ -14,6 +14,8 @@ class ProfileViewController: UIViewController {
     
     var profile: ProfileViewModel?
     
+    var onProfileChanged: ((ProfileViewModel) -> Void)?
+    
     lazy var imagePickerController: UIImagePickerController = {
         let imagePicker = UIImagePickerController()
         imagePicker.delegate = self
@@ -33,7 +35,7 @@ class ProfileViewController: UIViewController {
     
     @IBOutlet var profileDescriptionTextView: UITextView!
     
-    @IBOutlet var editButton: UIButton!
+    @IBOutlet var editAvatarButton: UIButton!
 
     @IBOutlet var editSaveButton: UIButton!
     
@@ -51,8 +53,8 @@ class ProfileViewController: UIViewController {
         case view
         case editing
         case changing
-        case saving
-        case done
+        case loading
+        case hasLoadingResult
     }
 
     override func viewDidLoad() {
@@ -70,6 +72,9 @@ class ProfileViewController: UIViewController {
         editSaveButton.layer.cornerRadius = 14
         profilePhotoImageView.layer.cornerRadius = 120
         loadingView.layer.cornerRadius = 14
+        loadingView.layer.shadowColor = UIColor.black.withAlphaComponent(0.4).cgColor
+        loadingView.layer.shadowRadius = 1.63
+        loadingView.layer.shadowOffset = CGSize(width: 0, height: 2)
     }
     
     private func updateData() {
@@ -156,74 +161,83 @@ class ProfileViewController: UIViewController {
         case .view:
             editSaveButton.isEnabled = true
             editSaveButton.setTitle("Edit", for: .normal)
+            editAvatarButton.isHidden = true
             profileNameTextField.isHidden = true
             profileNameLabel.isHidden = false
             profileDescriptionTextView.isEditable = false
             profileDescriptionTextView.isSelectable = false
+            loadingView.isHidden = true
         case .editing:
             editSaveButton.isEnabled = false
             editSaveButton.setTitle("Save", for: .normal)
+            editAvatarButton.isHidden = false
             profileNameLabel.isHidden = true
             profileNameTextField.isHidden = false
             profileNameTextField.text = profile?.fullName
             profileDescriptionTextView.isEditable = true
             profileDescriptionTextView.isSelectable = true
+            loadingView.isHidden = true
         case .changing:
             editSaveButton.isEnabled = true
-        case .saving:
+        case .loading:
             loadingView.isHidden = false
             editSaveButton.isEnabled = false
-        case .done:
+        case .hasLoadingResult:
             loadingView.isHidden = true
         }
     }
     
     private func saveProfileChanges(with dataManager: DataManagerProtocol) {
-        changeView(state: .saving)
+        changeView(state: .loading)
         guard let oldProfile = profile else { return }
         let newProfile = ProfileViewModel(
             fullName: profileNameTextField.text ?? "",
             description: profileDescriptionTextView.text ?? "",
             avatar: profilePhotoImageView.image)
         dataManager.writeToDisk(newProfile: newProfile, oldProfile: oldProfile) { [weak self] (success) in
-            self?.changeView(state: .done)
-            if success {
-                let alert = UIAlertController(title: "Success", message: "Profile was succesful saved", preferredStyle: .alert)
-                alert.addAction(.init(title: "OK", style: .default, handler: { _ in
-                    self?.profile = newProfile
-                    self?.loadProfile(with: dataManager)
-                    self?.changeView(state: .view)
-                }))
-                self?.present(alert, animated: true, completion: nil)
-            } else {
-                let alert = UIAlertController(title: "Error", message: "Error during saving profile", preferredStyle: .alert)
-                alert.addAction(.init(title: "OK", style: .default, handler: { _ in
-                    self?.changeView(state: .view)
-                }))
-                alert.addAction(.init(title: "Retry", style: .cancel, handler: { _ in
-                    self?.saveProfileChanges(with: dataManager)
-                }))
-                self?.present(alert, animated: true, completion: nil)
+            DispatchQueue.main.async {
+                self?.changeView(state: .hasLoadingResult)
+                if success {
+                    let alert = UIAlertController(title: "Success", message: "Profile was succesful saved", preferredStyle: .alert)
+                    alert.addAction(.init(title: "OK", style: .default, handler: { _ in
+                        self?.profile = newProfile
+                        self?.loadProfile(with: dataManager)
+                        self?.onProfileChanged?(newProfile)
+                    }))
+                    self?.present(alert, animated: true, completion: nil)
+                } else {
+                    let alert = UIAlertController(title: "Error", message: "Error during saving profile", preferredStyle: .alert)
+                    alert.addAction(.init(title: "OK", style: .default, handler: { _ in
+                        self?.changeView(state: .view)
+                    }))
+                    alert.addAction(.init(title: "Retry", style: .cancel, handler: { _ in
+                        self?.saveProfileChanges(with: dataManager)
+                    }))
+                    self?.present(alert, animated: true, completion: nil)
+                }
             }
         }
     }
     
     private func loadProfile(with dataManager: DataManagerProtocol) {
-        changeView(state: .saving)
+        changeView(state: .loading)
         dataManager.readProfileFromDisk { [weak self] (profile) in
-            self?.profile = profile
-            self?.updateData()
+            DispatchQueue.main.async {
+                self?.profile = profile
+                self?.updateData()
+                self?.changeView(state: .view)
+            }  
         }
     }
 
     @IBAction func saveButtonDidTap(_ sender: Any) {
         switch currentState {
-        case .initial, .editing, .saving, .done:
+        case .initial, .editing, .loading, .hasLoadingResult:
             break;
         case .view:
             changeView(state: .editing)
         case .changing:
-            saveProfileChanges(with: GCDDataManager())
+            saveProfileChanges(with: OperationDataManager())
         }
     }
     

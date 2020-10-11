@@ -10,22 +10,20 @@ import UIKit
 
 
 final class GCDDataManager: DataManagerProtocol {
-    
-    private let nameFileName = "profile_name"
-    private let descriptionFileName = "profile_description"
-    private let avatarFileName = "profile_avatar"
-
-    
+        
     func writeToDisk(newProfile: ProfileViewModel, oldProfile: ProfileViewModel?, completion: @escaping((Bool) -> Void)) {
         let group = DispatchGroup()
-        var successWritingName = false
-        var successWritingDescription = false
-        var successWritingAvatar = false
+        var successWritingName = true
+        var successWritingDescription = true
+        var successWritingAvatar = true
         
         if newProfile.fullName != oldProfile?.fullName {
             group.enter()
             DispatchQueue.global(qos: .utility).async {
-                successWritingName = self.writeToDisk(data: newProfile.fullName.data(using: .utf8), fileName: self.nameFileName)
+                successWritingName = FileUtils.writeToDisk(
+                    data: newProfile.fullName.data(using: .utf8),
+                    fileName: ProfileItemsStoreKeys.fullName.rawValue
+                )
                 group.leave()
             }
         }
@@ -33,9 +31,10 @@ final class GCDDataManager: DataManagerProtocol {
         if newProfile.description != oldProfile?.description {
             group.enter()
             DispatchQueue.global(qos: .utility).async {
-                successWritingDescription = self.writeToDisk(
+                successWritingDescription = FileUtils.writeToDisk(
                     data: newProfile.fullName.data(using: .utf8),
-                    fileName: self.descriptionFileName)
+                    fileName: ProfileItemsStoreKeys.description.rawValue
+                )
                 group.leave()
             }
         }
@@ -44,28 +43,28 @@ final class GCDDataManager: DataManagerProtocol {
             group.enter()
             DispatchQueue.global(qos: .utility).async {
                 if let imageData = newProfile.avatar?.pngData() {
-                    successWritingAvatar = self.writeToDisk(
+                    successWritingAvatar = FileUtils.writeToDisk(
                         data: imageData,
-                        fileName: self.avatarFileName)
+                        fileName: ProfileItemsStoreKeys.avatar.rawValue)
                 } else {
                     successWritingAvatar = false
                 }
-               
                 group.leave()
             }
         }
         
         group.notify(queue: .main) {
-            let successWriting = successWritingName || successWritingDescription || successWritingAvatar
+            let successWriting = successWritingName && successWritingDescription && successWritingAvatar
             completion(successWriting)
         }
     }
     
+    
     func readProfileFromDisk(completion: @escaping((ProfileViewModel?) -> Void)) {
         DispatchQueue.global(qos: .utility).async {
-            if let nameData = self.readFromDisk(fileName: self.nameFileName),
-               let descriptionData = self.readFromDisk(fileName: self.descriptionFileName),
-               let avatarData = self.readFromDisk(fileName: self.avatarFileName),
+            if let nameData = FileUtils.readFromDisk(fileName: ProfileItemsStoreKeys.fullName.rawValue),
+               let descriptionData = FileUtils.readFromDisk(fileName: ProfileItemsStoreKeys.description.rawValue),
+               let avatarData = FileUtils.readFromDisk(fileName: ProfileItemsStoreKeys.avatar.rawValue),
                let name = String(data: nameData, encoding: .utf8),
                let description = String(data: descriptionData, encoding: .utf8),
                let avatar = UIImage(data: avatarData) {
@@ -81,27 +80,6 @@ final class GCDDataManager: DataManagerProtocol {
                 }
             }
         }
-    }
-    
-    private func getDocumentsDirectory() -> URL {
-        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
-        return paths[0]
-    }
-    
-    private func writeToDisk(data: Data?, fileName: String) -> Bool {
-        let url = getDocumentsDirectory().appendingPathComponent(fileName)
-        do {
-            try data?.write(to: url)
-            return true
-        } catch {
-            return false
-        }
-    }
-    
-    private func readFromDisk(fileName: String) -> Data? {
-        let url = getDocumentsDirectory().appendingPathComponent(fileName)
-        let data = try? Data(contentsOf: url)
-        return data
     }
     
 }

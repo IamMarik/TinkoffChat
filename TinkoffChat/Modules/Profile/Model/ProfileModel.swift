@@ -23,3 +23,9 @@ struct ProfileViewModel {
     }
 }
 
+enum ProfileItemsStoreKeys: String {
+    case fullName = "profile_name"
+    case description = "profile_description"
+    case avatar = "profile_avatar"
+}
+
