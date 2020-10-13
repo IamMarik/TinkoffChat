@@ -52,7 +52,7 @@
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="252" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UcA-G8-QD5">
+                                                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="252" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UcA-G8-QD5">
                                                         <rect key="frame" x="287" y="235" width="40" height="40"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="40" id="6W7-Ay-PbE"/>
@@ -93,17 +93,17 @@
                                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="Yg8-RT-hvN">
                                                         <rect key="frame" x="75.5" y="691" width="263" height="40"/>
                                                         <subviews>
-                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JRZ-ge-aKi">
-                                                                <rect key="frame" x="0.0" y="0.0" width="121.5" height="40"/>
+                                                            <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JRZ-ge-aKi">
+                                                                <rect key="frame" x="0.0" y="0.0" width="263" height="40"/>
                                                                 <color key="backgroundColor" red="0.96470588239999999" green="0.96470588239999999" blue="0.96470588239999999" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="19"/>
-                                                                <state key="normal" title="Save GCD"/>
+                                                                <state key="normal" title="Edit"/>
                                                                 <connections>
                                                                     <action selector="saveButtonDidTap:" destination="yHK-Rd-4co" eventType="touchUpInside" id="OYd-hV-BoH"/>
                                                                 </connections>
                                                             </button>
-                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0uo-py-a3a">
-                                                                <rect key="frame" x="141.5" y="0.0" width="121.5" height="40"/>
+                                                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0uo-py-a3a">
+                                                                <rect key="frame" x="0.0" y="0.0" width="0.0" height="40"/>
                                                                 <color key="backgroundColor" red="0.96470588239999999" green="0.96470588239999999" blue="0.96470588239999999" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="19"/>
                                                                 <state key="normal" title="Save Op-s"/>
@@ -183,6 +183,7 @@
                         <outlet property="saveButtonsStackView" destination="Yg8-RT-hvN" id="PX3-Zb-RCN"/>
                         <outlet property="saveGCDButton" destination="JRZ-ge-aKi" id="HsU-b6-Tru"/>
                         <outlet property="saveOperationButton" destination="0uo-py-a3a" id="L9R-HN-JIE"/>
+                        <outlet property="scrollView" destination="PTV-TY-FoI" id="5tS-YF-k6V"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8Mc-Me-lp1" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

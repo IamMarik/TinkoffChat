@@ -27,7 +27,9 @@ class ProfileViewController: UIViewController {
         return imagePicker
     }()
     
-    var currentState: ProfileViewState = .initial
+    var currentState: ProfileViewState = .view
+    
+    @IBOutlet var scrollView: UIScrollView!
 
     @IBOutlet var profileNavigationBar: ProfileNavigationBar!
     
@@ -55,13 +57,18 @@ class ProfileViewController: UIViewController {
         }
     }
     
-    enum ProfileViewState {
-        case initial
-        case view
-        case editing
-        case changing
+    /// Стейты вьюхи. Сделал String для дебага
+    enum ProfileViewState: String{
+        // Загрузка профиля
         case loading
-        case hasLoadingResult
+        // Просмотр профиля
+        case view
+        // В режиме редактирования
+        case editing
+        // Есть изменения в режиме редактирования
+        case hasChanges
+        // Происходит сохранение профиля
+        case saving
     }
 
     override func viewDidLoad() {
@@ -73,7 +80,17 @@ class ProfileViewController: UIViewController {
         setupView()
         setupTheme()
         updateData()
-        changeView(state: .view)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name:UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name:UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        // Не совсем понял из задания каким менеджером читать данные, поэтому пусть решает всемогущий рэндом
+        if profile == nil {
+            //let dataManager: DataManagerProtocol = Bool.random() ? gcdDataManager : operationDataManager
+            loadProfile(with: operationDataManager)
+        }        
     }
 
     private func setupView() {
@@ -87,15 +104,16 @@ class ProfileViewController: UIViewController {
     }
     
     private func updateData() {
-        profileNameLabel.text = profile?.fullName
-        profileDescriptionTextView.text = profile?.description
-        profilePhotoImageView.image = profile?.avatar
+        profileNameLabel.text = profile?.fullName ?? ""
+        profileDescriptionTextView.text = profile?.description ?? ""
+        profilePhotoImageView.image = profile?.avatar 
     }
     
     private func setupTheme() {
         let theme = Themes.current
         view.backgroundColor = theme.colors.primaryBackground
         profileNameLabel.textColor = theme.colors.profile.name
+        profileNameTextField.textColor = theme.colors.profile.name
         profileDescriptionTextView.textColor = theme.colors.profile.description
         saveGCDButton.backgroundColor = theme.colors.profile.saveButtonBackground
         saveOperationButton.backgroundColor = theme.colors.profile.saveButtonBackground
@@ -165,11 +183,12 @@ class ProfileViewController: UIViewController {
     }
     
     private func changeView(state: ProfileViewState) {
-        if currentState == state { return }
+        guard currentState != state else { return }
+        Log.info("Changing state to: \(state.rawValue)", tag: "\(Self.self)")
         currentState = state
         switch state {
-        case .initial:
-            changeView(state: .view)
+        case .loading:
+            loadingView.isHidden = false
         case .view:
             editAvatarButton.isHidden = true
             saveGCDButton.isEnabled = true
@@ -193,48 +212,13 @@ class ProfileViewController: UIViewController {
             profileDescriptionTextView.isEditable = true
             profileDescriptionTextView.isSelectable = true
             loadingView.isHidden = true
-        case .changing:
+        case .hasChanges:
             saveGCDButton.isEnabled = true
             saveOperationButton.isEnabled = true
-        case .loading:
+        case .saving:
             loadingView.isHidden = false
             saveGCDButton.isEnabled = false
             saveOperationButton.isEnabled = false
-        case .hasLoadingResult:
-            loadingView.isHidden = true
-        }
-    }
-    
-    private func saveProfileChanges(with dataManager: DataManagerProtocol) {
-        Log.info("Saving profile with \(dataManager.self)")
-        changeView(state: .loading)
-        guard let oldProfile = profile else { return }
-        let newProfile = ProfileViewModel(
-            fullName: profileNameTextField.text ?? "",
-            description: profileDescriptionTextView.text ?? "",
-            avatar: profilePhotoImageView.image)
-        dataManager.writeToDisk(newProfile: newProfile, oldProfile: oldProfile) { [weak self] (success) in
-            DispatchQueue.main.async {
-                self?.changeView(state: .hasLoadingResult)
-                if success {
-                    let alert = UIAlertController(title: "Success", message: "Profile was succesful saved", preferredStyle: .alert)
-                    alert.addAction(.init(title: "OK", style: .default, handler: { _ in
-                        self?.profile = newProfile
-                        self?.loadProfile(with: dataManager)
-                        self?.onProfileChanged?(newProfile)
-                    }))
-                    self?.present(alert, animated: true, completion: nil)
-                } else {
-                    let alert = UIAlertController(title: "Error", message: "Error during saving profile", preferredStyle: .alert)
-                    alert.addAction(.init(title: "OK", style: .default, handler: { _ in
-                        self?.changeView(state: .view)
-                    }))
-                    alert.addAction(.init(title: "Retry", style: .cancel, handler: { _ in
-                        self?.saveProfileChanges(with: dataManager)
-                    }))
-                    self?.present(alert, animated: true, completion: nil)
-                }
-            }
         }
     }
     
@@ -245,34 +229,81 @@ class ProfileViewController: UIViewController {
                 self?.profile = profile
                 self?.updateData()
                 self?.changeView(state: .view)
-            }  
+            }
         }
     }
+    
+    private func saveProfileChanges(with dataManager: DataManagerProtocol) {
+        Log.info("Saving profile with \(dataManager.self)")
+        changeView(state: .saving)
+        guard let oldProfile = profile else { return }
+        let newProfile = ProfileViewModel(
+            fullName: profileNameTextField.text ?? "",
+            description: profileDescriptionTextView.text ?? "",
+            avatar: profilePhotoImageView.image)
+        dataManager.writeToDisk(newProfile: newProfile, oldProfile: oldProfile) { [weak self] (success) in
+            DispatchQueue.main.async {
+                self?.changeView(state: .view)
+                if success {
+                    let alert = UIAlertController(title: "Success", message: "Profile was succesful saved", preferredStyle: .alert)
+                    alert.addAction(.init(title: "OK", style: .default, handler: { _ in
+                        self?.profile = newProfile
+                        self?.onProfileChanged?(newProfile)
+                    }))
+                    self?.present(alert, animated: true, completion: nil)
+                } else {
+                    let alert = UIAlertController(title: "Error", message: "Error during saving profile", preferredStyle: .alert)
+                    alert.addAction(.init(title: "OK", style: .default))
+                    alert.addAction(.init(title: "Retry", style: .cancel, handler: { _ in
+                        self?.saveProfileChanges(with: dataManager)
+                    }))
+                    self?.present(alert, animated: true, completion: nil)
+                }
+            }
+        }
+    }
+    
 
+    // Здесь IBAction от двух кнопок сохранения
     @IBAction func saveButtonDidTap(_ sender: UIButton) {
         switch currentState {
-        case .initial, .editing, .loading, .hasLoadingResult:
+        case .loading, .editing, .saving:
             break;
         case .view:
             changeView(state: .editing)
-        case .changing:
+        case .hasChanges:
+            // Определяем реализацию DataManager-а от нажатой кнопки
             let dataManager: DataManagerProtocol = sender === saveGCDButton ? gcdDataManager : operationDataManager
+            // Сохраняем профайл
             saveProfileChanges(with: dataManager)
         }
     }
         
     
     @objc func profileDataDidChange() {
-        let isDataChanged =
+        // Проверяем изменились ли данные от исходных по контенту, изображение проверяем по ссылке объекта.
+        // Сравнивать данные изображения считаю накладным и бессмысленным в данном кейсе.
+        let hasDataChanges =
             profile?.fullName != profileNameTextField.text ||
-            profile?.avatar !== profilePhotoImageView.image ||
-            profile?.description != profileDescriptionTextView.text
-        
-        if currentState == .editing && isDataChanged {
-            changeView(state: .changing)
-        } else if currentState == .changing && !isDataChanged {
-            changeView(state: .editing)
-        }
+            profile?.description != profileDescriptionTextView.text ||
+            profile?.avatar !== profilePhotoImageView.image
+        changeView(state: hasDataChanges ? .hasChanges : .editing)
+    }
+    
+    @objc func keyboardWillShow(notification:NSNotification) {
+
+        guard let userInfo = notification.userInfo else { return }
+        var keyboardFrame:CGRect = (userInfo[UIResponder.keyboardFrameBeginUserInfoKey] as! NSValue).cgRectValue
+        keyboardFrame = self.view.convert(keyboardFrame, from: nil)
+
+        var contentInset:UIEdgeInsets = self.scrollView.contentInset
+        contentInset.bottom = keyboardFrame.size.height + 20
+        scrollView.contentInset = contentInset
+    }
+
+    @objc func keyboardWillHide(notification:NSNotification) {
+        let contentInset:UIEdgeInsets = UIEdgeInsets.zero
+        scrollView.contentInset = contentInset
     }
 }
 
@@ -298,11 +329,12 @@ extension ProfileViewController: UINavigationControllerDelegate, UIImagePickerCo
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let image = info[.originalImage] as? UIImage {
             self.profilePhotoImageView.image = image
+           
         } else {
             Log.error("Awaited an image from UIImagePickerController, but got nil")
         }
         picker.dismiss(animated: true) {
-            self.profileDataDidChange()
+            self.profileDataDidChange()          
         }
     }
 }
@@ -313,5 +345,3 @@ extension ProfileViewController: ProfileNavigationBarDelegate {
         dismiss(animated: true, completion: nil)
     }
 }
-
-

@@ -31,7 +31,6 @@
 		EC793CA32531605E005F6E08 /* FileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC793CA22531605E005F6E08 /* FileManager.swift */; };
 		EC89FDC6250E07CF00B22EC4 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = EC89FDC5250E07CF00B22EC4 /* README.md */; };
 		EC9C347D253306D100932552 /* OperationDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC9C347C253306D100932552 /* OperationDataManager.swift */; };
-		EC9C34812533319300932552 /* MockDefaultProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC9C34802533319300932552 /* MockDefaultProfile.swift */; };
 		ECAB8611251F80D600BA7845 /* DateFormatter + dateOrNow.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECAB8610251F80D600BA7845 /* DateFormatter + dateOrNow.swift */; };
 		ECAB8616251F85E900BA7845 /* DateFormatter + init.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECAB8615251F85E900BA7845 /* DateFormatter + init.swift */; };
 		ECC26931250C6FEC001C08A0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC26930250C6FEC001C08A0 /* AppDelegate.swift */; };
@@ -79,7 +78,6 @@
 		EC793CA22531605E005F6E08 /* FileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManager.swift; sourceTree = "<group>"; };
 		EC89FDC5250E07CF00B22EC4 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		EC9C347C253306D100932552 /* OperationDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperationDataManager.swift; sourceTree = "<group>"; };
-		EC9C34802533319300932552 /* MockDefaultProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockDefaultProfile.swift; sourceTree = "<group>"; };
 		ECAB8610251F80D600BA7845 /* DateFormatter + dateOrNow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter + dateOrNow.swift"; sourceTree = "<group>"; };
 		ECAB8615251F85E900BA7845 /* DateFormatter + init.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter + init.swift"; sourceTree = "<group>"; };
 		ECC2692D250C6FEC001C08A0 /* TinkoffChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TinkoffChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -131,9 +129,9 @@
 			children = (
 				EC3B4965251F6924002A93A8 /* Views */,
 				EC3B495A251F6663002A93A8 /* Model */,
-				EC3B4950251F659E002A93A8 /* Conversations.storyboard */,
 				EC3B4953251F65C4002A93A8 /* ConversationsListViewController.swift */,
 				ECE295C12528AE2100F30BAA /* RootNavigationController.swift */,
+				EC3B4950251F659E002A93A8 /* Conversations.storyboard */,
 			);
 			path = ConversationList;
 			sourceTree = "<group>";
@@ -152,7 +150,6 @@
 				EC3B495C251F667C002A93A8 /* ConverationCellModel.swift */,
 				EC3B495F251F67D6002A93A8 /* ConversationSection.swift */,
 				EC3B4962251F6824002A93A8 /* ConversationSectionsMockData.swift */,
-				EC9C34802533319300932552 /* MockDefaultProfile.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -430,7 +427,6 @@
 				ECF5BBD2252B5BBB00B829B0 /* DayTheme.swift in Sources */,
 				EC6794662520298000DB8002 /* ConversationViewController.swift in Sources */,
 				EC793CA32531605E005F6E08 /* FileManager.swift in Sources */,
-				EC9C34812533319300932552 /* MockDefaultProfile.swift in Sources */,
 				EC67946B252029B600DB8002 /* MessageTableViewCell.swift in Sources */,
 				ECED1CA92518E3EC0069EB71 /* Colors.swift in Sources */,
 				EC53DCAF252C9D09000227E3 /* ThemeOptionView.swift in Sources */,

@@ -19,35 +19,44 @@ class OperationDataManager: DataManagerProtocol {
     }()
     
     func writeToDisk(newProfile: ProfileViewModel, oldProfile: ProfileViewModel?, completion: @escaping ((Bool) -> Void)) {
-        var writeOperations = [WriteDataOperation]()
+        var writeOperations = [WriteDataToDiskOperation]()
         if newProfile.fullName != oldProfile?.fullName {
-            writeOperations.append(.init(data: newProfile.fullName.data(using: .utf8), fileName: ProfileItemsStoreKeys.fullName.rawValue))
+            writeOperations.append(WriteDataToDiskOperation(
+                                    data: newProfile.fullName.data(using: .utf8),
+                                    fileName: ProfileItemsStoreKeys.fullName.rawValue)
+            )
         }
         
         if newProfile.description != oldProfile?.description {
-            writeOperations.append(.init(data: newProfile.description.data(using: .utf8), fileName: ProfileItemsStoreKeys.description.rawValue))
+            writeOperations.append(WriteDataToDiskOperation(
+                                    data: newProfile.description.data(using: .utf8),
+                                    fileName: ProfileItemsStoreKeys.description.rawValue)
+            )
         }
         
         if newProfile.avatar !== oldProfile?.avatar {
-            writeOperations.append(.init(data: newProfile.avatar?.pngData(), fileName: ProfileItemsStoreKeys.avatar.rawValue))
+            writeOperations.append(WriteDataToDiskOperation(
+                                    data: newProfile.avatar?.pngData(),
+                                    fileName: ProfileItemsStoreKeys.avatar.rawValue)
+            )
         }
         
         let writeProfileOperation = WriteProfileOperation(writeOperations: writeOperations, completion: completion)
-        operationQueue.addOperations(writeOperations, waitUntilFinished: true)
-        operationQueue.addOperation(writeProfileOperation)
+        
+        let allOperations: [Operation] = writeOperations.map { $0 as Operation } + [writeProfileOperation as Operation]
+        operationQueue.addOperations(allOperations, waitUntilFinished: false)
     }
     
     func readProfileFromDisk(completion: @escaping ((ProfileViewModel?) -> Void)) {
         let nameOperation = LoadDataFromDiskOperation(fileName: ProfileItemsStoreKeys.fullName.rawValue)
         let descriptionOperation = LoadDataFromDiskOperation(fileName: ProfileItemsStoreKeys.description.rawValue)
         let avatarOperation = LoadDataFromDiskOperation(fileName: ProfileItemsStoreKeys.avatar.rawValue)
-        let parseProfile = ParseProfileOperation(
+        let parseProfile = ReadProfileOperation(
             nameOperation: nameOperation,
             descriptionOperation: descriptionOperation,
             avatarOperation: avatarOperation,
             completion: completion)
-        operationQueue.addOperations([nameOperation, descriptionOperation, avatarOperation, parseProfile], waitUntilFinished: true)
-        
+        operationQueue.addOperations([nameOperation, descriptionOperation, avatarOperation, parseProfile], waitUntilFinished: false)
     }
         
 }
@@ -62,12 +71,13 @@ class LoadDataFromDiskOperation: Operation {
     }
     
     override func main() {
+        Log.info("Start LoadDataFromDiskOperation for filename: \(fileName)")
         guard !isCancelled else { return }
         data = FileUtils.readFromDisk(fileName: fileName)
     }
 }
 
-class ParseProfileOperation: Operation {
+class ReadProfileOperation: Operation {
     let nameOperation: LoadDataFromDiskOperation
     let descriptionOperation: LoadDataFromDiskOperation
     let avatarOperation: LoadDataFromDiskOperation
@@ -89,6 +99,7 @@ class ParseProfileOperation: Operation {
     }
     
     override func main() {
+        Log.info("Start ReadProfileOperation")
         guard !isCancelled else { return }
         guard let nameData = nameOperation.data,
               let descriptionData = descriptionOperation.data,
@@ -105,7 +116,7 @@ class ParseProfileOperation: Operation {
     
 }
 
-class WriteDataOperation: Operation {
+class WriteDataToDiskOperation: Operation {
     
     let data: Data?
     let fileName: String
@@ -118,6 +129,7 @@ class WriteDataOperation: Operation {
     }
     
     override func main() {
+        Log.info("Start WriteDataToDiskOperation for filename: \(fileName)")
         guard !isCancelled else { return }
         isSuccessWriting = FileUtils.writeToDisk(data: data, fileName: fileName)
     }
@@ -125,12 +137,11 @@ class WriteDataOperation: Operation {
 
 class WriteProfileOperation: Operation {
     
-    let operations: [WriteDataOperation]
+    let operations: [WriteDataToDiskOperation]
     
     let completion: ((Bool) -> Void)
-    
-    
-    init(writeOperations: [WriteDataOperation], completion: @escaping ((Bool) -> Void) ) {
+        
+    init(writeOperations: [WriteDataToDiskOperation], completion: @escaping ((Bool) -> Void) ) {
         self.operations = writeOperations
         self.completion = completion
         super.init()
@@ -138,6 +149,7 @@ class WriteProfileOperation: Operation {
     }
     
     override func main() {
+        Log.info("Start WriteProfileOperation")
         guard !isCancelled else {
             completion(false)
             return

@@ -17,8 +17,7 @@ class ConversationsListViewController: UIViewController {
     static let mockDefaultProfile = ProfileViewModel(fullName: "Marat Dzhanybaev",
                                                      description: "Love coding, bbq and beer",
                                                      avatar: nil)
-    
-    
+
   
     var profileDataManager: DataManagerProtocol = GCDDataManager()
     
@@ -63,7 +62,6 @@ class ConversationsListViewController: UIViewController {
         tableView.tableFooterView = UIView()
         tableView.estimatedRowHeight = 44
         tableView.rowHeight = UITableView.automaticDimension
-        
     }
     
     private func setupTheme() {
@@ -101,13 +99,20 @@ class ConversationsListViewController: UIViewController {
     
     private func loadProfile() {
         profileDataManager.readProfileFromDisk { [weak self] (profile) in
-            let profile = profile ?? Self.mockDefaultProfile
-            self?.updateProfile(profile: profile)
+            if let profile = profile {
+                self?.updateProfile(profile: profile)
+            } else {
+                // При первой загрузке приложения на диске не будет профиля, поэтому подкинем туда мок
+                self?.profileDataManager.writeToDisk(newProfile: Self.mockDefaultProfile, oldProfile: nil) { _ in 
+                    self?.updateProfile(profile: Self.mockDefaultProfile)
+                }
+            }
         }
     }
     
     private func updateProfile(profile: ProfileViewModel) {
-        DispatchQueue.main.async { [weak self] in
+        
+        RunLoop.main.perform(inModes: [.default]) { [weak self] in
             self?.userProfile = profile
             self?.profileAvatarButton.isEnabled = true
             self?.profileAvatarButton.setImage(profile.avatar, for: .normal)
@@ -116,7 +121,9 @@ class ConversationsListViewController: UIViewController {
     
     @objc private func profileItemDidTap() {
         guard let profileViewController = UIStoryboard(name: "Profile", bundle: nil).instantiateViewController(withIdentifier: "profileId") as? ProfileViewController else { return }
-        profileViewController.profile = userProfile
+        // Вообще получается нелогично, но раз для задания требуется грузить профайл внутри ProfileViewController,
+        // тогда не будем инжектить его здесь, хотя он уже готов
+        // profileViewController.profile = userProfile
         profileViewController.onProfileChanged = { [weak self] (profile) in
             self?.updateProfile(profile: profile)
         }
@@ -127,13 +134,6 @@ class ConversationsListViewController: UIViewController {
         guard let themesViewController = UIStoryboard(name: "ThemeSettings", bundle: nil).instantiateViewController(withIdentifier: "ThemeSettingsId") as? ThemesViewController else { return }
         
         themesViewController.delegate = self
-        
-        themesViewController.onThemeDidChanged = { [weak self] themeOption in
-            Themes.saveApplicationTheme(themeOption)
-            self?.setupTheme()
-            self?.tableView.reloadData()
-        }
-        
         navigationController?.pushViewController(themesViewController, animated: true)
     }
     
@@ -193,9 +193,8 @@ extension ConversationsListViewController: UITableViewDelegate {
 extension ConversationsListViewController: ThemesPickerDelegate {
     
     func themeDidChanged(on themeOption: ThemeOptions) {
-//        Themes.saveApplicationTheme(themeOption)
-//        setupTheme()
-//        tableView.reloadData()
+        setupTheme()
+        tableView.reloadData()
     }
     
 }
