@@ -59,7 +59,7 @@ final class GCDDataManager: DataManagerProtocol {
             }
         }
         
-        group.notify(queue: .main) {
+        group.notify(queue: .global(qos: .default)) {
             Log.info("Complete writing profile with GCD")
             let successWriting = successWritingName && successWritingDescription && successWritingAvatar
             completion(successWriting)

@@ -225,6 +225,9 @@ class ProfileViewController: UIViewController {
             DispatchQueue.main.async {
                 self?.changeView(state: .view)
                 if success {
+                    self?.profile = newProfile
+                    self?.updateData()
+                    self?.onProfileChanged?(newProfile)
                     self?.showAlert(withTitle: "Success", message: "Profile was successful saved")
                 } else {
                     self?.showAlert(withTitle: "Error", message: "Error during saving profile", retryAction: {
