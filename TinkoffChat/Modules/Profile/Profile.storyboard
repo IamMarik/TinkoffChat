@@ -61,7 +61,7 @@
                                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="16"/>
                                                         <state key="normal" title="Edit"/>
                                                         <connections>
-                                                            <action selector="editButtonDidTap:" destination="yHK-Rd-4co" eventType="touchUpInside" id="6OB-gz-6q4"/>
+                                                            <action selector="editAvatarButtonDidTap:" destination="yHK-Rd-4co" eventType="touchUpInside" id="6OB-gz-6q4"/>
                                                         </connections>
                                                     </button>
                                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalHuggingPriority="750" verticalCompressionResistancePriority="1000" scrollEnabled="NO" editable="NO" text="Moscow, Russia UX/UI " textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zJ2-sI-2CI">
@@ -175,11 +175,11 @@
                     <connections>
                         <outlet property="editAvatarButton" destination="UcA-G8-QD5" id="PJm-oY-VZd"/>
                         <outlet property="loadingView" destination="tNz-ZQ-fMs" id="oLE-uD-4bW"/>
+                        <outlet property="profileAvatarImageView" destination="PIR-c1-kFA" id="uSz-OK-wEo"/>
                         <outlet property="profileDescriptionTextView" destination="zJ2-sI-2CI" id="yyM-FR-rXi"/>
                         <outlet property="profileNameLabel" destination="bqa-TX-wuR" id="h5O-0p-gj0"/>
                         <outlet property="profileNameTextField" destination="g9o-2C-yab" id="7MZ-MM-yPa"/>
                         <outlet property="profileNavigationBar" destination="xRj-y6-0Q4" id="7BQ-XW-Q0Y"/>
-                        <outlet property="profilePhotoImageView" destination="PIR-c1-kFA" id="uSz-OK-wEo"/>
                         <outlet property="saveButtonsStackView" destination="Yg8-RT-hvN" id="PX3-Zb-RCN"/>
                         <outlet property="saveGCDButton" destination="JRZ-ge-aKi" id="HsU-b6-Tru"/>
                         <outlet property="saveOperationButton" destination="0uo-py-a3a" id="L9R-HN-JIE"/>

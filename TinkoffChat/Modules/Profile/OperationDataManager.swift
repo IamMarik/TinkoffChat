@@ -107,6 +107,7 @@ class ReadProfileOperation: Operation {
               let name = String(data: nameData, encoding: .utf8),
               let description = String(data: descriptionData, encoding: .utf8),
               let avatar = UIImage(data: avatarData) else {
+            
             completion(nil)
             return
         }

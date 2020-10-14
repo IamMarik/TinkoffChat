@@ -111,7 +111,6 @@ class ConversationsListViewController: UIViewController {
     }
     
     private func updateProfile(profile: ProfileViewModel) {
-        
         RunLoop.main.perform(inModes: [.default]) { [weak self] in
             self?.userProfile = profile
             self?.profileAvatarButton.isEnabled = true

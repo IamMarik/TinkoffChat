@@ -33,7 +33,7 @@ class ProfileViewController: UIViewController {
 
     @IBOutlet var profileNavigationBar: ProfileNavigationBar!
     
-    @IBOutlet var profilePhotoImageView: UIImageView!
+    @IBOutlet var profileAvatarImageView: UIImageView!
 
     @IBOutlet var profileNameLabel: UILabel!
 
@@ -51,11 +51,6 @@ class ProfileViewController: UIViewController {
  
     @IBOutlet var saveOperationButton: UIButton!
     
-    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        get {
-            return .portrait
-        }
-    }
     
     /// Стейты вьюхи. Сделал String для дебага
     enum ProfileViewState: String{
@@ -70,43 +65,52 @@ class ProfileViewController: UIViewController {
         // Происходит сохранение профиля
         case saving
     }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        profileNavigationBar.delegate = self
-        profileNameTextField.delegate = self
-        profileNameTextField.addTarget(self, action: #selector(profileDataDidChange), for: .editingChanged)
-        profileDescriptionTextView.delegate = self
+
         setupView()
         setupTheme()
+        setupKeyboard()
         updateData()
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name:UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name:UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         // Не совсем понял из задания каким менеджером читать данные, поэтому пусть решает всемогущий рэндом
         if profile == nil {
-            //let dataManager: DataManagerProtocol = Bool.random() ? gcdDataManager : operationDataManager
-            loadProfile(with: operationDataManager)
+            let dataManager: DataManagerProtocol = Bool.random() ? gcdDataManager : operationDataManager
+            loadProfile(with: dataManager)
         }        
     }
 
     private func setupView() {
         saveGCDButton.layer.cornerRadius = 14
         saveOperationButton.layer.cornerRadius = 14
-        profilePhotoImageView.layer.cornerRadius = 120
+        profileAvatarImageView.layer.cornerRadius = 120
         loadingView.layer.cornerRadius = 14
         loadingView.layer.shadowColor = UIColor.black.withAlphaComponent(0.4).cgColor
         loadingView.layer.shadowRadius = 1.63
         loadingView.layer.shadowOffset = CGSize(width: 0, height: 2)
+        profileNavigationBar.delegate = self
+        profileNameTextField.delegate = self
+        profileNameTextField.addTarget(self, action: #selector(checkProfileDataForChanges), for: .editingChanged)
+        profileDescriptionTextView.delegate = self
+    }
+    
+    private func setupKeyboard() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name:UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name:UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     private func updateData() {
         profileNameLabel.text = profile?.fullName ?? ""
         profileDescriptionTextView.text = profile?.description ?? ""
-        profilePhotoImageView.image = profile?.avatar 
+        profileAvatarImageView.image = profile?.avatar 
     }
     
     private func setupTheme() {
@@ -126,7 +130,7 @@ class ProfileViewController: UIViewController {
             present(imagePickerController, animated: true, completion: nil)
         } else {
             Log.error("Photo library source is not available", tag: Self.logTag)
-            showErrorAlert(withMessage: "Фотогалерея не доступна")
+            showAlert(withTitle: "Error", message: "Photo gallery is not available")
         }
     }
 
@@ -136,50 +140,26 @@ class ProfileViewController: UIViewController {
             present(imagePickerController, animated: true, completion: nil)
         } else {
             Log.error("Camera source is not available", tag: Self.logTag)
-            showErrorAlert(withMessage: "Камера не доступна")
+            showAlert(withTitle: "Error", message: "Camera is not available")
         }
     }
 
-    private func showErrorAlert(withMessage message: String) {
-        let alert = UIAlertController(title: "Ошибка", message: message, preferredStyle: .alert)
-        let closeAction = UIAlertAction(title: "Понятно", style: .cancel, handler: nil)
-        alert.addAction(closeAction)
-        present(alert, animated: true, completion: nil)
-    }
-
-    @IBAction func editButtonDidTap(_ sender: Any) {
+    private func showAlert(withTitle title: String, message: String, retryAction: (() -> Void)? = nil) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+ 
+        alertController.set(title: title, color: Themes.current.colors.profile.actionSheet.text)
+        alertController.set(message: message, color: Themes.current.colors.profile.actionSheet.text)
+        alertController.set(backgroundColor: Themes.current.colors.profile.actionSheet.background)
         
-        let alertController = UIAlertController(title: "Edit photo", message: "Please, choose one of the ways", preferredStyle: .actionSheet)
-        
-        let attributedTitle = NSAttributedString(string: "Edit photo", attributes: [
-            NSAttributedString.Key.font : UIFont.systemFont(ofSize: 17)
-        ])
-        
-        let attributedMessage = NSAttributedString(string: "Please, choose one of the ways", attributes: [
-            NSAttributedString.Key.font : UIFont.systemFont(ofSize: 13, weight: .regular)
-        ])
-        
-        
-        alertController.setValue(attributedTitle, forKey: "attributedTitle")
-        alertController.setValue(attributedMessage, forKey: "attributedMessage")
-        
-        let takeShotAction = UIAlertAction(title: "Camera", style: .default) { _ in
-            self.openCamera()
-        }
-        
-        let chooseFromGalleryAction = UIAlertAction(title: "Photo Gallery", style: .default) { _ in
-            self.openGallery()
+        let closeAction = UIAlertAction(title: "Got it", style: .default, handler: nil)
+        alertController.addAction(closeAction)
+        if let retryAction = retryAction {
+            alertController.addAction(UIAlertAction(title: "Retry", style: .default, handler: { (_) in
+                retryAction()
+            }))
         }
 
-        let cancelAction = UIAlertAction(title: "Cancel", style: .default)
-
-        alertController.addAction(takeShotAction)
-        alertController.addAction(chooseFromGalleryAction)
-        alertController.addAction(cancelAction)
-        
-        let contentView = alertController.view.subviews.first?.subviews.first?.subviews.first
-        contentView?.backgroundColor = Themes.current.colors.profile.actionSheet.background
-        present(alertController, animated: true)
+        present(alertController, animated: true, completion: nil)
     }
     
     private func changeView(state: ProfileViewState) {
@@ -240,27 +220,44 @@ class ProfileViewController: UIViewController {
         let newProfile = ProfileViewModel(
             fullName: profileNameTextField.text ?? "",
             description: profileDescriptionTextView.text ?? "",
-            avatar: profilePhotoImageView.image)
+            avatar: profileAvatarImageView.image)
         dataManager.writeToDisk(newProfile: newProfile, oldProfile: oldProfile) { [weak self] (success) in
             DispatchQueue.main.async {
                 self?.changeView(state: .view)
                 if success {
-                    let alert = UIAlertController(title: "Success", message: "Profile was succesful saved", preferredStyle: .alert)
-                    alert.addAction(.init(title: "OK", style: .default, handler: { _ in
-                        self?.profile = newProfile
-                        self?.onProfileChanged?(newProfile)
-                    }))
-                    self?.present(alert, animated: true, completion: nil)
+                    self?.showAlert(withTitle: "Success", message: "Profile was successful saved")
                 } else {
-                    let alert = UIAlertController(title: "Error", message: "Error during saving profile", preferredStyle: .alert)
-                    alert.addAction(.init(title: "OK", style: .default))
-                    alert.addAction(.init(title: "Retry", style: .cancel, handler: { _ in
+                    self?.showAlert(withTitle: "Error", message: "Error during saving profile", retryAction: {
                         self?.saveProfileChanges(with: dataManager)
-                    }))
-                    self?.present(alert, animated: true, completion: nil)
+                    })
                 }
             }
         }
+    }
+    
+    @IBAction func editAvatarButtonDidTap(_ sender: Any) {
+        
+        let alertController = UIAlertController(title: "Edit photo", message: "Please, choose one of the ways", preferredStyle: .actionSheet)
+        
+        alertController.set(title: "Edit photo", color: Themes.current.colors.profile.actionSheet.text)
+        alertController.set(message: "Please, choose one of the ways", color: Themes.current.colors.profile.actionSheet.text)
+        alertController.set(backgroundColor: Themes.current.colors.profile.actionSheet.background)
+ 
+        let takeShotAction = UIAlertAction(title: "Camera", style: .default) { _ in
+            self.openCamera()
+        }
+        
+        let chooseFromGalleryAction = UIAlertAction(title: "Photo Gallery", style: .default) { _ in
+            self.openGallery()
+        }
+
+        let cancelAction = UIAlertAction(title: "Cancel", style: .default)
+
+        alertController.addAction(takeShotAction)
+        alertController.addAction(chooseFromGalleryAction)
+        alertController.addAction(cancelAction)
+        
+        present(alertController, animated: true)
     }
     
 
@@ -280,30 +277,30 @@ class ProfileViewController: UIViewController {
     }
         
     
-    @objc func profileDataDidChange() {
+    @objc func checkProfileDataForChanges() {
         // Проверяем изменились ли данные от исходных по контенту, изображение проверяем по ссылке объекта.
         // Сравнивать данные изображения считаю накладным и бессмысленным в данном кейсе.
         let hasDataChanges =
             profile?.fullName != profileNameTextField.text ||
             profile?.description != profileDescriptionTextView.text ||
-            profile?.avatar !== profilePhotoImageView.image
+            profile?.avatar !== profileAvatarImageView.image
         changeView(state: hasDataChanges ? .hasChanges : .editing)
     }
     
     @objc func keyboardWillShow(notification:NSNotification) {
-
-        guard let userInfo = notification.userInfo else { return }
-        var keyboardFrame:CGRect = (userInfo[UIResponder.keyboardFrameBeginUserInfoKey] as! NSValue).cgRectValue
-        keyboardFrame = self.view.convert(keyboardFrame, from: nil)
-
-        var contentInset:UIEdgeInsets = self.scrollView.contentInset
-        contentInset.bottom = keyboardFrame.size.height + 20
-        scrollView.contentInset = contentInset
+        guard let userInfo = notification.userInfo,
+              let keyboardSize = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else { return }
+        
+        let offsetHeight = keyboardSize.height + 20
+        let contentInsets = UIEdgeInsets(top: 0, left: 0, bottom: offsetHeight, right: 0)
+        
+        scrollView.contentInset = contentInsets
+        scrollView.scrollIndicatorInsets = contentInsets
     }
 
     @objc func keyboardWillHide(notification:NSNotification) {
-        let contentInset:UIEdgeInsets = UIEdgeInsets.zero
-        scrollView.contentInset = contentInset
+        scrollView.contentInset = .zero
+        scrollView.scrollIndicatorInsets = .zero
     }
 }
 
@@ -319,7 +316,7 @@ extension ProfileViewController: UITextViewDelegate {
     
     func textViewDidChange(_ textView: UITextView) {
         if textView === profileDescriptionTextView {
-            profileDataDidChange()
+            checkProfileDataForChanges()
         }
     }
 }
@@ -328,13 +325,13 @@ extension ProfileViewController: UINavigationControllerDelegate, UIImagePickerCo
 
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let image = info[.originalImage] as? UIImage {
-            self.profilePhotoImageView.image = image
+            self.profileAvatarImageView.image = image
            
         } else {
             Log.error("Awaited an image from UIImagePickerController, but got nil")
         }
         picker.dismiss(animated: true) {
-            self.profileDataDidChange()          
+            self.checkProfileDataForChanges()          
         }
     }
 }
