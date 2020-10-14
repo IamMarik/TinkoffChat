@@ -52,12 +52,14 @@ class ProfileViewController: UIViewController {
         // Размеры фрейма будут соответствовать начальным (со сториборда в данном случае)
         Log.info("Save button frame in viewDidLoad: \(saveButton.frame)", tag: Self.logTag)
         setupView()
+        setupTheme()
     }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         // Здесь все вью уже иерархии с пересчитанными согласно констрейтам размерами
         Log.info("Save button frame in viewDidAppear: \(saveButton.frame)", tag: Self.logTag)
+       
     }
 
     private func setupView() {
@@ -74,6 +76,14 @@ class ProfileViewController: UIViewController {
             profileNameLabel.text = profile.fullName
             profileDescriptionLabel.text = profile.description
         }
+    }
+    
+    private func setupTheme() {
+        let theme = Themes.current
+        view.backgroundColor = theme.colors.primaryBackground
+        profileNameLabel.textColor = theme.colors.profile.name
+        profileDescriptionLabel.textColor = theme.colors.profile.description
+        saveButton.backgroundColor = theme.colors.profile.saveButtonBackground
     }
 
     private func openGallery() {
@@ -104,22 +114,37 @@ class ProfileViewController: UIViewController {
     }
 
     @IBAction func editButtonDidTap(_ sender: Any) {
-        let alertController = UIAlertController(title: "", message: "Изображение", preferredStyle: .actionSheet)
-
-        let chooseFromGalleryAction = UIAlertAction(title: "Выбрать из библиотеки", style: .default) { _ in
+        
+        let alertController = UIAlertController(title: "Edit photo", message: "Please, choose one of the ways", preferredStyle: .actionSheet)
+        
+        let attributedTitle = NSAttributedString(string: "Edit photo", attributes: [
+            NSAttributedString.Key.font : UIFont.systemFont(ofSize: 17)
+        ])
+        
+        let attributedMessage = NSAttributedString(string: "Please, choose one of the ways", attributes: [
+            NSAttributedString.Key.font : UIFont.systemFont(ofSize: 13, weight: .regular)
+        ])
+        
+        
+        alertController.setValue(attributedTitle, forKey: "attributedTitle")
+        alertController.setValue(attributedMessage, forKey: "attributedMessage")
+        
+        let takeShotAction = UIAlertAction(title: "Camera", style: .default) { _ in
+            self.openCamera()
+        }
+        
+        let chooseFromGalleryAction = UIAlertAction(title: "Photo Gallery", style: .default) { _ in
             self.openGallery()
         }
 
-        let takeShotAction = UIAlertAction(title: "Сделать фотографию", style: .default) { _ in
-            self.openCamera()
-        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .default)
 
-        let cancelAction = UIAlertAction(title: "Отменить", style: .cancel)
-
-        alertController.addAction(chooseFromGalleryAction)
         alertController.addAction(takeShotAction)
+        alertController.addAction(chooseFromGalleryAction)
         alertController.addAction(cancelAction)
-
+        
+        let contentView = alertController.view.subviews.first?.subviews.first?.subviews.first
+        contentView?.backgroundColor = Themes.current.colors.profile.actionSheet.background
         present(alertController, animated: true)
     }
 

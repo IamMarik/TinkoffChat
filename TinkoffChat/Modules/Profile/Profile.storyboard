@@ -82,7 +82,7 @@
                                                         </connections>
                                                     </button>
                                                 </subviews>
-                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstItem="JRZ-ge-aKi" firstAttribute="top" relation="greaterThanOrEqual" secondItem="IDd-Yl-Ppx" secondAttribute="bottom" constant="32" id="337-aL-iPX"/>
                                                     <constraint firstItem="IDd-Yl-Ppx" firstAttribute="top" secondItem="bqa-TX-wuR" secondAttribute="bottom" constant="32" id="CbI-Ms-OvV"/>
@@ -108,7 +108,7 @@
                                         </constraints>
                                     </scrollView>
                                 </subviews>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="JRZ-ge-aKi" secondAttribute="bottom" priority="250" constant="32" id="DxI-BK-mt8"/>
                                     <constraint firstAttribute="trailing" secondItem="PTV-TY-FoI" secondAttribute="trailing" id="Nge-qC-gU3"/>

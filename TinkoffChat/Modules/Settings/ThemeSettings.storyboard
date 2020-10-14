@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="STZ-r0-e59">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Settings-->
+        <scene sceneID="q30-FT-yqd">
+            <objects>
+                <viewController storyboardIdentifier="ThemeSettingsId" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Dku-1F-Mfs" customClass="ThemesViewController" customModule="TinkoffChat" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="MC0-1G-qNX">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView verifyAmbiguity="ignoreSizes" opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" distribution="fillEqually" spacing="21" translatesAutoresizingMaskIntoConstraints="NO" id="qGJ-wI-Dlz">
+                                <rect key="frame" x="38" y="262" width="338" height="426"/>
+                            </stackView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="ekO-6q-e6S"/>
+                        <color key="backgroundColor" red="0.098039215686274508" green="0.21176470588235294" blue="0.38039215686274508" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="qGJ-wI-Dlz" firstAttribute="centerY" secondItem="ekO-6q-e6S" secondAttribute="centerY" id="94I-OF-sda"/>
+                            <constraint firstItem="qGJ-wI-Dlz" firstAttribute="leading" secondItem="ekO-6q-e6S" secondAttribute="leading" constant="38" id="rAI-WE-q1y"/>
+                            <constraint firstItem="ekO-6q-e6S" firstAttribute="trailing" secondItem="qGJ-wI-Dlz" secondAttribute="trailing" constant="38" id="vlx-qb-EGt"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Settings" largeTitleDisplayMode="never" id="AxZ-38-Pdv">
+                        <barButtonItem key="backBarButtonItem" title="Chat" id="enc-Ds-ifJ"/>
+                        <barButtonItem key="rightBarButtonItem" title="Cancel" id="C7R-QE-n4M">
+                            <connections>
+                                <action selector="cancelBarButtonDidTap:" destination="Dku-1F-Mfs" id="x5E-I1-N82"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <connections>
+                        <outlet property="stackView" destination="qGJ-wI-Dlz" id="aZe-sj-bHa"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="a3R-3m-82f" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1176.8115942028987" y="130.58035714285714"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="tut-wB-0G1">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="STZ-r0-e59" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" id="z6C-L1-QoK">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="Dku-1F-Mfs" kind="relationship" relationship="rootViewController" id="4dq-Sm-kVX"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ltU-Kx-rVc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="266.66666666666669" y="130.58035714285714"/>
+        </scene>
+    </scenes>
+</document>
