@@ -12,6 +12,8 @@ class MessageTableViewCell: UITableViewCell {
     
     @IBOutlet var containerView: UIView!
     
+    @IBOutlet var senderLabel: UILabel!
+    
     @IBOutlet var messageLabel: UILabel!
     
     @IBOutlet var trailingContainerConstraint: NSLayoutConstraint!
@@ -28,16 +30,21 @@ class MessageTableViewCell: UITableViewCell {
 }
 
 extension MessageTableViewCell: ConfigurableView {
-    func configure(with model: MessageCellModel) {
-        messageLabel.text = model.text
-        trailingContainerConstraint.isActive = model.direction == .outgoing
-        setupTheme(for: model.direction)
+    func configure(with model: Message) {
+        let isMyMessage = model.isMyMessage
+        messageLabel.text = model.content
+        senderLabel.text = isMyMessage ? "" : model.senderName 
+        trailingContainerConstraint.isActive = isMyMessage
+        senderLabel.isHidden = isMyMessage
+        setupTheme(isMyMessage: isMyMessage)
+        invalidateIntrinsicContentSize()
     }
     
-    func setupTheme(for direction: MessageDirection) {
+    func setupTheme(isMyMessage: Bool) {
         let themeColors = Themes.current.colors.conversation.cell
-        let directionTheme = direction == .incoming ? themeColors.incoming : themeColors.outgoing
+        let directionTheme = isMyMessage ? themeColors.outgoing : themeColors.incoming
         containerView.backgroundColor = directionTheme.background
         messageLabel.textColor = directionTheme.text
+        
     }
 }

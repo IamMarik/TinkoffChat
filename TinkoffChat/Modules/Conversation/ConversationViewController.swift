@@ -10,38 +10,96 @@ import UIKit
 
 class ConversationViewController: UIViewController {
     
-    var messages: [MessageCellModel] = {
-       return [
-        .init(text: "Hello, what's up?", direction: .incoming),
-        .init(text: "Hi, there! I'm great do you hear about Lorem Ipsum?", direction: .outgoing),
-        .init(text: "Nope. Show it...", direction: .incoming),
-        .init(text: "Just a little bit...😉", direction: .incoming),
-        .init(text: "Here we go", direction: .outgoing),
-        .init(text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et.", direction: .outgoing),
-        .init(text: "Stop this😂😂😂", direction: .incoming),
-        .init(text: "Est velit egestas dui id ornare. Amet risus nullam eget felis eget. Augue ut lectus arcu bibendum at", direction: .outgoing)
-       ]
-    }()
+    var messageService: MessageService?
+    
+    var channel: Channel?
+    
+    var messages: [Message] = []
     
     let cellId = "\(MessageTableViewCell.self)"
 
     @IBOutlet var tableView: UITableView!
     
+    @IBOutlet var messageContainer: UIView!
+    
+    @IBOutlet var inputTextView: UITextView!
+    
+    @IBOutlet var sendButton: UIButton!
+    
+    @IBOutlet var inputMaxHeightConstraint: NSLayoutConstraint!
+    
+    
+    @IBOutlet var messageContainerBottomConstraint: NSLayoutConstraint!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupTableView()
+        if let channel = self.channel {
+            messageService = MessageService(channel: channel)
+        }
+        setupView()
         setupTheme()
+        setupKeyboard()
+        loadMessages()
     }
     
-    private func setupTableView() {
+    private func setupView() {
         tableView.dataSource = self
         tableView.tableFooterView = UIView()
         tableView.register(UINib(nibName: "\(MessageTableViewCell.self)", bundle: nil), forCellReuseIdentifier: cellId)
+        
+        messageContainer.layer.borderWidth = 0.5
+        messageContainer.layer.cornerRadius = 16
+        
+        inputTextView.delegate = self
+        inputView?.backgroundColor = .red
+        
     }
     
     private func setupTheme() {
         view.backgroundColor = Themes.current.colors.primaryBackground
+        messageContainer.layer.borderColor = UIColor.lightGray.cgColor
     }
+    
+    private func setupKeyboard() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    private func loadMessages() {
+        messageService?.getMessages { [weak self] (messages) in
+            self?.messages = messages
+            self?.tableView.reloadData()
+        } failure: { (error) in
+            
+        }
+
+    }
+    
+    @IBAction func sendButtonDidTap(_ sender: Any) {
+        guard let content = inputTextView.text else { return }
+        messageService?.addMessage(
+            content: content,
+            successful: { [weak self] in
+                self?.loadMessages()
+                self?.inputTextView.resignFirstResponder()
+                self?.inputTextView.text = ""
+            }, failure: { (error) in
+                
+            })
+    }
+    
+    @objc func keyboardWillShow(notification: NSNotification) {
+        guard let userInfo = notification.userInfo,
+              let keyboardSize = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else { return }
+        
+        let offsetHeight = keyboardSize.height
+        messageContainerBottomConstraint.constant = offsetHeight
+    }
+
+    @objc func keyboardWillHide(notification: NSNotification) {
+        messageContainerBottomConstraint.constant = 0
+    }
+    
 }
 
 extension ConversationViewController: UITableViewDataSource {
@@ -59,4 +117,16 @@ extension ConversationViewController: UITableViewDataSource {
         return cell
     }
     
+}
+
+extension ConversationViewController: UITextViewDelegate {
+    func textViewDidChange(_ textView: UITextView) {
+        let isOversize = textView.contentSize.height >= inputMaxHeightConstraint.constant
+        let shouldInvalidateContenSize = !isOversize && textView.isScrollEnabled
+        textView.isScrollEnabled = isOversize
+        inputMaxHeightConstraint.isActive = isOversize
+        if shouldInvalidateContenSize {
+            textView.invalidateIntrinsicContentSize()
+        }
+    }
 }

@@ -9,7 +9,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Tinkoff Chat-->
+        <!--Channels-->
         <scene sceneID="2ng-ZM-Tby">
             <objects>
                 <viewController id="Ejp-RB-G5P" customClass="ConversationsListViewController" customModule="TinkoffChat" customModuleProvider="target" sceneMemberID="viewController">
@@ -31,20 +31,29 @@
                             <constraint firstItem="eyK-zO-G7h" firstAttribute="trailing" secondItem="FHE-JN-bmn" secondAttribute="trailing" id="xM5-F4-hYC"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Tinkoff Chat" largeTitleDisplayMode="always" id="6jF-Xa-bZU">
+                    <navigationItem key="navigationItem" title="Channels" largeTitleDisplayMode="always" id="6jF-Xa-bZU">
                         <barButtonItem key="backBarButtonItem" title=" " id="Lhg-WZ-MZR"/>
                         <barButtonItem key="leftBarButtonItem" title="Item" image="settings" id="07f-gJ-nHq">
                             <connections>
                                 <action selector="settingsItemDidTap:" destination="Ejp-RB-G5P" id="HRD-pD-BxW"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title=" " id="7mg-Ho-2OC">
-                            <connections>
-                                <action selector="profileItemDidTap:" destination="Ejp-RB-G5P" id="cD6-iV-sYc"/>
-                            </connections>
-                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem title=" " id="7mg-Ho-2OC">
+                                <connections>
+                                    <action selector="profileItemDidTap:" destination="Ejp-RB-G5P" id="cD6-iV-sYc"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem systemItem="add" id="HCY-9a-Yjy">
+                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <connections>
+                                    <action selector="addChannelItemDidTap:" destination="Ejp-RB-G5P" id="1sk-7h-2ch"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <connections>
+                        <outlet property="addChannelBarButtonItem" destination="HCY-9a-Yjy" id="Bt2-rO-iFQ"/>
                         <outlet property="profileBarButtonItem" destination="7mg-Ho-2OC" id="8Ce-xn-Uoe"/>
                         <outlet property="settingsBarButtonItem" destination="07f-gJ-nHq" id="qOS-v9-77s"/>
                         <outlet property="tableView" destination="eyK-zO-G7h" id="1mv-F5-Oh4"/>
@@ -57,7 +66,6 @@
         <!--Root Navigation Controller-->
         <scene sceneID="4xH-SO-L1H">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="uYZ-F9-pf5" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="wPP-no-qjE" customClass="RootNavigationController" customModule="TinkoffChat" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="BMp-3h-mSZ">
@@ -70,6 +78,7 @@
                         <segue destination="Ejp-RB-G5P" kind="relationship" relationship="rootViewController" id="7Km-0m-xQY"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="uYZ-F9-pf5" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="644.92753623188412" y="32.8125"/>
         </scene>

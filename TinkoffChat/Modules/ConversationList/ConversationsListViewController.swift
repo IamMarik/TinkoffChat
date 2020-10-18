@@ -10,7 +10,10 @@ import UIKit
 
 class ConversationsListViewController: UIViewController {
     
-    let sections: [ConversationSection] = ConversationSectionsMockData.sections
+   // let sections: [ConversationSection] = ConversationSectionsMockData.sections
+    lazy var channelsService = ChannelsService()
+    
+    var channels: [Channel] = []
         
     var userProfile: ProfileViewModel?
     
@@ -38,18 +41,21 @@ class ConversationsListViewController: UIViewController {
     
     @IBOutlet var profileBarButtonItem: UIBarButtonItem!
     
+    @IBOutlet var addChannelBarButtonItem: UIBarButtonItem!
+    
     override var preferredStatusBarStyle: UIStatusBarStyle {
         Themes.current.statusBarStyle
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Tinkoff chat"
+        title = "Channels"
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         setupTableView()
         setupNavigationBar()
         setupTheme()
         loadProfile()
+        loadChannels()
     }
         
     private func setupTableView() {
@@ -107,6 +113,19 @@ class ConversationsListViewController: UIViewController {
         }
     }
     
+    private func loadChannels() {
+        channelsService.getAllChannels(
+            successful: { [weak self] (channels) in
+                DispatchQueue.main.async {
+                    self?.channels = channels
+                    self?.tableView.reloadData()
+                }
+            },
+            failure: { (error) in
+                
+            })
+    }
+    
     private func updateProfile(profile: ProfileViewModel) {
         RunLoop.main.perform(inModes: [.default]) { [weak self] in
             self?.userProfile = profile
@@ -135,30 +154,54 @@ class ConversationsListViewController: UIViewController {
         navigationController?.pushViewController(themesViewController, animated: true)
     }
     
+    @IBAction func addChannelItemDidTap(_ sender: Any) {
+        let alert = UIAlertController(title: "Adding new channel", message: "", preferredStyle: .alert)
+        
+        alert.addTextField { (textField) in
+            textField.placeholder = "Enter channel name here..."
+        }
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "Create", style: .default, handler: { (_) in
+            if let name = alert.textFields?.first?.text {
+                self.channelsService.createChannel(name: name) {
+                    self.loadChannels()
+                } failure: { (error) in
+                    
+                }
+            } else {
+                // not to create?
+            }
+           
+        }))
+        present(alert, animated: true)
+        
+    }
+    
+    
 }
 
 extension ConversationsListViewController: UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return sections.count
+        return 1
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return sections[section].conversations.count
+        return channels.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as? ConversationTableViewCell else {
             return UITableViewCell()
         }
-        let conversation = sections[indexPath.section].conversations[indexPath.row]
-        cell.configure(with: conversation)      
+        let channel = channels[indexPath.row]
+        cell.configure(with: channel)
         return cell
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        let section = sections[section]
-        return !section.conversations.isEmpty ? section.title : nil
+        return "Channel list"
     }
     
 }
@@ -171,8 +214,9 @@ extension ConversationsListViewController: UITableViewDelegate {
                 .instantiateViewController(withIdentifier: "conversationId") as? ConversationViewController else {
             return
         }
-        let conversation = sections[indexPath.section].conversations[indexPath.row]
-        conversationViewController.title = conversation.name
+        let chanel = channels[indexPath.row]
+        conversationViewController.title = chanel.name
+        conversationViewController.channel = chanel
         navigationController?.pushViewController(conversationViewController, animated: true)
     }
     
