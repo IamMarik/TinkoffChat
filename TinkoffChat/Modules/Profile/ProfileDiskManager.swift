@@ -8,13 +8,11 @@
 
 import UIKit
 
-
 final class GCDDataManager {
     
     private let nameFileName = "profile_name"
     private let descriptionFileName = "profile_description"
     private let avatarFileName = "profile_avatar"
-
     
     func writeToDisk(newProfile: ProfileViewModel, oldProfile: ProfileViewModel?, completion: @escaping((Bool) -> Void)) {
         let group = DispatchGroup()

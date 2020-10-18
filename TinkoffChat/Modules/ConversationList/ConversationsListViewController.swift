@@ -17,7 +17,6 @@ class ConversationsListViewController: UIViewController {
     static let mockDefaultProfile = ProfileViewModel(fullName: "Marat Dzhanybaev",
                                                      description: "Love coding, bbq and beer",
                                                      avatar: nil)
-
   
     var profileDataManager: DataManagerProtocol = GCDDataManager()
     
@@ -43,7 +42,6 @@ class ConversationsListViewController: UIViewController {
         Themes.current.statusBarStyle
     }
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Tinkoff chat"
@@ -53,7 +51,6 @@ class ConversationsListViewController: UIViewController {
         setupTheme()
         loadProfile()
     }
-
         
     private func setupTableView() {
         tableView.dataSource = self
@@ -71,7 +68,7 @@ class ConversationsListViewController: UIViewController {
             let navBarAppearance = UINavigationBarAppearance()
             navBarAppearance.configureWithOpaqueBackground()
             navBarAppearance.titleTextAttributes = [.foregroundColor: theme.colors.navigationBar.title]
-            navBarAppearance.largeTitleTextAttributes = [.foregroundColor:theme.colors.navigationBar.title]
+            navBarAppearance.largeTitleTextAttributes = [.foregroundColor: theme.colors.navigationBar.title]
             navBarAppearance.backgroundColor = theme.colors.navigationBar.background
             navigationController?.navigationBar.standardAppearance = navBarAppearance
             navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
@@ -119,7 +116,8 @@ class ConversationsListViewController: UIViewController {
     }
     
     @objc private func profileItemDidTap() {
-        guard let profileViewController = UIStoryboard(name: "Profile", bundle: nil).instantiateViewController(withIdentifier: "profileId") as? ProfileViewController else { return }
+        guard let profileViewController = UIStoryboard(name: "Profile", bundle: nil)
+                .instantiateViewController(withIdentifier: "profileId") as? ProfileViewController else { return }
         // Вообще получается нелогично, но раз для задания требуется грузить профайл внутри ProfileViewController,
         // тогда не будем инжектить его здесь, хотя он уже готов
         // profileViewController.profile = userProfile
@@ -130,14 +128,14 @@ class ConversationsListViewController: UIViewController {
     }
     
     @IBAction func settingsItemDidTap(_ sender: Any) {
-        guard let themesViewController = UIStoryboard(name: "ThemeSettings", bundle: nil).instantiateViewController(withIdentifier: "ThemeSettingsId") as? ThemesViewController else { return }
+        guard let themesViewController = UIStoryboard(name: "ThemeSettings", bundle: nil)
+                .instantiateViewController(withIdentifier: "ThemeSettingsId") as? ThemesViewController else { return }
         
         themesViewController.delegate = self
         navigationController?.pushViewController(themesViewController, animated: true)
     }
     
 }
-
 
 extension ConversationsListViewController: UITableViewDataSource {
     
@@ -163,7 +161,6 @@ extension ConversationsListViewController: UITableViewDataSource {
         return !section.conversations.isEmpty ? section.title : nil
     }
     
-    
 }
 
 extension ConversationsListViewController: UITableViewDelegate {
@@ -187,7 +184,6 @@ extension ConversationsListViewController: UITableViewDelegate {
     }
     
 }
-
 
 extension ConversationsListViewController: ThemesPickerDelegate {
     

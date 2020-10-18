@@ -28,4 +28,3 @@ enum ProfileItemsStoreKeys: String {
     case description = "profile_description"
     case avatar = "profile_avatar"
 }
-

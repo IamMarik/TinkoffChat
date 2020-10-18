@@ -8,7 +8,6 @@
 
 import UIKit
 
-
 struct ClassicTheme: ApplicationTheme {
     
     var name = "Classic"

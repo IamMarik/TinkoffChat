@@ -8,7 +8,6 @@
 
 import UIKit
 
-
 final class GCDDataManager: DataManagerProtocol {
         
     func writeToDisk(newProfile: ProfileViewModel, oldProfile: ProfileViewModel?, completion: @escaping((Bool) -> Void)) {
@@ -65,7 +64,6 @@ final class GCDDataManager: DataManagerProtocol {
             completion(successWriting)
         }
     }
-    
     
     func readProfileFromDisk(completion: @escaping((ProfileViewModel?) -> Void)) {
         DispatchQueue.global(qos: .utility).async {

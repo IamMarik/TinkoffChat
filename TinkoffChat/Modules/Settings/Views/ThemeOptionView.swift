@@ -8,7 +8,6 @@
 
 import UIKit
 
-
 class ThemeOptionView: UIView {
     
     weak var delegate: ThemeOptionViewDelegate?
@@ -34,7 +33,6 @@ class ThemeOptionView: UIView {
     private var outgoingMessageSampleView = UIView()
     
     private var themeNameLabel = UILabel()
-
     
     init(themeOption: ThemeOptions) {
         super.init(frame: .zero)
@@ -46,7 +44,6 @@ class ThemeOptionView: UIView {
         super.init(coder: coder)
         setupView()
     }
-    
         
     private func setupView() {
         let theme = themeOption.theme
@@ -117,4 +114,3 @@ protocol ThemeOptionViewDelegate: class {
     func viewDidSelected(_ view: ThemeOptionView, withThemeOption themeOption: ThemeOptions)
     
 }
-

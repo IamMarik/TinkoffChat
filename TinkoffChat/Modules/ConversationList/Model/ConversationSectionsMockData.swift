@@ -8,7 +8,6 @@
 
 import Foundation
 
-
 class ConversationSectionsMockData {
     
     static let dateFormatter: DateFormatter = {
@@ -70,7 +69,7 @@ class ConversationSectionsMockData {
                                   message: "Please call me later",
                                   date: Date.randomTimePastToday(),
                                   isOnline: true,
-                                  hasUnreadMessage: true),
+                                  hasUnreadMessage: true)
         ]
         
         var historySection = ConversationSection(title: "History")
@@ -124,11 +123,10 @@ class ConversationSectionsMockData {
                                   message: "To go over everything\nThey say that time'ssupposed to heal ya But I ain't done much healing",
                                   date: Date.randomTimePastToday(),
                                   isOnline: false,
-                                  hasUnreadMessage: true),
+                                  hasUnreadMessage: true)
         ]
         
         return [onlineSection, historySection]
     }()
-    
     
 }

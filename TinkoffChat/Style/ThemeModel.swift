@@ -8,7 +8,6 @@
 
 import UIKit
 
-
 protocol ApplicationTheme {
     
     var name: String { get }
@@ -85,4 +84,3 @@ struct ActionSheetColors {
     let background: UIColor
     let text: UIColor
 }
-

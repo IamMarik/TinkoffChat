@@ -6,7 +6,6 @@
 //  Copyright © 2020 Tinkoff. All rights reserved.
 //
 
-
 protocol ThemesPickerDelegate: class {
     func themeDidChanged(on themeOption: ThemeOptions)
 }

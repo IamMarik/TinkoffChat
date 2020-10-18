@@ -8,7 +8,6 @@
 
 import UIKit
 
-
 struct NightTheme: ApplicationTheme {
     
     var name = "Night"

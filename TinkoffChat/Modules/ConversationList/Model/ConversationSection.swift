@@ -8,7 +8,6 @@
 
 import Foundation
 
-
 class ConversationSection {
     
     let title: String

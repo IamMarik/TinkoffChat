@@ -6,7 +6,6 @@
 //  Copyright © 2020 Tinkoff. All rights reserved.
 //
 
-
 struct MessageCellModel {
     let text: String
     let direction: MessageDirection

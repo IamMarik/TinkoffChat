@@ -9,7 +9,6 @@
 import UIKit
 
 class MessageTableViewCell: UITableViewCell {
-   
     
     @IBOutlet var containerView: UIView!
     

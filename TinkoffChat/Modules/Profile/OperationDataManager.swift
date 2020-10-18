@@ -8,7 +8,6 @@
 
 import UIKit
 
-
 class OperationDataManager: DataManagerProtocol {
     
     lazy var operationQueue: OperationQueue =  {

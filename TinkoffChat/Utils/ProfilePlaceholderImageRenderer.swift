@@ -28,7 +28,7 @@ class ProfilePlaceholderImageRenderer {
 
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.alignment = .center
-        let fontAttributes: [NSAttributedString.Key : Any] =
+        let fontAttributes: [NSAttributedString.Key: Any] =
             [NSAttributedString.Key.font: font,
              NSAttributedString.Key.paragraphStyle: paragraphStyle,
              NSAttributedString.Key.foregroundColor: UIColor.black]
@@ -84,7 +84,6 @@ class ProfilePlaceholderImageRenderer {
                                             y: (rectangleSize.height - firstLetterSize.height) / 2,
                                             width: secondLetterSize.width,
                                             height: secondLetterSize.height)
-
 
                 firstLetterString.draw(in: firstTextRect,
                                        withAttributes: fontAttributes)

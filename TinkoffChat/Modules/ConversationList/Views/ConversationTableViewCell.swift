@@ -68,6 +68,5 @@ extension ConversationTableViewCell: ConfigurableView {
         selectedBackgroundView.backgroundColor = theme.colors.conversationList.cell.cellSelected
         self.selectedBackgroundView = selectedBackgroundView
     }
-
     
 }

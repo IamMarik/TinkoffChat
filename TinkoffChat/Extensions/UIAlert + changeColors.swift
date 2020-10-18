@@ -8,7 +8,6 @@
 
 import UIKit
 
-
 extension UIAlertController {
     
     func set(backgroundColor: UIColor) {
@@ -18,16 +17,16 @@ extension UIAlertController {
     
     func set(title: String, font: UIFont = UIFont.systemFont(ofSize: 17), color: UIColor) {
         let attributedTitle = NSAttributedString(string: title, attributes: [
-            NSAttributedString.Key.font : font,
-            NSAttributedString.Key.foregroundColor : color
+            NSAttributedString.Key.font: font,
+            NSAttributedString.Key.foregroundColor: color
         ])
         setValue(attributedTitle, forKey: "attributedTitle")
     }
     
     func set(message: String, font: UIFont = UIFont.systemFont(ofSize: 13, weight: .regular), color: UIColor) {
         let attributedMessage = NSAttributedString(string: message, attributes: [
-            NSAttributedString.Key.font : font,
-            NSAttributedString.Key.foregroundColor : color
+            NSAttributedString.Key.font: font,
+            NSAttributedString.Key.foregroundColor: color
         ])
         setValue(attributedMessage, forKey: "attributedMessage")
     }
