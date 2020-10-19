@@ -22,13 +22,14 @@ class ConversationViewController: UIViewController {
     
     @IBOutlet var messageContainer: UIView!
     
+    @IBOutlet var bottomView: UIView!
+    
     @IBOutlet var inputTextView: UITextView!
     
     @IBOutlet var sendButton: UIButton!
     
     @IBOutlet var inputMaxHeightConstraint: NSLayoutConstraint!
-    
-    
+        
     @IBOutlet var messageContainerBottomConstraint: NSLayoutConstraint!
     
     override func viewDidLoad() {
@@ -66,13 +67,26 @@ class ConversationViewController: UIViewController {
     }
     
     private func loadMessages() {
-        messageService?.getMessages { [weak self] (messages) in
-            self?.messages = messages
-            self?.tableView.reloadData()
-        } failure: { (error) in
-            
+        messageService?.subscribeOnMessages(handler: { [weak self] (result) in
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let messages):
+                    self?.messages = messages
+                    self?.tableView.reloadData()
+                    self?.scrollToBottom()
+                case .failure(let error):
+                    break
+                }
+            }
+        })
+    }
+    
+    private func scrollToBottom() {
+        guard messages.count > 0 else { return }
+        DispatchQueue.main.async {
+            let indexPath = IndexPath(row: self.messages.count-1, section: 0)
+            self.tableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
         }
-
     }
     
     @IBAction func sendButtonDidTap(_ sender: Any) {

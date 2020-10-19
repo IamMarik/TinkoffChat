@@ -13,14 +13,20 @@ final class MessageService {
     
     let channel: Channel
     
+    private let db = Firestore.firestore()
+    
     lazy var messagesReference = {
         db.collection("channels/\(channel.identifier)/messages")
     }()
     
-    private let db = Firestore.firestore()
+    var messageListener: ListenerRegistration?
     
     init(channel: Channel) {
         self.channel = channel
+    }
+    
+    deinit {
+        messageListener?.remove()
     }
     
     func getMessages(successful: @escaping ([Message]) -> Void, failure: @escaping (Error) -> Void) {
@@ -36,6 +42,21 @@ final class MessageService {
                 
             }
         }
+    }
+    
+    func subscribeOnMessages(handler: @escaping(Result<[Message], Error>) -> Void) {
+        messageListener = messagesReference.addSnapshotListener({ (querySnapshot, error) in
+            if let error = error {
+                handler(.failure(error))
+            } else if let documents = querySnapshot?.documents {
+                let messages = documents
+                    .compactMap { Message(firestoreData: $0.data()) }
+                    .sorted(by: { $0.created < $1.created })
+                handler(.success(messages))
+            } else {
+                handler(.failure(NSError()))
+            }
+        })
     }
     
     func addMessage(content: String, successful: @escaping () -> Void, failure: @escaping (Error) -> Void) {

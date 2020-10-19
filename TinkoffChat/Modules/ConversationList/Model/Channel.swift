@@ -17,6 +17,7 @@ struct Channel {
 }
 
 extension Channel {
+    
     init?(identifier: String, firestoreData: [String: Any]) {
         guard let name = firestoreData["name"] as? String else {
             return nil
@@ -30,11 +31,11 @@ extension Channel {
             self.lastActivity = nil
         }
     }
-    
-//    var firestoreData: [String: Any] {
-//        return ["name": name,
-//                "l" ]
-//    }
 }
 
-
+extension Channel: Comparable {
+    
+    static func < (lhs: Channel, rhs: Channel) -> Bool {
+        return (lhs.lastActivity ?? Date()) > (rhs.lastActivity ?? Date())
+    }
+}

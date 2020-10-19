@@ -10,7 +10,6 @@ import UIKit
 
 class ConversationsListViewController: UIViewController {
     
-   // let sections: [ConversationSection] = ConversationSectionsMockData.sections
     lazy var channelsService = ChannelsService()
     
     var channels: [Channel] = []
@@ -114,16 +113,28 @@ class ConversationsListViewController: UIViewController {
     }
     
     private func loadChannels() {
-        channelsService.getAllChannels(
-            successful: { [weak self] (channels) in
+        channelsService.subscribeOnChannels { [weak self] (result) in
+            switch result {
+            case .success(let channels):
                 DispatchQueue.main.async {
                     self?.channels = channels
+                    // По-хорошему можно обновлять с анимацией добавления, перемещения канала
                     self?.tableView.reloadData()
                 }
-            },
-            failure: { (error) in
-                
-            })
+            case .failure(let error):
+                Log.error("Error during update channels: \(error.localizedDescription)")
+            }
+        }
+//        channelsService.getAllChannels(
+//            successful: { [weak self] (channels) in
+//                DispatchQueue.main.async {
+//                    self?.channels = channels
+//                    self?.tableView.reloadData()
+//                }
+//            },
+//            failure: { (error) in
+//
+//            })
     }
     
     private func updateProfile(profile: ProfileViewModel) {
@@ -165,7 +176,7 @@ class ConversationsListViewController: UIViewController {
         alert.addAction(UIAlertAction(title: "Create", style: .default, handler: { (_) in
             if let name = alert.textFields?.first?.text {
                 self.channelsService.createChannel(name: name) {
-                    self.loadChannels()
+                    //self.loadChannels()
                 } failure: { (error) in
                     
                 }
