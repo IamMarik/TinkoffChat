@@ -15,7 +15,8 @@ extension UIAlertController {
         contentView?.backgroundColor = backgroundColor
     }
     
-    func set(title: String, font: UIFont = UIFont.systemFont(ofSize: 17), color: UIColor) {
+    func set(title: String?, font: UIFont = UIFont.systemFont(ofSize: 17), color: UIColor) {
+        guard let title = title else { return }
         let attributedTitle = NSAttributedString(string: title, attributes: [
             NSAttributedString.Key.font: font,
             NSAttributedString.Key.foregroundColor: color
@@ -23,7 +24,8 @@ extension UIAlertController {
         setValue(attributedTitle, forKey: "attributedTitle")
     }
     
-    func set(message: String, font: UIFont = UIFont.systemFont(ofSize: 13, weight: .regular), color: UIColor) {
+    func set(message: String?, font: UIFont = UIFont.systemFont(ofSize: 13, weight: .regular), color: UIColor) {
+        guard let message = message else { return }
         let attributedMessage = NSAttributedString(string: message, attributes: [
             NSAttributedString.Key.font: font,
             NSAttributedString.Key.foregroundColor: color

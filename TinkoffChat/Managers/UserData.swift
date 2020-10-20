@@ -8,6 +8,10 @@
 
 import Foundation
 
+/*
+    Тот случай, когда я считаю допустимым использование Singleton.
+    Если есть решение лучше, пожалуйста укажи в комментариях :)
+ */
 class UserData {
     
     static var shared: UserData = UserData()

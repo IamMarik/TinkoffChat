@@ -24,7 +24,6 @@ class MessageTableViewCell: UITableViewCell {
         containerView.layer.shadowColor = UIColor.black.withAlphaComponent(0.4).cgColor
         containerView.layer.shadowRadius = 1.63
         containerView.layer.shadowOffset = CGSize(width: 0, height: 2)
-        
     }
     
 }
@@ -45,6 +44,5 @@ extension MessageTableViewCell: ConfigurableView {
         let directionTheme = isMyMessage ? themeColors.outgoing : themeColors.incoming
         containerView.backgroundColor = directionTheme.background
         messageLabel.textColor = directionTheme.text
-        
     }
 }

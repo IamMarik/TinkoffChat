@@ -9,66 +9,51 @@
 import Foundation
 import Firebase
 
-class ChannelsService {
+final class ChannelsService {
     
-    var db = Firestore.firestore()
+    private var db = Firestore.firestore()
     
-    var channelListener: ListenerRegistration?
+    private var channelsListener: ListenerRegistration?
     
     private lazy var channels: CollectionReference = {
         return db.collection("channels")
     }()
     
     deinit {
-        channelListener?.remove()
+        channelsListener?.remove()
     }
     
-    func getAllChannels(successful: @escaping ([Channel]) -> Void, failure: @escaping (Error) -> Void) {
-        channels.getDocuments { (querySnapshot, err) in
-            if let err = err {
-                failure(err)
-            } else if let documents = querySnapshot?.documents {
-                
-                let channels = documents.compactMap { Channel(identifier: $0.documentID,
-                                                              firestoreData: $0.data()) }
-                successful(channels)
-            } else {
-                
-            }
-        }
-    }
-    
+    /// Create subscription to channel list updates
     func subscribeOnChannels(handler: @escaping (Result<[Channel], Error>) -> Void) {
-        channelListener = channels.addSnapshotListener { (querySnapshot, error) in
+        channelsListener = channels.addSnapshotListener { (querySnapshot, error) in
             if let error = error {
                 Log.error("Error fetching channels")
                 handler(.failure(error))
             } else if let documents = querySnapshot?.documents {
-                let channels = documents
-                    .compactMap { Channel(identifier: $0.documentID,
-                                          firestoreData: $0.data()) }                  
-                handler(.success(channels))
+                DispatchQueue.global(qos: .default).async {
+                    let channels = documents
+                        .compactMap { Channel(identifier: $0.documentID,
+                                              firestoreData: $0.data()) }
+                    handler(.success(channels))
+                }
             } else {
-                handler(.failure(NSError()))
+                handler(.failure(FirebaseError.snapshotIsNil))
             }
         }
     }
     
-    func createChannel(name: String, successful: @escaping () -> Void, failure: @escaping (Error) -> Void) {
+    /// Create a new channel in chanel list with given `name`
+    func createChannel(name: String, handler: @escaping (Result<String, Error>) -> Void) {
         var ref: DocumentReference?
         ref = channels.addDocument(data: ["name": name]) { (error) in
             if let error = error {
-                failure(error)
+                handler(.failure(error))
+            } else if let channelId = ref?.documentID {
+                handler(.success(channelId))
             } else {
-                if ref?.documentID != nil {
-                    successful()
-                } else {
-                    
-                }
+                handler(.failure(FirebaseError.referenceIsNil))
             }
         }
     }
-    
-
-        
+     
 }

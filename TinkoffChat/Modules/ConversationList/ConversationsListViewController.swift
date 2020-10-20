@@ -89,6 +89,7 @@ class ConversationsListViewController: UIViewController {
         setNeedsStatusBarAppearanceUpdate()        
         tableView.separatorColor = Themes.current.colors.conversationList.table.separator
         settingsBarButtonItem.tintColor = theme.colors.navigationBar.tint
+        addChannelBarButtonItem.tintColor = theme.colors.navigationBar.tint
     }
     
     private func setupNavigationBar() {
@@ -125,16 +126,6 @@ class ConversationsListViewController: UIViewController {
                 Log.error("Error during update channels: \(error.localizedDescription)")
             }
         }
-//        channelsService.getAllChannels(
-//            successful: { [weak self] (channels) in
-//                DispatchQueue.main.async {
-//                    self?.channels = channels
-//                    self?.tableView.reloadData()
-//                }
-//            },
-//            failure: { (error) in
-//
-//            })
     }
     
     private func updateProfile(profile: ProfileViewModel) {
@@ -143,6 +134,12 @@ class ConversationsListViewController: UIViewController {
             self?.profileAvatarButton.isEnabled = true
             self?.profileAvatarButton.setImage(profile.avatar, for: .normal)
         }
+    }
+    
+    private func showErrorAlert(message: String) {
+        let alert = UIAlertController.themeAlert(title: "Error", message: message)
+        alert.addAction(UIAlertAction(title: "Got it", style: .default, handler: nil))
+        present(alert, animated: true, completion: nil)
     }
     
     @objc private func profileItemDidTap() {
@@ -166,30 +163,28 @@ class ConversationsListViewController: UIViewController {
     }
     
     @IBAction func addChannelItemDidTap(_ sender: Any) {
-        let alert = UIAlertController(title: "Adding new channel", message: "", preferredStyle: .alert)
+        
+        let alert = UIAlertController.themeAlert(title: "Adding new channel", message: "")
         
         alert.addTextField { (textField) in
             textField.placeholder = "Enter channel name here..."
         }
         
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        alert.addAction(UIAlertAction(title: "Create", style: .default, handler: { (_) in
-            if let name = alert.textFields?.first?.text {
-                self.channelsService.createChannel(name: name) {
-                    //self.loadChannels()
-                } failure: { (error) in
-                    
+        alert.addAction(UIAlertAction(title: "Create", style: .default, handler: { [weak self] _ in
+            if let name = alert.textFields?.first?.text,
+               !name.isEmpty {
+                self?.channelsService.createChannel(name: name) { (result) in
+                    if case Result.failure(_) = result {
+                        self?.showErrorAlert(message: "Error during create new channel, try later.")
+                    }
                 }
             } else {
-                // not to create?
+                self?.showErrorAlert(message: "Channel name can't be empty.")
             }
-           
         }))
         present(alert, animated: true)
-        
     }
-    
-    
 }
 
 extension ConversationsListViewController: UITableViewDataSource {

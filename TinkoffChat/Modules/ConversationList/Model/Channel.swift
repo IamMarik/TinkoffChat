@@ -32,10 +32,3 @@ extension Channel {
         }
     }
 }
-
-extension Channel: Comparable {
-    
-    static func < (lhs: Channel, rhs: Channel) -> Bool {
-        return (lhs.lastActivity ?? Date()) > (rhs.lastActivity ?? Date())
-    }
-}

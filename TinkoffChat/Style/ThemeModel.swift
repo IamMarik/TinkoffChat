@@ -60,6 +60,8 @@ struct ConversationListThemeColors {
 struct ConversationThemeColors {
     
     let cell: CellTheme
+    let bottomViewBackground: UIColor
+    let inputTextView: UIColor
     
     struct CellTheme {
         let incoming: MessageTheme
@@ -70,6 +72,7 @@ struct ConversationThemeColors {
         let background: UIColor
         let text: UIColor
     }
+    
 }
 
 struct ProfileThemeColors {

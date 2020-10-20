@@ -22,6 +22,8 @@ class ConversationViewController: UIViewController {
     
     @IBOutlet var messageContainer: UIView!
     
+    @IBOutlet var messageVisibleView: UIView!
+    
     @IBOutlet var bottomView: UIView!
     
     @IBOutlet var inputTextView: UITextView!
@@ -32,6 +34,10 @@ class ConversationViewController: UIViewController {
         
     @IBOutlet var messageContainerBottomConstraint: NSLayoutConstraint!
     
+    @IBOutlet var tableViewBottomConstraint: NSLayoutConstraint!
+    
+    var messageVisibleBottomConstraint: NSLayoutConstraint?
+  
     override func viewDidLoad() {
         super.viewDidLoad()
         if let channel = self.channel {
@@ -40,14 +46,14 @@ class ConversationViewController: UIViewController {
         setupView()
         setupTheme()
         setupKeyboard()
-        loadMessages()
+        subscribeOnMessagesUpdates()
     }
     
     private func setupView() {
         tableView.dataSource = self
         tableView.tableFooterView = UIView()
         tableView.register(UINib(nibName: "\(MessageTableViewCell.self)", bundle: nil), forCellReuseIdentifier: cellId)
-        
+          
         messageContainer.layer.borderWidth = 0.5
         messageContainer.layer.cornerRadius = 16
         
@@ -59,6 +65,8 @@ class ConversationViewController: UIViewController {
     private func setupTheme() {
         view.backgroundColor = Themes.current.colors.primaryBackground
         messageContainer.layer.borderColor = UIColor.lightGray.cgColor
+        messageContainer.backgroundColor = Themes.current.colors.conversation.inputTextView
+        bottomView.backgroundColor = Themes.current.colors.conversation.bottomViewBackground       
     }
     
     private func setupKeyboard() {
@@ -66,7 +74,7 @@ class ConversationViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
-    private func loadMessages() {
+    private func subscribeOnMessagesUpdates() {
         messageService?.subscribeOnMessages(handler: { [weak self] (result) in
             DispatchQueue.main.async {
                 switch result {
@@ -74,32 +82,37 @@ class ConversationViewController: UIViewController {
                     self?.messages = messages
                     self?.tableView.reloadData()
                     self?.scrollToBottom()
-                case .failure(let error):
+                case .failure:
                     break
                 }
             }
         })
     }
     
-    private func scrollToBottom() {
+    private func scrollToBottom(animated: Bool = true) {
         guard messages.count > 0 else { return }
         DispatchQueue.main.async {
-            let indexPath = IndexPath(row: self.messages.count-1, section: 0)
-            self.tableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
+            let indexPath = IndexPath(row: self.messages.count - 1, section: 0)
+            self.tableView.scrollToRow(at: indexPath, at: .bottom, animated: animated)
         }
     }
     
     @IBAction func sendButtonDidTap(_ sender: Any) {
         guard let content = inputTextView.text else { return }
+        self.inputTextView.resignFirstResponder()
+        self.inputTextView.text = ""
         messageService?.addMessage(
-            content: content,
-            successful: { [weak self] in
-                self?.loadMessages()
-                self?.inputTextView.resignFirstResponder()
-                self?.inputTextView.text = ""
-            }, failure: { (error) in
-                
-            })
+            content: content) { [weak self] (result) in
+            DispatchQueue.main.async {
+                if case Result.failure(_) = result {
+                    let alert = UIAlertController.themeAlert(
+                        title: "Error",
+                        message: "Error during adding new message, try later.",
+                        actions: [.init(title: "Got it", style: .default)])
+                    self?.present(alert, animated: true, completion: nil)
+                }
+            }
+        }
     }
     
     @objc func keyboardWillShow(notification: NSNotification) {
@@ -107,11 +120,14 @@ class ConversationViewController: UIViewController {
               let keyboardSize = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else { return }
         
         let offsetHeight = keyboardSize.height
-        messageContainerBottomConstraint.constant = offsetHeight
+        messageVisibleBottomConstraint = messageVisibleView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -offsetHeight)
+        messageVisibleBottomConstraint?.isActive = true
+        scrollToBottom(animated: true)
     }
 
     @objc func keyboardWillHide(notification: NSNotification) {
-        messageContainerBottomConstraint.constant = 0
+        messageVisibleBottomConstraint?.isActive = false
+        messageVisibleView.layoutIfNeeded()
     }
     
 }

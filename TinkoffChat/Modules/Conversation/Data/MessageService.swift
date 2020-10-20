@@ -11,55 +11,45 @@ import Firebase
 
 final class MessageService {
     
-    let channel: Channel
+    private let channel: Channel
     
     private let db = Firestore.firestore()
     
-    lazy var messagesReference = {
+    private lazy var messagesReference = {
         db.collection("channels/\(channel.identifier)/messages")
     }()
     
-    var messageListener: ListenerRegistration?
+    private var messagesListener: ListenerRegistration?
     
     init(channel: Channel) {
         self.channel = channel
     }
     
     deinit {
-        messageListener?.remove()
+        messagesListener?.remove()
     }
     
-    func getMessages(successful: @escaping ([Message]) -> Void, failure: @escaping (Error) -> Void) {
-        messagesReference.getDocuments { (querySnapshot, err)  in
-            if let err = err {
-                failure(err)
+    /// Create subscription to message list updates
+    func subscribeOnMessages(handler: @escaping(Result<[Message], Error>) -> Void) {
+        messagesListener = messagesReference.addSnapshotListener { (querySnapshot, error) in
+            if let error = error {
+                handler(.failure(error))
             } else if let documents = querySnapshot?.documents {
-                let messages = documents
-                    .compactMap { Message(firestoreData: $0.data()) }
-                    .sorted(by: { $0.created < $1.created })
-                successful(messages)
+                // На случай большого списка решил вывести парсинг и сортировку из основного потока
+                DispatchQueue.global(qos: .default).async {
+                    let messages = documents
+                        .compactMap { Message(firestoreData: $0.data()) }
+                        .sorted(by: { $0.created < $1.created })
+                    handler(.success(messages))
+                }
             } else {
-                
+                handler(.failure(FirebaseError.snapshotIsNil))
             }
         }
     }
     
-    func subscribeOnMessages(handler: @escaping(Result<[Message], Error>) -> Void) {
-        messageListener = messagesReference.addSnapshotListener({ (querySnapshot, error) in
-            if let error = error {
-                handler(.failure(error))
-            } else if let documents = querySnapshot?.documents {
-                let messages = documents
-                    .compactMap { Message(firestoreData: $0.data()) }
-                    .sorted(by: { $0.created < $1.created })
-                handler(.success(messages))
-            } else {
-                handler(.failure(NSError()))
-            }
-        })
-    }
-    
-    func addMessage(content: String, successful: @escaping () -> Void, failure: @escaping (Error) -> Void) {
+    /// Add a new message to channel
+    func addMessage(content: String, handler: @escaping(Result<String, Error>) -> Void) {
         var ref: DocumentReference?
         ref = messagesReference.addDocument(
             data: [
@@ -69,16 +59,13 @@ final class MessageService {
                 "created": Timestamp(date: Date())
             ]) { (error) in
             if let error = error {
-                failure(error)
+                handler(.failure(error))
+            } else if let documentId = ref?.documentID {
+                handler(.success(documentId))
             } else {
-                if ref?.documentID != nil {
-                    successful()
-                } else {
-                    
-                }
+                handler(.failure(FirebaseError.referenceIsNil))
             }
         }
     }
-    
     
 }
