@@ -19,24 +19,24 @@ class ConversationViewController: UIViewController {
     let cellId = "\(MessageTableViewCell.self)"
 
     @IBOutlet var tableView: UITableView!
-    
-    @IBOutlet var messageContainer: UIView!
-    
-    @IBOutlet var messageVisibleView: UIView!
-    
-    @IBOutlet var bottomView: UIView!
-    
-    @IBOutlet var inputTextView: UITextView!
-    
-    @IBOutlet var sendButton: UIButton!
-    
-    @IBOutlet var inputMaxHeightConstraint: NSLayoutConstraint!
-        
-    @IBOutlet var messageContainerBottomConstraint: NSLayoutConstraint!
-    
-    @IBOutlet var tableViewBottomConstraint: NSLayoutConstraint!
-    
+
     var messageVisibleBottomConstraint: NSLayoutConstraint?
+    
+    lazy var messageInputView: MessageInputView = {
+        let view = MessageInputView()
+        view.delegate = self
+        return view
+    }()
+    
+    var shouldScrollToBottom: Bool = false
+    
+    override var inputAccessoryView: UIView? {
+        return messageInputView
+    }
+    
+    override var canBecomeFirstResponder: Bool { true }
+    
+    override var canResignFirstResponder: Bool { true }
   
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,24 +49,22 @@ class ConversationViewController: UIViewController {
         subscribeOnMessagesUpdates()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        becomeFirstResponder()
+    }
+    
     private func setupView() {
         tableView.dataSource = self
         tableView.tableFooterView = UIView()
         tableView.register(UINib(nibName: "\(MessageTableViewCell.self)", bundle: nil), forCellReuseIdentifier: cellId)
-          
-        messageContainer.layer.borderWidth = 0.5
-        messageContainer.layer.cornerRadius = 16
-        
-        inputTextView.delegate = self
-        inputView?.backgroundColor = .red
-        
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = UITableView.automaticDimension
+        tableView.keyboardDismissMode = .none
     }
     
     private func setupTheme() {
         view.backgroundColor = Themes.current.colors.primaryBackground
-        messageContainer.layer.borderColor = UIColor.lightGray.cgColor
-        messageContainer.backgroundColor = Themes.current.colors.conversation.inputTextView
-        bottomView.backgroundColor = Themes.current.colors.conversation.bottomViewBackground       
     }
     
     private func setupKeyboard() {
@@ -81,7 +79,7 @@ class ConversationViewController: UIViewController {
                 case .success(let messages):
                     self?.messages = messages
                     self?.tableView.reloadData()
-                    self?.scrollToBottom()
+                    self?.scrollToBottom(animated: true)
                 case .failure:
                     break
                 }
@@ -89,45 +87,51 @@ class ConversationViewController: UIViewController {
         })
     }
     
-    private func scrollToBottom(animated: Bool = true) {
-        guard messages.count > 0 else { return }
-        DispatchQueue.main.async {
-            let indexPath = IndexPath(row: self.messages.count - 1, section: 0)
-            self.tableView.scrollToRow(at: indexPath, at: .bottom, animated: animated)
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        if shouldScrollToBottom {
+            shouldScrollToBottom = false
+            scrollToBottom(animated: false)
         }
     }
     
-    @IBAction func sendButtonDidTap(_ sender: Any) {
-        guard let content = inputTextView.text else { return }
-        self.inputTextView.resignFirstResponder()
-        self.inputTextView.text = ""
-        messageService?.addMessage(
-            content: content) { [weak self] (result) in
-            DispatchQueue.main.async {
-                if case Result.failure(_) = result {
-                    let alert = UIAlertController.themeAlert(
-                        title: "Error",
-                        message: "Error during adding new message, try later.",
-                        actions: [.init(title: "Got it", style: .default)])
-                    self?.present(alert, animated: true, completion: nil)
-                }
-            }
-        }
+    func scrollToBottom(animated: Bool) {
+        // Не всегда хорошо скроллит до низа, возможно стоит покопать в сторону расчета высоты ячеек по тексту
+        tableView.setContentOffset(CGPoint(x: 0, y: CGFloat.greatestFiniteMagnitude), animated: animated)
     }
-    
-    @objc func keyboardWillShow(notification: NSNotification) {
-        guard let userInfo = notification.userInfo,
-              let keyboardSize = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else { return }
         
-        let offsetHeight = keyboardSize.height
-        messageVisibleBottomConstraint = messageVisibleView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -offsetHeight)
-        messageVisibleBottomConstraint?.isActive = true
-        scrollToBottom(animated: true)
+    @objc func keyboardWillShow(notification: NSNotification) {
+        adjustContentForKeyboard(shown: true, notification: notification)
     }
 
     @objc func keyboardWillHide(notification: NSNotification) {
-        messageVisibleBottomConstraint?.isActive = false
-        messageVisibleView.layoutIfNeeded()
+        adjustContentForKeyboard(shown: false, notification: notification)
+    }
+    
+    private func adjustContentForKeyboard(shown: Bool, notification: NSNotification) {
+        guard let userInfo = notification.userInfo,
+              let keyboardSize = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else { return }
+            
+        let keyboardHeight = shown ? keyboardSize.height : messageInputView.bounds.size.height
+        if tableView.contentInset.bottom == keyboardHeight {
+            return
+        }
+
+        var insets = tableView.contentInset
+        insets.bottom = keyboardHeight
+             
+        let duration = userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? TimeInterval ?? 0.2
+        let curveOptions = userInfo[UIResponder.keyboardAnimationCurveUserInfoKey] as? UIView.AnimationOptions ?? .curveEaseOut
+                
+        UIView.animate(withDuration: duration, delay: 0, options: curveOptions, animations: {
+            self.tableView.contentInset = insets
+            self.tableView.scrollIndicatorInsets = insets
+
+        }, completion: nil)
+    }
+    
+    private func bottomOffset() -> CGPoint {
+        return CGPoint(x: 0, y: max(-tableView.contentInset.top, tableView.contentSize.height - (tableView.bounds.size.height - tableView.contentInset.bottom)))
     }
     
 }
@@ -149,14 +153,26 @@ extension ConversationViewController: UITableViewDataSource {
     
 }
 
-extension ConversationViewController: UITextViewDelegate {
-    func textViewDidChange(_ textView: UITextView) {
-        let isOversize = textView.contentSize.height >= inputMaxHeightConstraint.constant
-        let shouldInvalidateContenSize = !isOversize && textView.isScrollEnabled
-        textView.isScrollEnabled = isOversize
-        inputMaxHeightConstraint.isActive = isOversize
-        if shouldInvalidateContenSize {
-            textView.invalidateIntrinsicContentSize()
+extension ConversationViewController: MessageInputViewDelegate {
+    
+    func send(text: String) {
+        DispatchQueue.main.async {
+            self.resignFirstResponder()
+            self.messageInputView.clearInput()
+        }
+        messageService?.addMessage(
+            content: text) { [weak self] (result) in
+            DispatchQueue.main.async {
+                if case Result.failure(_) = result {
+                    let alert = UIAlertController.themeAlert(
+                        title: "Error",
+                        message: "Error during adding new message, try later.",
+                        actions: [.init(title: "Got it", style: .default)])
+                    self?.present(alert, animated: true, completion: nil)
+                } else {
+                    self?.shouldScrollToBottom = true
+                }
+            }
         }
     }
 }

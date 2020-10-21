@@ -10,6 +10,8 @@
 		0797A9942DF4CB41F17508A7 /* libPods-TinkoffChat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 333582F7039D97D2AAE17B97 /* libPods-TinkoffChat.a */; };
 		EC14A87B25307BD1007AEB5F /* GCDDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC14A87A25307BD1007AEB5F /* GCDDataManager.swift */; };
 		EC14A88025309EFB007AEB5F /* DataManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC14A87F25309EFB007AEB5F /* DataManagerProtocol.swift */; };
+		EC175EE12540468400B06B1F /* MessageInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC175EE02540468400B06B1F /* MessageInputView.swift */; };
+		EC175EE425404B8E00B06B1F /* MessageInputView.xib in Resources */ = {isa = PBXBuildFile; fileRef = EC175EE325404B8E00B06B1F /* MessageInputView.xib */; };
 		EC17F38325235EF000C6C2A7 /* ProfileNavigationBar.xib in Resources */ = {isa = PBXBuildFile; fileRef = EC17F38225235EF000C6C2A7 /* ProfileNavigationBar.xib */; };
 		EC17F3862523601F00C6C2A7 /* ProfileNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC17F3852523601F00C6C2A7 /* ProfileNavigationBar.swift */; };
 		EC3B4951251F659E002A93A8 /* Conversations.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EC3B4950251F659E002A93A8 /* Conversations.storyboard */; };
@@ -69,6 +71,8 @@
 		333582F7039D97D2AAE17B97 /* libPods-TinkoffChat.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TinkoffChat.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EC14A87A25307BD1007AEB5F /* GCDDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GCDDataManager.swift; sourceTree = "<group>"; };
 		EC14A87F25309EFB007AEB5F /* DataManagerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManagerProtocol.swift; sourceTree = "<group>"; };
+		EC175EE02540468400B06B1F /* MessageInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageInputView.swift; sourceTree = "<group>"; };
+		EC175EE325404B8E00B06B1F /* MessageInputView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MessageInputView.xib; sourceTree = "<group>"; };
 		EC17F38225235EF000C6C2A7 /* ProfileNavigationBar.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProfileNavigationBar.xib; sourceTree = "<group>"; };
 		EC17F3852523601F00C6C2A7 /* ProfileNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileNavigationBar.swift; sourceTree = "<group>"; };
 		EC3B4950251F659E002A93A8 /* Conversations.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Conversations.storyboard; sourceTree = "<group>"; };
@@ -228,6 +232,8 @@
 			children = (
 				EC679469252029B600DB8002 /* MessageTableViewCell.swift */,
 				EC67946A252029B600DB8002 /* MessageTableViewCell.xib */,
+				EC175EE02540468400B06B1F /* MessageInputView.swift */,
+				EC175EE325404B8E00B06B1F /* MessageInputView.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -478,6 +484,7 @@
 				EC67946C252029B600DB8002 /* MessageTableViewCell.xib in Resources */,
 				ECF7B6A625177A4B006DDB81 /* Roboto-Medium.ttf in Resources */,
 				EC73E3052514AF57006D5ADF /* Profile.storyboard in Resources */,
+				EC175EE425404B8E00B06B1F /* MessageInputView.xib in Resources */,
 				EC89FDC6250E07CF00B22EC4 /* README.md in Resources */,
 				ECD9CB7925273F56003FB027 /* ThemeSettings.storyboard in Resources */,
 				EC3B4951251F659E002A93A8 /* Conversations.storyboard in Resources */,
@@ -579,6 +586,7 @@
 				ECF7B6A225177781006DDB81 /* ProfileModel.swift in Sources */,
 				EC84588E253C4CD100EEBCA3 /* Channel.swift in Sources */,
 				EC3B4968251F6940002A93A8 /* ConversationTableViewCell.swift in Sources */,
+				EC175EE12540468400B06B1F /* MessageInputView.swift in Sources */,
 				ECE295C22528AE2100F30BAA /* RootNavigationController.swift in Sources */,
 				EC845891253C4D1300EEBCA3 /* Message.swift in Sources */,
 				ECF5BBC8252B485700B829B0 /* Themes.swift in Sources */,
