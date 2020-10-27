@@ -78,9 +78,11 @@ struct ProfileThemeColors {
     let description: UIColor
     let saveButtonBackground: UIColor
     let actionSheet: ActionSheetColors
+    let loadingViewBackground: UIColor
 }
 
 struct ActionSheetColors {
     let background: UIColor
     let text: UIColor
 }
+

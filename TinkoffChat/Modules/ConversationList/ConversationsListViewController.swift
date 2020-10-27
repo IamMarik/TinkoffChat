@@ -11,15 +11,27 @@ import UIKit
 class ConversationsListViewController: UIViewController {
     
     let sections: [ConversationSection] = ConversationSectionsMockData.sections
+        
+    var userProfile: ProfileViewModel?
     
-    var userProfile: ProfileViewModel = {
-        let profile = ProfileViewModel(fullName: "Marat Dzhanybaev",
-                                       description: "Love coding, bbq and beer",
-                                       photo: nil)
-        return profile
-    }()
+    static let mockDefaultProfile = ProfileViewModel(fullName: "Marat Dzhanybaev",
+                                                     description: "Love coding, bbq and beer",
+                                                     avatar: nil)
+
+  
+    var profileDataManager: DataManagerProtocol = GCDDataManager()
     
     private let cellId = String(describing: ConversationTableViewCell.self)
+    
+    lazy var profileAvatarButton: UIButton = {
+        let button = UIButton()
+        button.frame = CGRect(x: 0, y: 0, width: 36, height: 36)
+        button.imageView?.contentMode = .scaleAspectFill
+        button.imageView?.layer.cornerRadius = 18
+        button.imageView?.clipsToBounds = true
+        button.addTarget(self, action: #selector(profileItemDidTap), for: .touchUpInside)
+        return button
+    }()
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -39,6 +51,7 @@ class ConversationsListViewController: UIViewController {
         setupTableView()
         setupNavigationBar()
         setupTheme()
+        loadProfile()
     }
 
         
@@ -49,7 +62,6 @@ class ConversationsListViewController: UIViewController {
         tableView.tableFooterView = UIView()
         tableView.estimatedRowHeight = 44
         tableView.rowHeight = UITableView.automaticDimension
-        
     }
     
     private func setupTheme() {
@@ -78,22 +90,42 @@ class ConversationsListViewController: UIViewController {
     }
     
     private func setupNavigationBar() {
-        let photo = userProfile.photo ?? ProfilePlaceholderImageRenderer.drawProfilePlaceholderImage(forName: userProfile.fullName, inRectangleOfSize: CGSize(width: 36, height: 36))
-        
-        let button = UIButton()
-        button.frame = CGRect(x: 0, y: 0, width: 36, height: 36)
-        button.setImage(photo, for: .normal)
-        button.addTarget(self, action: #selector(profileItemDidTap), for: .touchUpInside)
-
-        let barButton = UIBarButtonItem()
-        barButton.customView = button
-        navigationItem.rightBarButtonItem = barButton
-   
+        let barItem = UIBarButtonItem(customView: profileAvatarButton)
+        barItem.customView?.widthAnchor.constraint(equalToConstant: 36).isActive = true
+        barItem.customView?.heightAnchor.constraint(equalToConstant: 36).isActive = true
+        navigationItem.rightBarButtonItem = barItem
+        profileAvatarButton.isEnabled = false
+    }
+    
+    private func loadProfile() {
+        profileDataManager.readProfileFromDisk { [weak self] (profile) in
+            if let profile = profile {
+                self?.updateProfile(profile: profile)
+            } else {
+                // При первой загрузке приложения на диске не будет профиля, поэтому подкинем туда мок
+                self?.profileDataManager.writeToDisk(newProfile: Self.mockDefaultProfile, oldProfile: nil) { _ in 
+                    self?.updateProfile(profile: Self.mockDefaultProfile)
+                }
+            }
+        }
+    }
+    
+    private func updateProfile(profile: ProfileViewModel) {
+        RunLoop.main.perform(inModes: [.default]) { [weak self] in
+            self?.userProfile = profile
+            self?.profileAvatarButton.isEnabled = true
+            self?.profileAvatarButton.setImage(profile.avatar, for: .normal)
+        }
     }
     
     @objc private func profileItemDidTap() {
         guard let profileViewController = UIStoryboard(name: "Profile", bundle: nil).instantiateViewController(withIdentifier: "profileId") as? ProfileViewController else { return }
-        profileViewController.profile = userProfile
+        // Вообще получается нелогично, но раз для задания требуется грузить профайл внутри ProfileViewController,
+        // тогда не будем инжектить его здесь, хотя он уже готов
+        // profileViewController.profile = userProfile
+        profileViewController.onProfileChanged = { [weak self] (profile) in
+            self?.updateProfile(profile: profile)
+        }
         navigationController?.present(profileViewController, animated: true, completion: nil)
     }
     
@@ -101,13 +133,6 @@ class ConversationsListViewController: UIViewController {
         guard let themesViewController = UIStoryboard(name: "ThemeSettings", bundle: nil).instantiateViewController(withIdentifier: "ThemeSettingsId") as? ThemesViewController else { return }
         
         themesViewController.delegate = self
-        
-        themesViewController.onThemeDidChanged = { [weak self] themeOption in
-            Themes.saveApplicationTheme(themeOption)
-            self?.setupTheme()
-            self?.tableView.reloadData()
-        }
-        
         navigationController?.pushViewController(themesViewController, animated: true)
     }
     
@@ -167,9 +192,8 @@ extension ConversationsListViewController: UITableViewDelegate {
 extension ConversationsListViewController: ThemesPickerDelegate {
     
     func themeDidChanged(on themeOption: ThemeOptions) {
-//        Themes.saveApplicationTheme(themeOption)
-//        setupTheme()
-//        tableView.reloadData()
+        setupTheme()
+        tableView.reloadData()
     }
     
 }

@@ -60,7 +60,6 @@ extension ConversationTableViewCell: ConfigurableView {
         photoImageView.image = ProfilePlaceholderImageRenderer.drawProfilePlaceholderImage(forName: model.name, inRectangleOfSize: .init(width: 120, height: 120))
         
         isOnlineContainerView.isHidden = !model.isOnline
-        //contentView.backgroundColor = model.isOnline ? Colors.paleYellow : .clear
         nameLabel.textColor = theme.colors.conversationList.cell.name
         messageLabel.textColor = theme.colors.conversationList.cell.message
         receivedDateLabel.textColor = theme.colors.conversationList.cell.receivedDate

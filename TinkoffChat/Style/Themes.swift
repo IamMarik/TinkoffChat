@@ -35,9 +35,13 @@ struct Themes {
         currentThemeOption = themeOption
     }
     
-    static func saveApplicationTheme(_ themeOption: ThemeOptions) {
-        UserDefaults.standard.set(themeOption.rawValue, forKey: themeStoreKey)
-        currentThemeOption = themeOption
+    static func saveApplicationTheme(_ themeOption: ThemeOptions, completion: (() -> Void)? ) {
+        // Сохраняем тему на неглавной очереди
+        DispatchQueue.global(qos: .default).async {
+            UserDefaults.standard.set(themeOption.rawValue, forKey: themeStoreKey)
+            currentThemeOption = themeOption
+            completion?()
+        }
     }
     
 }

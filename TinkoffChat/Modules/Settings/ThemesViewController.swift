@@ -17,16 +17,8 @@ class ThemesViewController: UIViewController {
      а этот объект захватывает сильную ссылку на делегат.
     */
     weak var delegate: ThemesPickerDelegate?
-    
-    /*
-     Здесь возможна утечка если в замыкании будут сильные ссылки на объекты,
-     имеющие сильные ссылки на объект этого класса (или ссылающиеся через цепочку сильных ссылок через другие объекты)
-     Для предотвращения утечек памяти, необходимо использовать список захвата замыкания со слабыми ссылками
-    */
-    var onThemeDidChanged: ((ThemeOptions) -> Void)?
-    
+        
     let initialThemeOption = Themes.currentThemeOption
-
     
     @IBOutlet var stackView: UIStackView!
 
@@ -51,11 +43,19 @@ class ThemesViewController: UIViewController {
             .filter { $0 !== view }
             .forEach { $0.isSelected = $0.themeOption == themeOption }
         
-        delegate?.themeDidChanged(on: themeOption)
-        onThemeDidChanged?(themeOption)
-        updateTheme()
-        navigationController?.isNavigationBarHidden = true
-        navigationController?.isNavigationBarHidden = false
+        Themes.saveApplicationTheme(themeOption) {
+            /*  После сохранения темы в UserDefaults, обновим тему и вызовем метод делегата,
+             специально не сделал слабую ссылку в списке захвата, чтобы обновить тему,
+             если пользователь быстро закроет текущий ViewController
+             */
+            DispatchQueue.main.async {
+                self.delegate?.themeDidChanged(on: themeOption)
+                self.updateTheme()
+                self.navigationController?.isNavigationBarHidden = true
+                self.navigationController?.isNavigationBarHidden = false
+            }
+        }
+      
     }
     
     private func updateTheme() {

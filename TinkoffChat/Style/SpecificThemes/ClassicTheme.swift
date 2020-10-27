@@ -53,7 +53,8 @@ struct ClassicTheme: ApplicationTheme {
             actionSheet: .init(
                 background: .white,
                 text: .black
-            )
+            ),
+            loadingViewBackground: .white            
         ),
         settings: .init(
             background: UIColor(hex: 0xA8D4AD)

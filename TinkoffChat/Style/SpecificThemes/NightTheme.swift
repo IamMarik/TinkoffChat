@@ -52,8 +52,9 @@ struct NightTheme: ApplicationTheme {
             saveButtonBackground: UIColor(hex: 0x1B1B1B),
             actionSheet: .init(
                 background: UIColor(hex: 0x1B1B1B),
-                text: .green
-            )
+                text: .white
+            ),
+            loadingViewBackground: UIColor(hex: 0x1B1B1B)
         ),
         settings: .init(
             background: UIColor(hex: 0x2D3047)
