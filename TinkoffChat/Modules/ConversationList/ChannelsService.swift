@@ -19,6 +19,12 @@ final class ChannelsService {
         return db.collection("channels")
     }()
     
+    private lazy var coreDataStack: CoreDataStack = {
+        let stack = CoreDataStack()
+        stack.addStatisticObservers()
+        return stack
+    }()
+    
     deinit {
         channelsListener?.remove()
     }
@@ -30,10 +36,17 @@ final class ChannelsService {
                 Log.error("Error fetching channels")
                 handler(.failure(error))
             } else if let documents = querySnapshot?.documents {
+                                
                 DispatchQueue.global(qos: .default).async {
                     let channels = documents
                         .compactMap { Channel(identifier: $0.documentID,
                                               firestoreData: $0.data()) }
+                   
+                   
+                    self.coreDataStack.performSave { context in
+                        channels.forEach { _ = ChannelDB(channel: $0, in: context) }
+                    }
+                    
                     handler(.success(channels))
                 }
             } else {
