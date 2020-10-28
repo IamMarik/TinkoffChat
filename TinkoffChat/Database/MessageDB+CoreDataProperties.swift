@@ -10,14 +10,24 @@ import Foundation
 import CoreData
 
 extension MessageDB {
+    
+    class var className: String { "MessageDB" }
 
     @nonobjc public class func fetchRequest() -> NSFetchRequest<MessageDB> {
-        return NSFetchRequest<MessageDB>(entityName: "MessageDB")
+        return NSFetchRequest<MessageDB>(entityName: className)
     }
-
-    @NSManaged public var identifier: String?
-    @NSManaged public var content: String?
-    @NSManaged public var senderId: String?
-    @NSManaged public var created: Date?
+    
+    @nonobjc public class func fetchRequest(withChannelId channelId: String) -> NSFetchRequest<MessageDB> {
+        let request = NSFetchRequest<MessageDB>(entityName: className)
+        request.predicate = NSPredicate(format: "channelId == %@", channelId)
+        return request
+    }
+    
+    @NSManaged public var identifier: String
+    @NSManaged public var channelId: String
+    @NSManaged public var content: String
+    @NSManaged public var senderId: String
+    @NSManaged public var senderName: String
+    @NSManaged public var created: Date
 
 }

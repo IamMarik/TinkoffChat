@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0797A9942DF4CB41F17508A7 /* libPods-TinkoffChat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 333582F7039D97D2AAE17B97 /* libPods-TinkoffChat.a */; };
+		EC03E9BC25491FE100D73B2B /* MessageDB + init.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC03E9BB25491FE100D73B2B /* MessageDB + init.swift */; };
 		EC14A87B25307BD1007AEB5F /* GCDDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC14A87A25307BD1007AEB5F /* GCDDataManager.swift */; };
 		EC14A88025309EFB007AEB5F /* DataManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC14A87F25309EFB007AEB5F /* DataManagerProtocol.swift */; };
 		EC175EE12540468400B06B1F /* MessageInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC175EE02540468400B06B1F /* MessageInputView.swift */; };
@@ -73,6 +74,7 @@
 		0CAC4ED939047A1509758ABD /* Pods-TinkoffChat.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TinkoffChat.release.xcconfig"; path = "Target Support Files/Pods-TinkoffChat/Pods-TinkoffChat.release.xcconfig"; sourceTree = "<group>"; };
 		0CE4FE4EC6794B49C7E49012 /* Pods-TinkoffChat.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TinkoffChat.debug.xcconfig"; path = "Target Support Files/Pods-TinkoffChat/Pods-TinkoffChat.debug.xcconfig"; sourceTree = "<group>"; };
 		333582F7039D97D2AAE17B97 /* libPods-TinkoffChat.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TinkoffChat.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		EC03E9BB25491FE100D73B2B /* MessageDB + init.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessageDB + init.swift"; sourceTree = "<group>"; };
 		EC14A87A25307BD1007AEB5F /* GCDDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GCDDataManager.swift; sourceTree = "<group>"; };
 		EC14A87F25309EFB007AEB5F /* DataManagerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManagerProtocol.swift; sourceTree = "<group>"; };
 		EC175EE02540468400B06B1F /* MessageInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageInputView.swift; sourceTree = "<group>"; };
@@ -163,6 +165,19 @@
 				333582F7039D97D2AAE17B97 /* libPods-TinkoffChat.a */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		EC03E9BF2549212C00D73B2B /* Entity */ = {
+			isa = PBXGroup;
+			children = (
+				ECDF965F2547D39300928A3F /* ChannelDB+CoreDataClass.swift */,
+				ECDF965E2547D39300928A3F /* ChannelDB+CoreDataProperties.swift */,
+				ECDF966A2547DE0C00928A3F /* ChannelDB + init.swift */,
+				ECDF96602547D39300928A3F /* MessageDB+CoreDataClass.swift */,
+				ECDF96612547D39300928A3F /* MessageDB+CoreDataProperties.swift */,
+				EC03E9BB25491FE100D73B2B /* MessageDB + init.swift */,
+			);
+			path = Entity;
 			sourceTree = "<group>";
 		};
 		EC17F38125235EAF00C6C2A7 /* Views */ = {
@@ -394,11 +409,7 @@
 		ECDF962A2547C5D600928A3F /* Database */ = {
 			isa = PBXGroup;
 			children = (
-				ECDF96602547D39300928A3F /* MessageDB+CoreDataClass.swift */,
-				ECDF96612547D39300928A3F /* MessageDB+CoreDataProperties.swift */,
-				ECDF965F2547D39300928A3F /* ChannelDB+CoreDataClass.swift */,
-				ECDF965E2547D39300928A3F /* ChannelDB+CoreDataProperties.swift */,
-				ECDF966A2547DE0C00928A3F /* ChannelDB + init.swift */,
+				EC03E9BF2549212C00D73B2B /* Entity */,
 				ECDF962B2547C5F200928A3F /* ChatModel.xcdatamodeld */,
 				ECDF96382547CE3200928A3F /* CoreDataStack.swift */,
 			);
@@ -591,6 +602,7 @@
 				EC73E3082514AF6C006D5ADF /* ProfileViewController.swift in Sources */,
 				ECE22DE62537055B00A6AD76 /* UIAlert + changeColors.swift in Sources */,
 				ECAB8616251F85E900BA7845 /* DateFormatter + init.swift in Sources */,
+				EC03E9BC25491FE100D73B2B /* MessageDB + init.swift in Sources */,
 				ECD9CB822527566D003FB027 /* ThemeModel.swift in Sources */,
 				EC73CFC6253EF602001C5CB6 /* FirebaseError.swift in Sources */,
 				ECDF96642547D39300928A3F /* MessageDB+CoreDataClass.swift in Sources */,

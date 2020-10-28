@@ -12,10 +12,12 @@
         </uniquenessConstraints>
     </entity>
     <entity name="MessageDB" representedClassName="MessageDB" syncable="YES">
+        <attribute name="channelId" attributeType="String"/>
         <attribute name="content" attributeType="String"/>
-        <attribute name="created" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="created" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="identifier" attributeType="String"/>
-        <attribute name="senderId" optional="YES" attributeType="String"/>
+        <attribute name="senderId" attributeType="String"/>
+        <attribute name="senderName" attributeType="String"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
                 <constraint value="identifier"/>
@@ -24,6 +26,6 @@
     </entity>
     <elements>
         <element name="ChannelDB" positionX="-63" positionY="-18" width="128" height="103"/>
-        <element name="MessageDB" positionX="-54" positionY="18" width="128" height="103"/>
+        <element name="MessageDB" positionX="-54" positionY="18" width="128" height="133"/>
     </elements>
 </model>

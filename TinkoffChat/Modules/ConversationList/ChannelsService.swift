@@ -18,13 +18,7 @@ final class ChannelsService {
     private lazy var channels: CollectionReference = {
         return db.collection("channels")
     }()
-    
-    private lazy var coreDataStack: CoreDataStack = {
-        let stack = CoreDataStack()
-        stack.addStatisticObservers()
-        return stack
-    }()
-    
+        
     deinit {
         channelsListener?.remove()
     }
@@ -41,9 +35,8 @@ final class ChannelsService {
                     let channels = documents
                         .compactMap { Channel(identifier: $0.documentID,
                                               firestoreData: $0.data()) }
-                   
-                   
-                    self.coreDataStack.performSave { context in
+                             
+                    CoreDataStack.shared.performSave { context in
                         channels.forEach { _ = ChannelDB(channel: $0, in: context) }
                     }
                     

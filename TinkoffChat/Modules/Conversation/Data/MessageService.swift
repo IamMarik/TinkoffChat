@@ -31,6 +31,7 @@ final class MessageService {
     
     /// Create subscription to message list updates
     func subscribeOnMessages(handler: @escaping(Result<[Message], Error>) -> Void) {
+        let channelId = channel.identifier
         messagesListener = messagesReference.addSnapshotListener { (querySnapshot, error) in
             if let error = error {
                 handler(.failure(error))
@@ -38,8 +39,11 @@ final class MessageService {
                 // На случай большого списка решил вывести парсинг и сортировку из основного потока
                 DispatchQueue.global(qos: .default).async {
                     let messages = documents
-                        .compactMap { Message(firestoreData: $0.data()) }
+                        .compactMap { Message(identifier: $0.documentID, firestoreData: $0.data()) }
                         .sorted(by: { $0.created < $1.created })
+                    CoreDataStack.shared.performSave { context in
+                        messages.forEach { _ = MessageDB(message: $0, channelId: channelId, in: context) }
+                    }
                     handler(.success(messages))
                 }
             } else {

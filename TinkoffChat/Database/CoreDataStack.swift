@@ -13,6 +13,8 @@ final class CoreDataStack {
     
     static let logTag = "\(CoreDataStack.self)"
     
+    static var shared = CoreDataStack()
+    
     private let modelName: String
     
     private let modelExtension: String
@@ -86,21 +88,23 @@ final class CoreDataStack {
         context.performAndWait {
             block(context)
             if context.hasChanges {
-                do {
-                    try performSave(in: context)
-                } catch {
-                    assertionFailure(error.localizedDescription)
-                }
+                performSave(in: context)
             }
         }
     }
     
-    private func performSave(in context: NSManagedObjectContext) throws {
-        try context.save()
-        if let parent = context.parent { try performSave(in: parent) }
+    private func performSave(in context: NSManagedObjectContext) {
+        context.performAndWait {
+            do {
+                try context.save()
+            } catch {
+                assertionFailure(error.localizedDescription)
+            }
+        }
+        if let parent = context.parent { performSave(in: parent) }
     }
   
-    func addStatisticObservers() {
+    func addStatisticObserver() {
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(contextObjectDidChanged(_:)),
                                                name: .NSManagedObjectContextObjectsDidChange,
@@ -113,9 +117,9 @@ final class CoreDataStack {
         let insertCount = (userInfo[NSInsertedObjectsKey] as? Set<NSManagedObject>)?.count ?? 0
         let updateCount = (userInfo[NSUpdatedObjectsKey] as? Set<NSManagedObject>)?.count ?? 0
         let deleteCount = (userInfo[NSDeletedObjectsKey] as? Set<NSManagedObject>)?.count ?? 0
-        Log.info("DB changes stats: inserted=\(insertCount), updated=\(updateCount), deleted=\(deleteCount)")
+        Log.info("DBContext changes stats: inserted=\(insertCount), updated=\(updateCount), deleted=\(deleteCount)")
     }
-    
+        
     func deleteStore() {
         let coordinator = NSPersistentStoreCoordinator(managedObjectModel: managedObjectModel)
         do {
