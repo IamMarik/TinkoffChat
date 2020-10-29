@@ -61,7 +61,7 @@ struct ConversationThemeColors {
     
     let cell: CellTheme
     let bottomViewBackground: UIColor
-    let inputTextView: UIColor
+    let input: InputTheme
     
     struct CellTheme {
         let incoming: MessageTheme
@@ -69,6 +69,11 @@ struct ConversationThemeColors {
     }
     
     struct MessageTheme {
+        let background: UIColor
+        let text: UIColor
+    }
+    
+    struct InputTheme {
         let background: UIColor
         let text: UIColor
     }

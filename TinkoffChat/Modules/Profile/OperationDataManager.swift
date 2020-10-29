@@ -33,9 +33,10 @@ class OperationDataManager: DataManagerProtocol {
             )
         }
         
-        if newProfile.avatar !== oldProfile?.avatar {
+        if newProfile.avatar !== oldProfile?.avatar,
+           !newProfile.isStubAvatar {
             writeOperations.append(WriteDataToDiskOperation(
-                                    data: newProfile.avatar?.pngData(),
+                                    data: newProfile.avatar.pngData(),
                                     fileName: ProfileItemsStoreKeys.avatar.rawValue)
             )
         }

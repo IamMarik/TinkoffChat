@@ -13,11 +13,11 @@ class ProfilePlaceholderImageRenderer {
 
     static var colors: [UIColor] = [.systemBlue, .systemPink, .systemTeal, Colors.sunFlower, .systemGreen]
 
-    static func drawProfilePlaceholderImage(forName name: String, inRectangleOfSize rectangleSize: CGSize) -> UIImage? {
+    static func drawProfilePlaceholderImage(forName name: String, inRectangleOfSize rectangleSize: CGSize) -> UIImage {
         
         guard let font = UIFont(name: "Roboto-Medium", size: rectangleSize.width / 2) else {
             Log.error("Font not found")
-            return nil
+            return UIImage()
         }
         
         let xOffset = rectangleSize.width / 7.5
@@ -93,6 +93,6 @@ class ProfilePlaceholderImageRenderer {
             }
             return image
         }
-        return nil
+        return UIImage()
     }
 }

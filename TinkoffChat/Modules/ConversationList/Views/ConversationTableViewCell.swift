@@ -14,8 +14,6 @@ class ConversationTableViewCell: UITableViewCell {
     
     static let commonDateFormatter = DateFormatter(format: "dd MMM")
     
-    @IBOutlet var photoImageView: UIImageView!
-    
     @IBOutlet var nameLabel: UILabel!
     
     @IBOutlet var messageLabel: UILabel!
@@ -23,19 +21,7 @@ class ConversationTableViewCell: UITableViewCell {
     @IBOutlet var receivedDateLabel: UILabel!
 
     @IBOutlet var disclosureImageView: UIImageView!
-    
-    @IBOutlet var isOnlineContainerView: UIView!
-    
-    @IBOutlet var isOnlineIndicatorView: UIView!
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        isOnlineContainerView.layer.cornerRadius = isOnlineContainerView.frame.width / 2
-        isOnlineIndicatorView.layer.cornerRadius = isOnlineIndicatorView.frame.width / 2
-        photoImageView.layer.cornerRadius = photoImageView.frame.width / 2
-        photoImageView.clipsToBounds = true
-    }
-        
+            
 }
 
 extension ConversationTableViewCell: ConfigurableView {
@@ -60,8 +46,6 @@ extension ConversationTableViewCell: ConfigurableView {
             messageLabel.font = UIFont.systemFont(ofSize: 13, weight: .regular)
         }
         
-        photoImageView.image = ProfilePlaceholderImageRenderer.drawProfilePlaceholderImage(forName: model.name, inRectangleOfSize: .init(width: 120, height: 120))
-
         nameLabel.textColor = theme.colors.conversationList.cell.name
         messageLabel.textColor = theme.colors.conversationList.cell.message
         receivedDateLabel.textColor = theme.colors.conversationList.cell.receivedDate

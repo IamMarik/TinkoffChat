@@ -75,16 +75,16 @@ final class CoreDataStack {
         return context
     }()
     
-    private func saveContext() -> NSManagedObjectContext {
+    private(set) lazy var saveContext: NSManagedObjectContext = {
         let context = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
         context.parent = mainContext
         context.automaticallyMergesChangesFromParent = true
         context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
         return context
-    }
+    }()
     
     func performSave(_ block: (NSManagedObjectContext) -> Void) {
-        let context = saveContext()
+        let context = saveContext
         context.performAndWait {
             block(context)
             if context.hasChanges {
@@ -127,6 +127,7 @@ final class CoreDataStack {
             try coordinator.destroyPersistentStore(at: storeURL,
                                                     ofType: NSSQLiteStoreType,
                                                     options: nil)
+            Log.info("DB was successful removed", tag: Self.logTag)
         } catch {
             Log.error(error.localizedDescription, tag: Self.logTag)
         }

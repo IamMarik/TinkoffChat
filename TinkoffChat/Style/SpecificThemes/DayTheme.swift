@@ -45,7 +45,10 @@ struct DayTheme: ApplicationTheme {
                 )                
             ),
             bottomViewBackground: UIColor(hex: 0xF6F6F6),
-            inputTextView: .white
+            input: .init(
+                background: .white,
+                text: .black
+            )
         ),
         profile: .init(
             name: .black,

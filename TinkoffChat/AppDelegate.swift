@@ -18,7 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         FirebaseApp.configure()
         //CoreDataStack.shared.deleteStore()
         CoreDataStack.shared.addStatisticObserver()
-        showingFetchRequestOnStart()
+        showDBCounts()
         return true
     }
     
@@ -27,7 +27,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
     
-    private func showingFetchRequestOnStart() {
+    private func showDBCounts() {
         let context = CoreDataStack.shared.mainContext
         // Логирую подтверждение того, что данные сохраняются при перезагрузке
         let resultChannels = (try? context.fetch(ChannelDB.fetchRequest()) as? [ChannelDB]) ?? []

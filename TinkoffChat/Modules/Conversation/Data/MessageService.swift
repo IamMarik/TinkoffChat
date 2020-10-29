@@ -54,12 +54,14 @@ final class MessageService {
     
     /// Add a new message to channel
     func addMessage(content: String, handler: @escaping(Result<String, Error>) -> Void) {
+        guard let profile = UserData.shared.profile else { return }
+        
         var ref: DocumentReference?
         ref = messagesReference.addDocument(
             data: [
                 "content": content,
                 "senderId": UserData.shared.identifier,
-                "senderName": UserData.shared.name,
+                "senderName": profile.fullName,
                 "created": Timestamp(date: Date())
             ]) { (error) in
             if let error = error {
