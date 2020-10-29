@@ -160,7 +160,7 @@ class ProfileViewController: UIViewController {
         case .editing:
             editAvatarButton.isHidden = false
             saveGCDButton.isEnabled = false
-            saveGCDButton.setTitle("Save GCD", for: .normal)
+            saveGCDButton.setTitle("Save", for: .normal)
             profileNameLabel.isHidden = true
             profileNameTextField.isHidden = false
             profileNameTextField.text = profile?.fullName
@@ -187,7 +187,6 @@ class ProfileViewController: UIViewController {
             UserData.shared.loadProfile { (profile) in
                 DispatchQueue.main.async {
                     self?.changeView(state: .view)
-                    let avatar = profile.avatar
                     if success {
                         self?.profile = profile
                         self?.updateData()

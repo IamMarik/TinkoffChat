@@ -13,8 +13,6 @@ class ConversationsListViewController: UIViewController {
     lazy var channelsService = ChannelsService()
     
     var channels: [Channel] = []
-        
-    //var userProfile: ProfileViewModel?
      
     var profileDataManager: DataManagerProtocol = GCDDataManager()
     
