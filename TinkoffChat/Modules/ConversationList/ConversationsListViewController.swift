@@ -10,7 +10,12 @@ import UIKit
 
 class ConversationsListViewController: UIViewController {
     
-    lazy var channelsService = ChannelsService()
+    // lazy var channelsService = ChannelsService()
+    
+    lazy var presenter: ConversationListPresenter = {
+        let presenter = ConversationListPresenter(for: self)
+        return presenter
+    }()
     
     var channels: [Channel] = []
      
@@ -48,7 +53,8 @@ class ConversationsListViewController: UIViewController {
         setupNavigationBar()
         setupTheme()
         loadProfile()
-        loadChannels()
+        presenter.activate()
+        // loadChannels()
     }
         
     private func setupTableView() {
@@ -100,20 +106,20 @@ class ConversationsListViewController: UIViewController {
         }
     }
     
-    private func loadChannels() {
-        channelsService.subscribeOnChannels { [weak self] (result) in
-            switch result {
-            case .success(let channels):
-                DispatchQueue.main.async {
-                    self?.channels = channels
-                    // По-хорошему можно обновлять с анимацией добавления, перемещения канала
-                    self?.tableView.reloadData()
-                }
-            case .failure(let error):
-                Log.error("Error during update channels: \(error.localizedDescription)")
-            }
-        }
-    }
+//    private func loadChannels() {
+//        channelsService.subscribeOnChannels { [weak self] (result) in
+//            switch result {
+//            case .success(let channels):
+//                DispatchQueue.main.async {
+//                    self?.channels = channels
+//                    // По-хорошему можно обновлять с анимацией добавления, перемещения канала
+//                    self?.tableView.reloadData()
+//                }
+//            case .failure(let error):
+//                Log.error("Error during update channels: \(error.localizedDescription)")
+//            }
+//        }
+//    }
     
     private func updateProfile(profile: ProfileViewModel) {
         RunLoop.main.perform(inModes: [.default]) { [weak self] in
@@ -159,11 +165,7 @@ class ConversationsListViewController: UIViewController {
         alert.addAction(UIAlertAction(title: "Create", style: .default, handler: { [weak self] _ in
             if let name = alert.textFields?.first?.text,
                !name.isEmpty {
-                self?.channelsService.createChannel(name: name) { (result) in
-                    if case Result.failure(_) = result {
-                        self?.showErrorAlert(message: "Error during create new channel, try later.")
-                    }
-                }
+                self?.presenter.createChannel(name: name)
             } else {
                 self?.showErrorAlert(message: "Channel name can't be empty.")
             }
@@ -225,6 +227,19 @@ extension ConversationsListViewController: ThemesPickerDelegate {
     func themeDidChanged(on themeOption: ThemeOptions) {
         setupTheme()
         tableView.reloadData()
+    }
+    
+}
+
+extension ConversationsListViewController: ConversationListView {
+    
+    func updateView(with channels: [Channel]) {
+        self.channels = channels
+        tableView.reloadData()
+    }
+    
+    func showError(message: String) {
+        
     }
     
 }

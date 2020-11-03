@@ -31,4 +31,11 @@ extension Channel {
             self.lastActivity = nil
         }
     }
+    
+    init(dbModel: ChannelDB) {
+        self.identifier = dbModel.identifier
+        self.name = dbModel.name
+        self.lastMessage = dbModel.lastMessage
+        self.lastActivity = dbModel.lastActivity
+    }
 }
