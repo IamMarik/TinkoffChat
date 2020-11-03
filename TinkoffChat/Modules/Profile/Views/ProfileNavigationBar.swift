@@ -24,7 +24,6 @@ class ProfileNavigationBar: UIView {
         return CGSize(width: 0, height: 55)
     }
     
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureView()
@@ -57,7 +56,6 @@ class ProfileNavigationBar: UIView {
     }
     
 }
-
 
 protocol ProfileNavigationBarDelegate: class {
     

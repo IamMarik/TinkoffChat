@@ -9,9 +9,10 @@
 import UIKit
 
 class MessageTableViewCell: UITableViewCell {
-   
     
     @IBOutlet var containerView: UIView!
+    
+    @IBOutlet var senderLabel: UILabel!
     
     @IBOutlet var messageLabel: UILabel!
     
@@ -23,21 +24,24 @@ class MessageTableViewCell: UITableViewCell {
         containerView.layer.shadowColor = UIColor.black.withAlphaComponent(0.4).cgColor
         containerView.layer.shadowRadius = 1.63
         containerView.layer.shadowOffset = CGSize(width: 0, height: 2)
-        
     }
     
 }
 
 extension MessageTableViewCell: ConfigurableView {
-    func configure(with model: MessageCellModel) {
-        messageLabel.text = model.text
-        trailingContainerConstraint.isActive = model.direction == .outgoing
-        setupTheme(for: model.direction)
+    func configure(with model: Message) {
+        let isMyMessage = model.isMyMessage
+        messageLabel.text = model.content
+        senderLabel.text = isMyMessage ? "" : model.senderName 
+        trailingContainerConstraint.isActive = isMyMessage
+        senderLabel.isHidden = isMyMessage
+        setupTheme(isMyMessage: isMyMessage)
+        invalidateIntrinsicContentSize()
     }
     
-    func setupTheme(for direction: MessageDirection) {
+    func setupTheme(isMyMessage: Bool) {
         let themeColors = Themes.current.colors.conversation.cell
-        let directionTheme = direction == .incoming ? themeColors.incoming : themeColors.outgoing
+        let directionTheme = isMyMessage ? themeColors.outgoing : themeColors.incoming
         containerView.backgroundColor = directionTheme.background
         messageLabel.textColor = directionTheme.text
     }

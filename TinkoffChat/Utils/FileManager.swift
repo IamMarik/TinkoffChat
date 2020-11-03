@@ -8,7 +8,6 @@
 
 import Foundation
 
-
 class FileUtils {
     
     static func getDocumentsDirectory() -> URL {

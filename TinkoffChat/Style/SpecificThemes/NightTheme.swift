@@ -8,7 +8,6 @@
 
 import UIKit
 
-
 struct NightTheme: ApplicationTheme {
     
     var name = "Night"
@@ -44,7 +43,9 @@ struct NightTheme: ApplicationTheme {
                     background: UIColor(hex: 0x5C5C5C),
                     text: .white
                 )
-            )
+            ),
+            bottomViewBackground: .black,
+            inputTextView: UIColor(hex: 0x3B3B3B)
         ),
         profile: .init(
             name: .white,

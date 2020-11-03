@@ -8,7 +8,6 @@
 
 import UIKit
 
-
 struct ClassicTheme: ApplicationTheme {
     
     var name = "Classic"
@@ -44,7 +43,9 @@ struct ClassicTheme: ApplicationTheme {
                     background: UIColor(hex: 0xDCF7C5),
                     text: .black
                 )
-            )
+            ),
+            bottomViewBackground: UIColor(hex: 0xF6F6F6),
+            inputTextView: .white
         ),
         profile: .init(
             name: .black,

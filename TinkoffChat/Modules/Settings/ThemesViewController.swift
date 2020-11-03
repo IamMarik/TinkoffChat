@@ -8,7 +8,6 @@
 
 import UIKit
 
-
 class ThemesViewController: UIViewController {
     
     /*
@@ -21,7 +20,6 @@ class ThemesViewController: UIViewController {
     let initialThemeOption = Themes.currentThemeOption
     
     @IBOutlet var stackView: UIStackView!
-
     
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -40,26 +40,28 @@ class ConversationTableViewCell: UITableViewCell {
 
 extension ConversationTableViewCell: ConfigurableView {
     
-    func configure(with model: ConversationCellModel) {
+    func configure(with model: Channel) {
         let theme = Themes.current
         
         nameLabel.text = model.name
         
-        messageLabel.text = !model.message.isEmpty ? model.message : "No messages yet"
-        let dateFormatter = Calendar.current.isDateInToday(model.date) ? Self.todayDateFormatter : Self.commonDateFormatter
-        receivedDateLabel.text = !model.message.isEmpty ? dateFormatter.string(from: model.date) : ""
+        messageLabel.text = model.lastMessage ?? "No messages yet"
         
-        if model.message.isEmpty {
-            messageLabel.font = UIFont.italicSystemFont(ofSize: 13)  
-        } else if model.hasUnreadMessage {
-            messageLabel.font = UIFont.systemFont(ofSize: 13, weight: .bold)
+        if let lastActivityDate = model.lastActivity {
+           let dateFormatter = Calendar.current.isDateInToday(lastActivityDate) ? Self.todayDateFormatter : Self.commonDateFormatter
+            receivedDateLabel.text = dateFormatter.string(from: lastActivityDate)
+        } else {
+            receivedDateLabel.text = ""
+        }
+                
+        if model.lastMessage == nil {
+            messageLabel.font = UIFont.italicSystemFont(ofSize: 13)
         } else {
             messageLabel.font = UIFont.systemFont(ofSize: 13, weight: .regular)
         }
         
         photoImageView.image = ProfilePlaceholderImageRenderer.drawProfilePlaceholderImage(forName: model.name, inRectangleOfSize: .init(width: 120, height: 120))
-        
-        isOnlineContainerView.isHidden = !model.isOnline
+
         nameLabel.textColor = theme.colors.conversationList.cell.name
         messageLabel.textColor = theme.colors.conversationList.cell.message
         receivedDateLabel.textColor = theme.colors.conversationList.cell.receivedDate
@@ -68,6 +70,5 @@ extension ConversationTableViewCell: ConfigurableView {
         selectedBackgroundView.backgroundColor = theme.colors.conversationList.cell.cellSelected
         self.selectedBackgroundView = selectedBackgroundView
     }
-
     
 }

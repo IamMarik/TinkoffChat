@@ -8,7 +8,6 @@
 
 import Foundation
 
-
 protocol ConfigurableView {
     
     associatedtype ConfigurationModel

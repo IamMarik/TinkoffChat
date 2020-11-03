@@ -51,9 +51,8 @@ class ProfileViewController: UIViewController {
  
     @IBOutlet var saveOperationButton: UIButton!
     
-    
     /// Стейты вьюхи. Сделал String для дебага
-    enum ProfileViewState: String{
+    enum ProfileViewState: String {
         // Загрузка профиля
         case loading
         // Просмотр профиля
@@ -66,10 +65,6 @@ class ProfileViewController: UIViewController {
         case saving
     }
     
-    deinit {
-        NotificationCenter.default.removeObserver(self)
-    }
-
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -103,8 +98,8 @@ class ProfileViewController: UIViewController {
     }
     
     private func setupKeyboard() {
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name:UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name:UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     private func updateData() {
@@ -262,13 +257,12 @@ class ProfileViewController: UIViewController {
         
         present(alertController, animated: true)
     }
-    
 
     // Здесь IBAction от двух кнопок сохранения
     @IBAction func saveButtonDidTap(_ sender: UIButton) {
         switch currentState {
         case .loading, .editing, .saving:
-            break;
+            break
         case .view:
             changeView(state: .editing)
         case .hasChanges:
@@ -278,7 +272,6 @@ class ProfileViewController: UIViewController {
             saveProfileChanges(with: dataManager)
         }
     }
-        
     
     @objc func checkProfileDataForChanges() {
         // Проверяем изменились ли данные от исходных по контенту, изображение проверяем по ссылке объекта.
@@ -290,7 +283,7 @@ class ProfileViewController: UIViewController {
         changeView(state: hasDataChanges ? .hasChanges : .editing)
     }
     
-    @objc func keyboardWillShow(notification:NSNotification) {
+    @objc func keyboardWillShow(notification: NSNotification) {
         guard let userInfo = notification.userInfo,
               let keyboardSize = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else { return }
         
@@ -301,7 +294,7 @@ class ProfileViewController: UIViewController {
         scrollView.scrollIndicatorInsets = contentInsets
     }
 
-    @objc func keyboardWillHide(notification:NSNotification) {
+    @objc func keyboardWillHide(notification: NSNotification) {
         scrollView.contentInset = .zero
         scrollView.scrollIndicatorInsets = .zero
     }
@@ -326,7 +319,7 @@ extension ProfileViewController: UITextViewDelegate {
 
 extension ProfileViewController: UINavigationControllerDelegate, UIImagePickerControllerDelegate {
 
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
         if let image = info[.originalImage] as? UIImage {
             self.profileAvatarImageView.image = image
            

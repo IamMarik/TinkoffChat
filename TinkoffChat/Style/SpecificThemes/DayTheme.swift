@@ -8,7 +8,6 @@
 
 import UIKit
 
-
 struct DayTheme: ApplicationTheme {
     
     var name = "Day"
@@ -43,8 +42,10 @@ struct DayTheme: ApplicationTheme {
                 outgoing: .init(
                     background: UIColor(hex: 0x4389F9),
                     text: .white
-                )
-            )
+                )                
+            ),
+            bottomViewBackground: UIColor(hex: 0xF6F6F6),
+            inputTextView: .white
         ),
         profile: .init(
             name: .black,

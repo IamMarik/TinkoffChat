@@ -10,14 +10,15 @@ import UIKit
 
 class ConversationsListViewController: UIViewController {
     
-    let sections: [ConversationSection] = ConversationSectionsMockData.sections
+    lazy var channelsService = ChannelsService()
+    
+    var channels: [Channel] = []
         
     var userProfile: ProfileViewModel?
     
     static let mockDefaultProfile = ProfileViewModel(fullName: "Marat Dzhanybaev",
                                                      description: "Love coding, bbq and beer",
                                                      avatar: nil)
-
   
     var profileDataManager: DataManagerProtocol = GCDDataManager()
     
@@ -39,21 +40,22 @@ class ConversationsListViewController: UIViewController {
     
     @IBOutlet var profileBarButtonItem: UIBarButtonItem!
     
+    @IBOutlet var addChannelBarButtonItem: UIBarButtonItem!
+    
     override var preferredStatusBarStyle: UIStatusBarStyle {
         Themes.current.statusBarStyle
     }
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Tinkoff chat"
+        title = "Channels"
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         setupTableView()
         setupNavigationBar()
         setupTheme()
         loadProfile()
+        loadChannels()
     }
-
         
     private func setupTableView() {
         tableView.dataSource = self
@@ -71,7 +73,7 @@ class ConversationsListViewController: UIViewController {
             let navBarAppearance = UINavigationBarAppearance()
             navBarAppearance.configureWithOpaqueBackground()
             navBarAppearance.titleTextAttributes = [.foregroundColor: theme.colors.navigationBar.title]
-            navBarAppearance.largeTitleTextAttributes = [.foregroundColor:theme.colors.navigationBar.title]
+            navBarAppearance.largeTitleTextAttributes = [.foregroundColor: theme.colors.navigationBar.title]
             navBarAppearance.backgroundColor = theme.colors.navigationBar.background
             navigationController?.navigationBar.standardAppearance = navBarAppearance
             navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
@@ -87,6 +89,7 @@ class ConversationsListViewController: UIViewController {
         setNeedsStatusBarAppearanceUpdate()        
         tableView.separatorColor = Themes.current.colors.conversationList.table.separator
         settingsBarButtonItem.tintColor = theme.colors.navigationBar.tint
+        addChannelBarButtonItem.tintColor = theme.colors.navigationBar.tint
     }
     
     private func setupNavigationBar() {
@@ -110,6 +113,21 @@ class ConversationsListViewController: UIViewController {
         }
     }
     
+    private func loadChannels() {
+        channelsService.subscribeOnChannels { [weak self] (result) in
+            switch result {
+            case .success(let channels):
+                DispatchQueue.main.async {
+                    self?.channels = channels
+                    // По-хорошему можно обновлять с анимацией добавления, перемещения канала
+                    self?.tableView.reloadData()
+                }
+            case .failure(let error):
+                Log.error("Error during update channels: \(error.localizedDescription)")
+            }
+        }
+    }
+    
     private func updateProfile(profile: ProfileViewModel) {
         RunLoop.main.perform(inModes: [.default]) { [weak self] in
             self?.userProfile = profile
@@ -118,8 +136,15 @@ class ConversationsListViewController: UIViewController {
         }
     }
     
+    private func showErrorAlert(message: String) {
+        let alert = UIAlertController.themeAlert(title: "Error", message: message)
+        alert.addAction(UIAlertAction(title: "Got it", style: .default, handler: nil))
+        present(alert, animated: true, completion: nil)
+    }
+    
     @objc private func profileItemDidTap() {
-        guard let profileViewController = UIStoryboard(name: "Profile", bundle: nil).instantiateViewController(withIdentifier: "profileId") as? ProfileViewController else { return }
+        guard let profileViewController = UIStoryboard(name: "Profile", bundle: nil)
+                .instantiateViewController(withIdentifier: "profileId") as? ProfileViewController else { return }
         // Вообще получается нелогично, но раз для задания требуется грузить профайл внутри ProfileViewController,
         // тогда не будем инжектить его здесь, хотя он уже готов
         // profileViewController.profile = userProfile
@@ -130,39 +155,60 @@ class ConversationsListViewController: UIViewController {
     }
     
     @IBAction func settingsItemDidTap(_ sender: Any) {
-        guard let themesViewController = UIStoryboard(name: "ThemeSettings", bundle: nil).instantiateViewController(withIdentifier: "ThemeSettingsId") as? ThemesViewController else { return }
+        guard let themesViewController = UIStoryboard(name: "ThemeSettings", bundle: nil)
+                .instantiateViewController(withIdentifier: "ThemeSettingsId") as? ThemesViewController else { return }
         
         themesViewController.delegate = self
         navigationController?.pushViewController(themesViewController, animated: true)
     }
     
+    @IBAction func addChannelItemDidTap(_ sender: Any) {
+        
+        let alert = UIAlertController.themeAlert(title: "Adding new channel", message: "")
+        
+        alert.addTextField { (textField) in
+            textField.placeholder = "Enter channel name here..."
+        }
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "Create", style: .default, handler: { [weak self] _ in
+            if let name = alert.textFields?.first?.text,
+               !name.isEmpty {
+                self?.channelsService.createChannel(name: name) { (result) in
+                    if case Result.failure(_) = result {
+                        self?.showErrorAlert(message: "Error during create new channel, try later.")
+                    }
+                }
+            } else {
+                self?.showErrorAlert(message: "Channel name can't be empty.")
+            }
+        }))
+        present(alert, animated: true)
+    }
 }
-
 
 extension ConversationsListViewController: UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return sections.count
+        return 1
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return sections[section].conversations.count
+        return channels.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as? ConversationTableViewCell else {
             return UITableViewCell()
         }
-        let conversation = sections[indexPath.section].conversations[indexPath.row]
-        cell.configure(with: conversation)      
+        let channel = channels[indexPath.row]
+        cell.configure(with: channel)
         return cell
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        let section = sections[section]
-        return !section.conversations.isEmpty ? section.title : nil
+        return "Channel list"
     }
-    
     
 }
 
@@ -174,8 +220,9 @@ extension ConversationsListViewController: UITableViewDelegate {
                 .instantiateViewController(withIdentifier: "conversationId") as? ConversationViewController else {
             return
         }
-        let conversation = sections[indexPath.section].conversations[indexPath.row]
-        conversationViewController.title = conversation.name
+        let chanel = channels[indexPath.row]
+        conversationViewController.title = chanel.name
+        conversationViewController.channel = chanel
         navigationController?.pushViewController(conversationViewController, animated: true)
     }
     
@@ -187,7 +234,6 @@ extension ConversationsListViewController: UITableViewDelegate {
     }
     
 }
-
 
 extension ConversationsListViewController: ThemesPickerDelegate {
     

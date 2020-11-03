@@ -8,7 +8,6 @@
 
 import Foundation
 
-
 /// Util-class for logging
 public class Log {
 
