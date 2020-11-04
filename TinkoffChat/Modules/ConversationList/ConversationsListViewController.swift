@@ -192,11 +192,15 @@ class ConversationsListViewController: UIViewController {
         
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         alert.addAction(UIAlertAction(title: "Create", style: .default, handler: { [weak self] _ in
-            if let name = alert.textFields?.first?.text,
-               !name.isEmpty {
-                self?.createChannel(name: name)
+            if let nameText = alert.textFields?.first?.text {
+                let name = nameText.trimmingCharacters(in: .whitespacesAndNewlines)
+                if !name.isEmpty {
+                    self?.createChannel(name: name)
+                } else {
+                    self?.showErrorAlert(message: "Channel name can't be empty")
+                }
             } else {
-                self?.showErrorAlert(message: "Channel name can't be empty.")
+                self?.showErrorAlert(message: "Channel name can't be nil.")
             }
         }))
         present(alert, animated: true)
