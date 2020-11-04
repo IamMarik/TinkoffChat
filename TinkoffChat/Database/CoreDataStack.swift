@@ -71,7 +71,7 @@ final class CoreDataStack {
         let context = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
         context.parent = writterContext
         context.automaticallyMergesChangesFromParent = true
-        context.mergePolicy = NSMergeByPropertyStoreTrumpMergePolicy
+        context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
         return context
     }()
     
@@ -79,7 +79,7 @@ final class CoreDataStack {
         let context = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
         context.parent = mainContext
         context.automaticallyMergesChangesFromParent = true
-        context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+        context.mergePolicy = NSOverwriteMergePolicy
         return context
     }()
     
@@ -88,6 +88,11 @@ final class CoreDataStack {
         context.performAndWait {
             block(context)
             if context.hasChanges {
+                do {
+                    try context.obtainPermanentIDs(for: Array(context.insertedObjects))
+                } catch {
+                    Log.error(error.localizedDescription, tag: Self.logTag)
+                }                
                 performSave(in: context)
             }
         }

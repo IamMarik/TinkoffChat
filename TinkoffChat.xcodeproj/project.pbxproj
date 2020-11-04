@@ -37,7 +37,6 @@
 		EC845899253C62C100EEBCA3 /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC845898253C62C100EEBCA3 /* UserData.swift */; };
 		EC84589D253C717A00EEBCA3 /* MessageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC84589C253C717A00EEBCA3 /* MessageService.swift */; };
 		EC89FDC6250E07CF00B22EC4 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = EC89FDC5250E07CF00B22EC4 /* README.md */; };
-		EC999F042551A33F00D7533A /* ConversationListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC999F032551A33F00D7533A /* ConversationListPresenter.swift */; };
 		EC9C347D253306D100932552 /* OperationDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC9C347C253306D100932552 /* OperationDataManager.swift */; };
 		ECAB8611251F80D600BA7845 /* DateFormatter + dateOrNow.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECAB8610251F80D600BA7845 /* DateFormatter + dateOrNow.swift */; };
 		ECAB8616251F85E900BA7845 /* DateFormatter + init.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECAB8615251F85E900BA7845 /* DateFormatter + init.swift */; };
@@ -103,7 +102,6 @@
 		EC845898253C62C100EEBCA3 /* UserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
 		EC84589C253C717A00EEBCA3 /* MessageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageService.swift; sourceTree = "<group>"; };
 		EC89FDC5250E07CF00B22EC4 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		EC999F032551A33F00D7533A /* ConversationListPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationListPresenter.swift; sourceTree = "<group>"; };
 		EC9C347C253306D100932552 /* OperationDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperationDataManager.swift; sourceTree = "<group>"; };
 		ECAB8610251F80D600BA7845 /* DateFormatter + dateOrNow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter + dateOrNow.swift"; sourceTree = "<group>"; };
 		ECAB8615251F85E900BA7845 /* DateFormatter + init.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter + init.swift"; sourceTree = "<group>"; };
@@ -200,7 +198,6 @@
 				ECE295C12528AE2100F30BAA /* RootNavigationController.swift */,
 				EC3B4950251F659E002A93A8 /* Conversations.storyboard */,
 				EC845893253C4F0B00EEBCA3 /* ChannelsService.swift */,
-				EC999F032551A33F00D7533A /* ConversationListPresenter.swift */,
 			);
 			path = ConversationList;
 			sourceTree = "<group>";
@@ -632,7 +629,6 @@
 				EC53DCAA252C9BF7000227E3 /* ThemesPickerDelegate.swift in Sources */,
 				EC845894253C4F0B00EEBCA3 /* ChannelsService.swift in Sources */,
 				EC84589D253C717A00EEBCA3 /* MessageService.swift in Sources */,
-				EC999F042551A33F00D7533A /* ConversationListPresenter.swift in Sources */,
 				ECC26949250C77D2001C08A0 /* Log.swift in Sources */,
 				ECDF966B2547DE0C00928A3F /* ChannelDB + init.swift in Sources */,
 				EC14A88025309EFB007AEB5F /* DataManagerProtocol.swift in Sources */,

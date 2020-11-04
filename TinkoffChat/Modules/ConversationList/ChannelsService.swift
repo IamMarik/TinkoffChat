@@ -11,6 +11,8 @@ import Firebase
 
 final class ChannelsService {
     
+    private static let logTag = "\(ChannelsService.self)"
+    
     private var db = Firestore.firestore()
     
     private var channelsListener: ListenerRegistration?
@@ -23,25 +25,60 @@ final class ChannelsService {
         channelsListener?.remove()
     }
     
-    /// Create subscription to channel list updates
-    func subscribeOnChannels(handler: @escaping (Result<[Channel], Error>) -> Void) {
-        channelsListener = channels.addSnapshotListener { (querySnapshot, error) in
+    func fetchChannels(handler: @escaping (Result<Bool, Error>) -> Void) {
+        channels.getDocuments { (querySnapshot, error) in
             if let error = error {
-                Log.error("Error fetching channels")
+                Log.error("Error fetching all channels")
                 handler(.failure(error))
             } else if let documents = querySnapshot?.documents {
                                 
                 DispatchQueue.global(qos: .default).async {
-                    let channels = documents
-                        .compactMap { Channel(identifier: $0.documentID,
-                                              firestoreData: $0.data()) }
-                             
-                    CoreDataStack.shared.performSave { context in
-                        channels.forEach { _ = ChannelDB(channel: $0, in: context) }
+                    CoreDataStack.shared.performSave { (context) in
+                        _ = documents.compactMap {
+                            ChannelDB(identifier: $0.documentID,
+                                      firestoreData: $0.data(),
+                                      in: context)
+                            }
                     }
                     
-                    handler(.success(channels))
+                    DispatchQueue.main.async {
+                        handler(.success(true))
+                    }
                 }
+            } else {
+                handler(.failure(FirebaseError.snapshotIsNil))
+            }
+        }
+    }
+    
+    /// Create subscription to channel list updates
+    func subscribeOnChannelsUpdates(handler: @escaping (Result<Bool, Error>) -> Void) {
+        channelsListener = channels.addSnapshotListener(includeMetadataChanges: true) { (querySnapshot, error) in
+            if let error = error {
+                Log.error("Error fetching channels", tag: Self.logTag)
+                handler(.failure(error))
+            } else if let snapshot = querySnapshot {
+                DispatchQueue.global(qos: .default).async {
+                    CoreDataStack.shared.performSave { context in
+                        Log.info("Success update channels fetch: \(snapshot.documentChanges.count)", tag: Self.logTag)
+                        
+                        snapshot.documentChanges.forEach { diff in
+                            print(diff.document.data()["name"] ?? "")
+                            switch diff.type {
+                            case .added, .modified:
+                                _ = ChannelDB(identifier: diff.document.documentID,
+                                              firestoreData: diff.document.data(),
+                                              in: context)
+                            case .removed:
+                                let id = diff.document.documentID
+                                if let result = try? context.fetch(ChannelDB.fetchRequest(withId: id)).first {
+                                    context.delete(result)
+                                }
+                            }
+                        }
+                        handler(.success(true))
+                    }
+                }          
             } else {
                 handler(.failure(FirebaseError.snapshotIsNil))
             }
