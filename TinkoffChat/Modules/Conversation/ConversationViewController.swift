@@ -178,9 +178,9 @@ extension ConversationViewController: MessageInputViewDelegate {
             self.resignFirstResponder()
             self.messageInputView.clearInput()
         }
-        
+        let sendMessage = text.trimmingCharacters(in: .whitespacesAndNewlines)
         messageService?.addMessage(
-            content: text) { [weak self] (result) in
+            content: sendMessage) { [weak self] (result) in
             DispatchQueue.main.async {
                 if case Result.failure(_) = result {
                     let alert = UIAlertController.themeAlert(
