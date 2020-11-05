@@ -11,6 +11,8 @@ import CoreData
 
 class ConversationsListViewController: UIViewController {
     
+    static let logTag = "\(ConversationsListViewController.self)"
+    
     lazy var channelsService = ChannelsService()
  
     private lazy var fetchedResultsController: NSFetchedResultsController<ChannelDB> = {
@@ -18,7 +20,7 @@ class ConversationsListViewController: UIViewController {
         let sortByDate = NSSortDescriptor(key: "lastActivity", ascending: false)
         let sortById = NSSortDescriptor(key: "identifier", ascending: true)
         request.sortDescriptors = [sortByDate, sortById]
-        request.fetchBatchSize = 200
+        request.fetchBatchSize = 20
         let controller = NSFetchedResultsController(fetchRequest: request,
                                                     managedObjectContext: CoreDataStack.shared.mainContext,
                                                     sectionNameKeyPath: nil,
@@ -29,6 +31,8 @@ class ConversationsListViewController: UIViewController {
     private var profileDataManager: DataManagerProtocol = GCDDataManager()
     
     private let cellId = String(describing: ConversationTableViewCell.self)
+    
+    private var isInitialFetch = true
         
     lazy var profileAvatarButton: UIButton = {
         let button = UIButton()
@@ -112,25 +116,16 @@ class ConversationsListViewController: UIViewController {
         }
     }
     
-    private func loadSavedChannels() {
-        do {
-            try fetchedResultsController.performFetch()
-            tableView.reloadData()
-        } catch {
-            showErrorAlert(message: "Fetch channels request failed")
-            Log.error("Fetch channels request failed")
-        }
-    }
-    
     private func fetchChannels() {
-        channelsService.fetchChannels { [weak self] result in
-            DispatchQueue.main.async {
-                self?.loadSavedChannels()
-                if case Result.success(_) = result {
-                    self?.subscribeOnChannelUpdates()
-                }
-            }
+        do {
+            // Загружаем уже сохраненные каналы из бд
+            try fetchedResultsController.performFetch()
+        } catch {
+            showErrorAlert(message: error.localizedDescription)
+            Log.error(error.localizedDescription, tag: Self.logTag)
         }
+        // Подписываемся на обновления из firestore
+        subscribeOnChannelUpdates()
     }
     
     private func subscribeOnChannelUpdates() {
@@ -243,7 +238,7 @@ extension ConversationsListViewController: UITableViewDelegate {
         }
         let channel = fetchedResultsController.object(at: indexPath)
         conversationViewController.title = channel.name
-        conversationViewController.channel = Channel(dbModel: channel)
+        conversationViewController.channel = channel
         navigationController?.pushViewController(conversationViewController, animated: true)
     }
     
@@ -251,7 +246,21 @@ extension ConversationsListViewController: UITableViewDelegate {
         guard let headerView = view as? UITableViewHeaderFooterView else { return }
         headerView.contentView.backgroundColor = Themes.current.colors.conversationList.table.sectionHeaderBackground
         headerView.textLabel?.textColor = Themes.current.colors.conversationList.table.sectionHeaderTitle
-        
+    }
+            
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            let channel = self.fetchedResultsController.object(at: indexPath)
+            channelsService.deleteChannel(channel) { (result) in
+                switch result {
+                case .success(let messageCount):
+                    Log.info("Successful delete channel \(channel.name) with \(messageCount) message", tag: Self.logTag)
+                case .failure(let error):
+                    self.showErrorAlert(message: error.localizedDescription)
+                    Log.error("Error during deleting channel \(channel.name). \(error.localizedDescription)", tag: Self.logTag)
+                }
+            }
+        }
     }
     
 }
@@ -273,17 +282,19 @@ extension ConversationsListViewController: NSFetchedResultsControllerDelegate {
     
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         tableView.endUpdates()
+        isInitialFetch = false
     }
     
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
                     didChange anObject: Any,
                     at indexPath: IndexPath?,
                     for type: NSFetchedResultsChangeType,
-                    newIndexPath: IndexPath?) {        
+                    newIndexPath: IndexPath?) {
+        
         switch type {
         case .insert:
             if let indexPath = newIndexPath {
-                tableView.insertRows(at: [indexPath], with: .automatic)
+                tableView.insertRows(at: [indexPath], with: isInitialFetch ? .none : .automatic)
             }
         case .update:
             if let indexPath = indexPath,
@@ -296,11 +307,11 @@ extension ConversationsListViewController: NSFetchedResultsControllerDelegate {
                 tableView.deleteRows(at: [indexPath], with: .none)
             }
             if let newIndexPath = newIndexPath {
-                tableView.insertRows(at: [newIndexPath], with: .automatic)
+                tableView.insertRows(at: [newIndexPath], with: isInitialFetch ? .none : .automatic)
             }
         case .delete:
             if let indexPath = indexPath {
-                tableView.deleteRows(at: [indexPath], with: .fade)
+                tableView.deleteRows(at: [indexPath], with: isInitialFetch ? .none : .fade)
             }
         @unknown default:
             fatalError()

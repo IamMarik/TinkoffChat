@@ -12,7 +12,7 @@ class ConversationViewController: UIViewController {
     
     var messageService: MessageService?
     
-    var channel: Channel?
+    var channel: ChannelDB?
     
     var messages: [Message] = []
     

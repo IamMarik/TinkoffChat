@@ -11,7 +11,9 @@ import Firebase
 
 final class MessageService {
     
-    private let channel: Channel
+    static let logTag = "\(MessageService.self)"
+    
+    private let channel: ChannelDB
     
     private let db = Firestore.firestore()
     
@@ -21,7 +23,7 @@ final class MessageService {
     
     private var messagesListener: ListenerRegistration?
     
-    init(channel: Channel) {
+    init(channel: ChannelDB) {
         self.channel = channel
     }
     
@@ -52,6 +54,38 @@ final class MessageService {
         }
     }
     
+    func subscribeOnMessagesUpdates(handler: @escaping(Result<[Message], Error>) -> Void) {
+        let channelId = channel.identifier
+        messagesListener = messagesReference.addSnapshotListener { (querySnapshot, error) in
+            if let error = error {
+                handler(.failure(error))
+            } else if let snapshot = querySnapshot {
+                
+                DispatchQueue.global(qos: .default).async {
+                    CoreDataStack.shared.performSave { context in
+                        Log.info("Success update messages fetch: \(snapshot.documentChanges.count)", tag: Self.logTag)
+                        snapshot.documentChanges.forEach { diff in
+                            switch diff.type {
+                            case .added, .modified:
+                                _ = MessageDB(identifier: diff.document.documentID,
+                                              firestoreData: diff.document.data(),
+                                              channelId: channelId,
+                                              in: context)
+                            case .removed:
+                                let id = diff.document.documentID
+                                if let result = try? context.fetch(MessageDB.fetchRequest(withId: id)).first {
+                                    context.delete(result)
+                                }
+                            }
+                        }
+                    }
+                }
+            } else {
+                handler(.failure(FirebaseError.snapshotIsNil))
+            }
+        }
+    }
+    
     /// Add a new message to channel
     func addMessage(content: String, handler: @escaping(Result<String, Error>) -> Void) {
         guard let profile = UserData.shared.profile else { return }
@@ -70,6 +104,19 @@ final class MessageService {
                 handler(.success(documentId))
             } else {
                 handler(.failure(FirebaseError.referenceIsNil))
+            }
+        }
+    }
+    
+    
+    func deleteMessage(withId identifier: String, handler: @escaping (Error?) -> Void ) {
+        messagesReference.document(identifier).delete() { error in
+            if let error = error {
+                Log.error("Error removing message, id: \(identifier). \(error.localizedDescription)", tag: Self.logTag)
+                handler(error)
+            } else {
+                Log.info("Message successfully removed, id: \(identifier)", tag: Self.logTag)
+                handler(nil)
             }
         }
     }

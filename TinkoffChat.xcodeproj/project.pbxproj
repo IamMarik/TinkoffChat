@@ -195,9 +195,7 @@
 				EC3B4965251F6924002A93A8 /* Views */,
 				EC3B495A251F6663002A93A8 /* Model */,
 				EC3B4953251F65C4002A93A8 /* ConversationsListViewController.swift */,
-				ECE295C12528AE2100F30BAA /* RootNavigationController.swift */,
 				EC3B4950251F659E002A93A8 /* Conversations.storyboard */,
-				EC845893253C4F0B00EEBCA3 /* ChannelsService.swift */,
 			);
 			path = ConversationList;
 			sourceTree = "<group>";
@@ -240,9 +238,8 @@
 			children = (
 				EC6794682520299B00DB8002 /* Views */,
 				EC67946E252029BB00DB8002 /* Model */,
-				EC8458A0253C7B8B00EEBCA3 /* Data */,
-				EC6794622520295000DB8002 /* Conversation.storyboard */,
 				EC6794652520298000DB8002 /* ConversationViewController.swift */,
+				EC6794622520295000DB8002 /* Conversation.storyboard */,
 			);
 			path = Conversation;
 			sourceTree = "<group>";
@@ -269,7 +266,6 @@
 		EC73CFC4253EF5F0001C5CB6 /* Errors */ = {
 			isa = PBXGroup;
 			children = (
-				EC73CFC5253EF602001C5CB6 /* FirebaseError.swift */,
 			);
 			path = Errors;
 			sourceTree = "<group>";
@@ -314,12 +310,22 @@
 			path = Managers;
 			sourceTree = "<group>";
 		};
-		EC8458A0253C7B8B00EEBCA3 /* Data */ = {
+		ECBFDDBE2553BD3900C508DA /* Firestore */ = {
 			isa = PBXGroup;
 			children = (
+				EC73CFC5253EF602001C5CB6 /* FirebaseError.swift */,
 				EC84589C253C717A00EEBCA3 /* MessageService.swift */,
+				EC845893253C4F0B00EEBCA3 /* ChannelsService.swift */,
 			);
-			path = Data;
+			path = Firestore;
+			sourceTree = "<group>";
+		};
+		ECBFDDBF2553BD4C00C508DA /* CoreView */ = {
+			isa = PBXGroup;
+			children = (
+				ECE295C12528AE2100F30BAA /* RootNavigationController.swift */,
+			);
+			path = CoreView;
 			sourceTree = "<group>";
 		};
 		ECC26924250C6FEC001C08A0 = {
@@ -344,11 +350,13 @@
 		ECC2692F250C6FEC001C08A0 /* TinkoffChat */ = {
 			isa = PBXGroup;
 			children = (
+				ECBFDDBE2553BD3900C508DA /* Firestore */,
 				ECDF962A2547C5D600928A3F /* Database */,
 				EC3B4956251F6616002A93A8 /* Protocols */,
 				EC73CFC4253EF5F0001C5CB6 /* Errors */,
 				EC845897253C62A400EEBCA3 /* Managers */,
 				ECED1CA72518E3DE0069EB71 /* Style */,
+				ECBFDDBF2553BD4C00C508DA /* CoreView */,
 				EC73CFC8253EFEC1001C5CB6 /* Components */,
 				ECF7B6A425177A2B006DDB81 /* Fonts */,
 				ECC26947250C77C8001C08A0 /* Utils */,

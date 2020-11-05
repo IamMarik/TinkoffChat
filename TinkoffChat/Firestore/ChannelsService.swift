@@ -20,6 +20,8 @@ final class ChannelsService {
     private lazy var channels: CollectionReference = {
         return db.collection("channels")
     }()
+    
+    private var fetchesCount = 0
         
     deinit {
         channelsListener?.remove()
@@ -54,10 +56,12 @@ final class ChannelsService {
     /// Create subscription to channel list updates
     func subscribeOnChannelsUpdates(handler: @escaping (Result<Bool, Error>) -> Void) {
         channelsListener = channels.addSnapshotListener(includeMetadataChanges: true) { (querySnapshot, error) in
+            
             if let error = error {
                 Log.error("Error fetching channels", tag: Self.logTag)
                 handler(.failure(error))
             } else if let snapshot = querySnapshot {
+                
                 DispatchQueue.global(qos: .default).async {
                     CoreDataStack.shared.performSave { context in
                         Log.info("Success update channels fetch: \(snapshot.documentChanges.count)", tag: Self.logTag)
@@ -85,6 +89,10 @@ final class ChannelsService {
         }
     }
     
+    func unSubscribeOnChannelsUpdates() {
+        channelsListener?.remove()
+    }
+    
     /// Create a new channel in chanel list with given `name`
     func createChannel(name: String, handler: @escaping (Result<String, Error>) -> Void) {
         var ref: DocumentReference?
@@ -96,6 +104,13 @@ final class ChannelsService {
             } else {
                 handler(.failure(FirebaseError.referenceIsNil))
             }
+        }
+    }
+    
+    func deleteChannel(_ channel: ChannelDB, handler: @escaping (Result<Int, Error>) -> Void ) {
+        let messageService = MessageService(channel: channel)
+        channels.document(channel.identifier).getDocument { (querySnapshot, error) in
+            
         }
     }
      
