@@ -18,7 +18,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         FirebaseApp.configure()
         //CoreDataStack.shared.deleteStore()
         CoreDataStack.shared.addStatisticObserver()
-        showDBCounts()
         return true
     }
     
@@ -27,12 +26,4 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
     
-    private func showDBCounts() {
-        let context = CoreDataStack.shared.mainContext
-        // Логирую подтверждение того, что данные сохраняются при перезагрузке
-        let resultChannels = (try? context.fetch(ChannelDB.fetchRequest()) as? [ChannelDB]) ?? []
-        let resultMessages = (try? context.fetch(MessageDB.fetchRequest()) as? [MessageDB]) ?? []
-        Log.info("Database contains \(resultChannels.count) channels and \(resultMessages.count) messages", tag: "DBState")
-    }
-
 }
