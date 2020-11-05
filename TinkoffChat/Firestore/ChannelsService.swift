@@ -26,42 +26,22 @@ final class ChannelsService {
     deinit {
         channelsListener?.remove()
     }
-    
-    func fetchChannels(handler: @escaping (Result<Bool, Error>) -> Void) {
-        channels.getDocuments { (querySnapshot, error) in
-            if let error = error {
-                Log.error("Error fetching all channels")
-                handler(.failure(error))
-            } else if let documents = querySnapshot?.documents {
-                                
-                DispatchQueue.global(qos: .default).async {
-                    CoreDataStack.shared.performSave { (context) in
-                        _ = documents.compactMap {
-                            ChannelDB(identifier: $0.documentID,
-                                      firestoreData: $0.data(),
-                                      in: context)
-                            }
-                    }
-                    
-                    DispatchQueue.main.async {
-                        handler(.success(true))
-                    }
-                }
-            } else {
-                handler(.failure(FirebaseError.snapshotIsNil))
-            }
-        }
-    }
-    
+        
     /// Create subscription to channel list updates
     func subscribeOnChannelsUpdates(handler: @escaping (Result<Bool, Error>) -> Void) {
+        var isFirstFetch = true
         channelsListener = channels.addSnapshotListener(includeMetadataChanges: true) { (querySnapshot, error) in
             
             if let error = error {
                 Log.error("Error fetching channels", tag: Self.logTag)
                 handler(.failure(error))
             } else if let snapshot = querySnapshot {
-                
+                if isFirstFetch {
+                    // Удалим все сообщения, на случай если канал удалён, наша бд не должна содержать сообщений
+                    // Также это поможет избежать дублирования строк в таблице
+                    self.deleteAllChannelsFromDB()
+                    isFirstFetch = false
+                }
                 DispatchQueue.global(qos: .default).async {
                     CoreDataStack.shared.performSave { context in
                         Log.info("Success update channels fetch: \(snapshot.documentChanges.count)", tag: Self.logTag)
@@ -107,11 +87,41 @@ final class ChannelsService {
         }
     }
     
-    func deleteChannel(_ channel: ChannelDB, handler: @escaping (Result<Int, Error>) -> Void ) {
+    // Не смог нормально отладить из-за квоты
+    func deleteChannel(_ channel: ChannelDB, handler: @escaping (Result<Bool, Error>) -> Void ) {
         let messageService = MessageService(channel: channel)
-        channels.document(channel.identifier).getDocument { (querySnapshot, error) in
-            
+        channels.document(channel.identifier).collection("messages").getDocuments { (querySnapshot, error) in
+            if let error = error {
+                Log.error("Error getting messages for deleting", tag: Self.logTag)
+                handler(.failure(error))
+            } else if let snapshot = querySnapshot {
+                snapshot.documents.forEach { document in
+                    messageService.deleteMessage(withId: document.documentID, handler: { (error) in
+                        Log.error("Error delete nested document", tag: Self.logTag)
+                    })
+                }
+                messageService.deleteAllMessagesFromDB()
+                self.channels.document(channel.identifier).delete { error in
+                    if let error = error {
+                        handler(.failure(error))
+                    } else {
+                        handler(.success(true))
+                    }
+                }
+            } else {
+                handler(.failure(FirebaseError.snapshotIsNil))
+            }
         }
     }
      
+    private func deleteAllChannelsFromDB() {
+        CoreDataStack.shared.performSave { (context) in
+            if let result = try? context.fetch(ChannelDB.fetchRequest()) as? [ChannelDB] {
+                result.forEach {
+                    context.delete($0)
+                }
+            }
+        }
+    }
+    
 }

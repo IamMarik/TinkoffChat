@@ -14,7 +14,8 @@ extension ChannelDB {
     class var className: String { "ChannelDB" }
 
     @nonobjc public class func fetchRequest() -> NSFetchRequest<ChannelDB> {
-        return NSFetchRequest<ChannelDB>(entityName: className)
+        let request = NSFetchRequest<ChannelDB>(entityName: className)
+        return request
     }
     
     @nonobjc public class func fetchRequest(withId identifier: String) -> NSFetchRequest<ChannelDB> {

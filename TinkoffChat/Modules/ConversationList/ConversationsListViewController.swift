@@ -32,7 +32,7 @@ class ConversationsListViewController: UIViewController {
     
     private let cellId = String(describing: ConversationTableViewCell.self)
     
-    private var isInitialFetch = true
+    private var fetchesCount = 0
         
     lazy var profileAvatarButton: UIButton = {
         let button = UIButton()
@@ -251,15 +251,22 @@ extension ConversationsListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             let channel = self.fetchedResultsController.object(at: indexPath)
-            channelsService.deleteChannel(channel) { (result) in
-                switch result {
-                case .success(let messageCount):
-                    Log.info("Successful delete channel \(channel.name) with \(messageCount) message", tag: Self.logTag)
-                case .failure(let error):
-                    self.showErrorAlert(message: error.localizedDescription)
-                    Log.error("Error during deleting channel \(channel.name). \(error.localizedDescription)", tag: Self.logTag)
+            let alert = UIAlertController(title: "Confirmation", message: "Do you realy want to delete channel \(channel.name)", preferredStyle: .alert)
+            let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+            let delete = UIAlertAction(title: "Delete", style: .destructive) { [weak self] (_) in
+                self?.channelsService.deleteChannel(channel) { (result) in
+                    switch result {
+                    case .success:
+                        Log.info("Successful delete channel \(channel.name)", tag: Self.logTag)
+                    case .failure(let error):
+                        self?.showErrorAlert(message: error.localizedDescription)
+                        Log.error("Error during deleting channel \(channel.name). \(error.localizedDescription)", tag: Self.logTag)
+                    }
                 }
             }
+            alert.addAction(cancel)
+            alert.addAction(delete)
+            present(alert, animated: true, completion: nil)
         }
     }
     
@@ -277,12 +284,13 @@ extension ConversationsListViewController: ThemesPickerDelegate {
 extension ConversationsListViewController: NSFetchedResultsControllerDelegate {
     
     func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        UIView.setAnimationsEnabled(fetchesCount > 1)
         tableView.beginUpdates()
     }
     
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         tableView.endUpdates()
-        isInitialFetch = false
+        fetchesCount += 1
     }
     
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
@@ -291,10 +299,12 @@ extension ConversationsListViewController: NSFetchedResultsControllerDelegate {
                     for type: NSFetchedResultsChangeType,
                     newIndexPath: IndexPath?) {
         
+        let withoutAnimation = fetchesCount < 2
+        
         switch type {
         case .insert:
             if let indexPath = newIndexPath {
-                tableView.insertRows(at: [indexPath], with: isInitialFetch ? .none : .automatic)
+                tableView.insertRows(at: [indexPath], with: withoutAnimation ? .none : .automatic)
             }
         case .update:
             if let indexPath = indexPath,
@@ -307,11 +317,11 @@ extension ConversationsListViewController: NSFetchedResultsControllerDelegate {
                 tableView.deleteRows(at: [indexPath], with: .none)
             }
             if let newIndexPath = newIndexPath {
-                tableView.insertRows(at: [newIndexPath], with: isInitialFetch ? .none : .automatic)
+                tableView.insertRows(at: [newIndexPath], with: withoutAnimation ? .none : .automatic)
             }
         case .delete:
             if let indexPath = indexPath {
-                tableView.deleteRows(at: [indexPath], with: isInitialFetch ? .none : .fade)
+                tableView.deleteRows(at: [indexPath], with: withoutAnimation ? .none : .fade)
             }
         @unknown default:
             fatalError()

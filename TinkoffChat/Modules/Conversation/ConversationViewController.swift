@@ -7,19 +7,18 @@
 //
 
 import UIKit
+import CoreData
 
 class ConversationViewController: UIViewController {
     
     var messageService: MessageService?
     
     var channel: ChannelDB?
-    
-    var messages: [Message] = []
-    
+        
     let cellId = "\(MessageTableViewCell.self)"
-
+    
     @IBOutlet var tableView: UITableView!
-
+    
     var messageVisibleBottomConstraint: NSLayoutConstraint?
     
     lazy var messageInputView: MessageInputView = {
@@ -30,6 +29,21 @@ class ConversationViewController: UIViewController {
     
     var shouldScrollToBottom: Bool = false
     
+    var fetchesCount: Int = 0
+    
+    private lazy var fetchedResultsController: NSFetchedResultsController<MessageDB> = {
+        let channelId = channel?.identifier ?? ""
+        let request: NSFetchRequest<MessageDB> = MessageDB.fetchRequest(forChannelId: channelId)
+        let sortByDate = NSSortDescriptor(key: "created", ascending: true)
+        request.sortDescriptors = [sortByDate]
+        request.fetchBatchSize = 20
+        let controller = NSFetchedResultsController(fetchRequest: request,
+                                                    managedObjectContext: CoreDataStack.shared.mainContext,
+                                                    sectionNameKeyPath: nil,
+                                                    cacheName: nil)
+        return controller
+    }()
+    
     override var inputAccessoryView: UIView? {
         return messageInputView
     }
@@ -37,7 +51,7 @@ class ConversationViewController: UIViewController {
     override var canBecomeFirstResponder: Bool { true }
     
     override var canResignFirstResponder: Bool { true }
-  
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         if let channel = self.channel {
@@ -46,12 +60,20 @@ class ConversationViewController: UIViewController {
         setupView()
         setupTheme()
         setupKeyboard()
-        subscribeOnMessagesUpdates()
+        fetchMessages()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         becomeFirstResponder()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        if shouldScrollToBottom {
+            shouldScrollToBottom = false
+            scrollToBottom(animated: false)
+        }
     }
     
     private func setupView() {
@@ -72,38 +94,34 @@ class ConversationViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
-    private func subscribeOnMessagesUpdates() {
-        messageService?.subscribeOnMessages(handler: { [weak self] (result) in
-            DispatchQueue.main.async {
-                switch result {
-                case .success(let messages):
-                    self?.messages = messages
-                    self?.tableView.reloadData()
-                    self?.scrollToBottom(animated: true)
-                case .failure:
-                    break
-                }
-            }
-        })
+    private func fetchMessages() {
+        do {
+            try fetchedResultsController.performFetch()
+        } catch {
+            // showErrorAlert(message: error.localizedDescription)
+            Log.error(error.localizedDescription)
+        }
+        subscribeOnMessagesUpdates()
     }
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        if shouldScrollToBottom {
-            shouldScrollToBottom = false
-            scrollToBottom(animated: false)
-        }
+    private func subscribeOnMessagesUpdates() {
+        fetchedResultsController.delegate = self
+        messageService?.subscribeOnMessagesUpdates(handler: { (result) in
+            if case Result.failure(let error) = result {
+                Log.error(error.localizedDescription)
+            }
+        })
     }
     
     func scrollToBottom(animated: Bool) {
         // Не всегда хорошо скроллит до низа, возможно стоит покопать в сторону расчета высоты ячеек по тексту
         tableView.setContentOffset(CGPoint(x: 0, y: CGFloat.greatestFiniteMagnitude), animated: animated)
     }
-        
+    
     @objc func keyboardWillShow(notification: NSNotification) {
         adjustContentForKeyboard(shown: true, notification: notification)
     }
-
+    
     @objc func keyboardWillHide(notification: NSNotification) {
         adjustContentForKeyboard(shown: false, notification: notification)
     }
@@ -111,22 +129,22 @@ class ConversationViewController: UIViewController {
     private func adjustContentForKeyboard(shown: Bool, notification: NSNotification) {
         guard let userInfo = notification.userInfo,
               let keyboardSize = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else { return }
-            
+        
         let keyboardHeight = shown ? keyboardSize.height : messageInputView.bounds.size.height
         if tableView.contentInset.bottom == keyboardHeight {
             return
         }
-
+        
         var insets = tableView.contentInset
         insets.bottom = keyboardHeight
-             
+        
         let duration = userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? TimeInterval ?? 0.2
         let curveOptions = userInfo[UIResponder.keyboardAnimationCurveUserInfoKey] as? UIView.AnimationOptions ?? .curveEaseOut
-                
+        
         UIView.animate(withDuration: duration, delay: 0, options: curveOptions, animations: {
             self.tableView.contentInset = insets
             self.tableView.scrollIndicatorInsets = insets
-
+            
         }, completion: nil)
     }
     
@@ -139,15 +157,15 @@ class ConversationViewController: UIViewController {
 extension ConversationViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return messages.count
+        return fetchedResultsController.fetchedObjects?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as? MessageTableViewCell else {
             return UITableViewCell()
         }
-        
-        cell.configure(with: messages[indexPath.row])
+        let message = fetchedResultsController.object(at: indexPath)
+        cell.configure(with: message)
         return cell
     }
     
@@ -160,6 +178,7 @@ extension ConversationViewController: MessageInputViewDelegate {
             self.resignFirstResponder()
             self.messageInputView.clearInput()
         }
+        
         messageService?.addMessage(
             content: text) { [weak self] (result) in
             DispatchQueue.main.async {
@@ -173,6 +192,57 @@ extension ConversationViewController: MessageInputViewDelegate {
                     self?.shouldScrollToBottom = true
                 }
             }
+        }
+    }
+}
+
+extension ConversationViewController: NSFetchedResultsControllerDelegate {
+    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        // Этот костыль убережёт нас от дергания ячеек при первых двух обновлениях
+        // 1 - это удаление всех сообщений, при получении первой порции данных
+        // 2 - добавление всех сообщений канала
+        // Все остальные изменения, например новые сообщения, будут приходить с плавной анимацией
+        UIView.setAnimationsEnabled(fetchesCount > 1)
+        tableView.beginUpdates()
+    }
+    
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        tableView.endUpdates()
+        UIView.setAnimationsEnabled(true)
+        fetchesCount += 1
+    }
+    
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
+                    didChange anObject: Any,
+                    at indexPath: IndexPath?,
+                    for type: NSFetchedResultsChangeType,
+                    newIndexPath: IndexPath?) {
+        let withoutAnimation = fetchesCount < 2
+        
+        switch type {
+        case .insert:
+            if let indexPath = newIndexPath {
+                tableView.insertRows(at: [indexPath], with: withoutAnimation ? .none : .automatic)
+            }
+        case .update:
+            if let indexPath = indexPath,
+               let cell = tableView.cellForRow(at: indexPath) as? MessageTableViewCell {
+                let message = fetchedResultsController.object(at: indexPath)
+                cell.configure(with: message)
+            }
+        case .move:
+            if let indexPath = indexPath {
+                tableView.deleteRows(at: [indexPath], with: .none)
+            }
+            if let newIndexPath = newIndexPath {
+                tableView.insertRows(at: [newIndexPath], with: withoutAnimation ? .none : .automatic)
+            }
+        case .delete:
+            if let indexPath = indexPath {
+                tableView.deleteRows(at: [indexPath], with: withoutAnimation ? .none : .fade)
+            }
+        @unknown default:
+            fatalError()
         }
     }
 }

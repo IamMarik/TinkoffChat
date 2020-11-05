@@ -23,6 +23,12 @@ extension MessageDB {
         return request
     }
     
+    @nonobjc public class func fetchRequest(forChannelId identifier: String) -> NSFetchRequest<MessageDB> {
+        let request = NSFetchRequest<MessageDB>(entityName: className)
+        request.predicate = NSPredicate(format: "channelId == %@", identifier)
+        return request
+    }
+    
     @NSManaged public var identifier: String
     @NSManaged public var channelId: String
     @NSManaged public var content: String

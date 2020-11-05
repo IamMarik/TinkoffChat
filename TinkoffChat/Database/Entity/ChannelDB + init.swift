@@ -11,13 +11,6 @@ import CoreData
 import Firebase
 
 extension ChannelDB {
-    convenience init(channel: Channel, in context: NSManagedObjectContext) {
-        self.init(context: context)
-        self.identifier = channel.identifier
-        self.name = channel.name
-        self.lastMessage = channel.lastMessage
-        self.lastActivity = channel.lastActivity
-    }
     
     convenience init?(identifier: String, firestoreData: [String: Any], in context: NSManagedObjectContext) {
         guard let name = firestoreData["name"] as? String,

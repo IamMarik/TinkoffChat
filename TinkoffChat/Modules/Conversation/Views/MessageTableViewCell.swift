@@ -29,7 +29,7 @@ class MessageTableViewCell: UITableViewCell {
 }
 
 extension MessageTableViewCell: ConfigurableView {
-    func configure(with model: Message) {
+    func configure(with model: MessageDB) {
         let isMyMessage = model.isMyMessage
         messageLabel.text = model.content
         senderLabel.text = isMyMessage ? "" : model.senderName 

@@ -8,12 +8,15 @@
 
 import Foundation
 import Firebase
+import CoreData
 
 final class MessageService {
     
     static let logTag = "\(MessageService.self)"
     
     private let channel: ChannelDB
+    
+    private let channelId: String
     
     private let db = Firestore.firestore()
     
@@ -25,28 +28,41 @@ final class MessageService {
     
     init(channel: ChannelDB) {
         self.channel = channel
+        self.channelId = channel.identifier
     }
     
     deinit {
         messagesListener?.remove()
     }
     
-    /// Create subscription to message list updates
-    func subscribeOnMessages(handler: @escaping(Result<[Message], Error>) -> Void) {
-        let channelId = channel.identifier
+    /// Create subscription to message list update
+    func subscribeOnMessagesUpdates(handler: @escaping(Result<Bool, Error>) -> Void) {
+        let channelId = self.channelId
+        var isFirstFetch = true
         messagesListener = messagesReference.addSnapshotListener { (querySnapshot, error) in
             if let error = error {
                 handler(.failure(error))
-            } else if let documents = querySnapshot?.documents {
-                // На случай большого списка решил вывести парсинг и сортировку из основного потока
+            } else if let snapshot = querySnapshot {
+                if isFirstFetch {
+                    // Удалим все сообщения, на случай если канал удалён, наша бд не должна содержать сообщений
+                    // Также это поможет избежать дублирования строк в таблице
+                    self.deleteAllMessagesFromDB()
+                    isFirstFetch = false
+                }
                 DispatchQueue.global(qos: .default).async {
-                    let messages = documents
-                        .compactMap { Message(identifier: $0.documentID, firestoreData: $0.data()) }
-                        .sorted(by: { $0.created < $1.created })
                     CoreDataStack.shared.performSave { context in
-                        messages.forEach { _ = MessageDB(message: $0, channelId: channelId, in: context) }
+                        snapshot.documentChanges.forEach { diff in
+                            switch diff.type {
+                            case .added:
+                                self.putMessageIn(context: context, document: diff.document, channelId: channelId)             
+                            case .modified:
+                                self.putMessageIn(context: context, document: diff.document, channelId: channelId)
+                            case .removed:
+                                self.putMessageIn(context: context, document: diff.document, channelId: channelId)
+                            }
+                        }
+                        handler(.success(true))
                     }
-                    handler(.success(messages))
                 }
             } else {
                 handler(.failure(FirebaseError.snapshotIsNil))
@@ -54,34 +70,14 @@ final class MessageService {
         }
     }
     
-    func subscribeOnMessagesUpdates(handler: @escaping(Result<[Message], Error>) -> Void) {
-        let channelId = channel.identifier
-        messagesListener = messagesReference.addSnapshotListener { (querySnapshot, error) in
-            if let error = error {
-                handler(.failure(error))
-            } else if let snapshot = querySnapshot {
-                
-                DispatchQueue.global(qos: .default).async {
-                    CoreDataStack.shared.performSave { context in
-                        Log.info("Success update messages fetch: \(snapshot.documentChanges.count)", tag: Self.logTag)
-                        snapshot.documentChanges.forEach { diff in
-                            switch diff.type {
-                            case .added, .modified:
-                                _ = MessageDB(identifier: diff.document.documentID,
-                                              firestoreData: diff.document.data(),
-                                              channelId: channelId,
-                                              in: context)
-                            case .removed:
-                                let id = diff.document.documentID
-                                if let result = try? context.fetch(MessageDB.fetchRequest(withId: id)).first {
-                                    context.delete(result)
-                                }
-                            }
-                        }
-                    }
+    /// Remove all messages for current channel in Database
+    func deleteAllMessagesFromDB() {
+        let channelId = self.channelId
+        CoreDataStack.shared.performSave { (context) in
+            if let result = try? context.fetch(MessageDB.fetchRequest(forChannelId: channelId)) {
+                result.forEach {
+                    context.delete($0)
                 }
-            } else {
-                handler(.failure(FirebaseError.snapshotIsNil))
             }
         }
     }
@@ -108,9 +104,9 @@ final class MessageService {
         }
     }
     
-    
+    /// Delete message from channel
     func deleteMessage(withId identifier: String, handler: @escaping (Error?) -> Void ) {
-        messagesReference.document(identifier).delete() { error in
+        messagesReference.document(identifier).delete { error in
             if let error = error {
                 Log.error("Error removing message, id: \(identifier). \(error.localizedDescription)", tag: Self.logTag)
                 handler(error)
@@ -120,5 +116,12 @@ final class MessageService {
             }
         }
     }
-    
+            
+    private func putMessageIn(context: NSManagedObjectContext, document: QueryDocumentSnapshot, channelId: String) {
+        _ = MessageDB(identifier: document.documentID,
+                      firestoreData: document.data(),
+                      channelId: channelId,
+                      in: context)
+    }
+        
 }

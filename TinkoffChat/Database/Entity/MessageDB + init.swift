@@ -30,13 +30,4 @@ extension MessageDB {
         self.created = created.dateValue()
     }
     
-    convenience init(message: Message, channelId: String, in context: NSManagedObjectContext) {
-        self.init(context: context)
-        self.identifier = message.identifier
-        self.content = message.content
-        self.senderId = message.senderId 
-        self.senderName = message.senderName
-        self.created = message.created
-        self.channelId = channelId
-    }
 }
