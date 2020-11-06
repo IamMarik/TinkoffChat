@@ -3,7 +3,7 @@
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -102,15 +102,6 @@
                                                                     <action selector="saveButtonDidTap:" destination="yHK-Rd-4co" eventType="touchUpInside" id="OYd-hV-BoH"/>
                                                                 </connections>
                                                             </button>
-                                                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0uo-py-a3a">
-                                                                <rect key="frame" x="0.0" y="0.0" width="0.0" height="40"/>
-                                                                <color key="backgroundColor" red="0.96470588239999999" green="0.96470588239999999" blue="0.96470588239999999" alpha="1" colorSpace="calibratedRGB"/>
-                                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="19"/>
-                                                                <state key="normal" title="Save Op-s"/>
-                                                                <connections>
-                                                                    <action selector="saveButtonDidTap:" destination="yHK-Rd-4co" eventType="touchUpInside" id="MjF-93-yCl"/>
-                                                                </connections>
-                                                            </button>
                                                         </subviews>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="263" id="b4i-FS-wOr"/>
@@ -182,7 +173,6 @@
                         <outlet property="profileNavigationBar" destination="xRj-y6-0Q4" id="7BQ-XW-Q0Y"/>
                         <outlet property="saveButtonsStackView" destination="Yg8-RT-hvN" id="PX3-Zb-RCN"/>
                         <outlet property="saveGCDButton" destination="JRZ-ge-aKi" id="HsU-b6-Tru"/>
-                        <outlet property="saveOperationButton" destination="0uo-py-a3a" id="L9R-HN-JIE"/>
                         <outlet property="scrollView" destination="PTV-TY-FoI" id="5tS-YF-k6V"/>
                     </connections>
                 </viewController>

@@ -35,9 +35,25 @@ class UserData {
             return id
         }
     }
-    
-    var name: String {
-        return "Marat Dzhanybaev"
+        
+    private(set) var profile: ProfileViewModel?
+        
+    func loadProfile(completion: @escaping (ProfileViewModel) -> Void) {
+        let profileManager = GCDDataManager()
+        profileManager.readProfileFromDisk { (profile) in
+            if let profile = profile {
+                self.profile = profile
+                completion(profile)
+            } else {
+                let defaultProfile = ProfileViewModel(fullName: "Marat Dzhanybaev",
+                                                      description: "Love coding, bbq and beer",
+                                                      avatar: nil)
+                profileManager.writeToDisk(newProfile: defaultProfile, oldProfile: nil) { _ in
+                    self.profile = defaultProfile
+                    completion(defaultProfile)
+                }
+            }
+        }
     }
     
 }

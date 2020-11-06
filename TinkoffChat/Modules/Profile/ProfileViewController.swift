@@ -17,9 +17,7 @@ class ProfileViewController: UIViewController {
     var onProfileChanged: ((ProfileViewModel) -> Void)?
     
     var gcdDataManager = GCDDataManager()
-    
-    var operationDataManager = OperationDataManager()
-    
+        
     lazy var imagePickerController: UIImagePickerController = {
         let imagePicker = UIImagePickerController()
         imagePicker.delegate = self
@@ -27,7 +25,7 @@ class ProfileViewController: UIViewController {
         return imagePicker
     }()
     
-    var currentState: ProfileViewState = .view
+    var currentState: ProfileViewState = .initial
     
     @IBOutlet var scrollView: UIScrollView!
 
@@ -49,12 +47,9 @@ class ProfileViewController: UIViewController {
     
     @IBOutlet var saveGCDButton: UIButton!
  
-    @IBOutlet var saveOperationButton: UIButton!
-    
     /// Стейты вьюхи. Сделал String для дебага
     enum ProfileViewState: String {
-        // Загрузка профиля
-        case loading
+        case initial
         // Просмотр профиля
         case view
         // В режиме редактирования
@@ -67,25 +62,15 @@ class ProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
         setupView()
         setupTheme()
         setupKeyboard()
         updateData()
+        changeView(state: .view)
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        // Не совсем понял из задания каким менеджером читать данные, поэтому пусть решает всемогущий рэндом
-        if profile == nil {
-            let dataManager: DataManagerProtocol = Bool.random() ? gcdDataManager : operationDataManager
-            loadProfile(with: dataManager)
-        }        
-    }
-
     private func setupView() {
         saveGCDButton.layer.cornerRadius = 14
-        saveOperationButton.layer.cornerRadius = 14
         profileAvatarImageView.layer.cornerRadius = 120
         loadingView.layer.cornerRadius = 14
         loadingView.layer.shadowColor = UIColor.black.withAlphaComponent(0.4).cgColor
@@ -115,7 +100,6 @@ class ProfileViewController: UIViewController {
         profileNameTextField.textColor = theme.colors.profile.name
         profileDescriptionTextView.textColor = theme.colors.profile.description
         saveGCDButton.backgroundColor = theme.colors.profile.saveButtonBackground
-        saveOperationButton.backgroundColor = theme.colors.profile.saveButtonBackground
         loadingView.backgroundColor = theme.colors.profile.loadingViewBackground
     }
 
@@ -162,14 +146,12 @@ class ProfileViewController: UIViewController {
         Log.info("Changing state to: \(state.rawValue)", tag: "\(Self.self)")
         currentState = state
         switch state {
-        case .loading:
-            loadingView.isHidden = false
+        case .initial:
+            break
         case .view:
             editAvatarButton.isHidden = true
             saveGCDButton.isEnabled = true
             saveGCDButton.setTitle("Edit", for: .normal)
-            saveOperationButton.isHidden = true
-            saveOperationButton.isEnabled = true
             profileNameTextField.isHidden = true
             profileNameLabel.isHidden = false
             profileDescriptionTextView.isEditable = false
@@ -178,9 +160,7 @@ class ProfileViewController: UIViewController {
         case .editing:
             editAvatarButton.isHidden = false
             saveGCDButton.isEnabled = false
-            saveGCDButton.setTitle("Save GCD", for: .normal)
-            saveOperationButton.isEnabled = false
-            saveOperationButton.isHidden = false
+            saveGCDButton.setTitle("Save", for: .normal)
             profileNameLabel.isHidden = true
             profileNameTextField.isHidden = false
             profileNameTextField.text = profile?.fullName
@@ -189,25 +169,12 @@ class ProfileViewController: UIViewController {
             loadingView.isHidden = true
         case .hasChanges:
             saveGCDButton.isEnabled = true
-            saveOperationButton.isEnabled = true
         case .saving:
             loadingView.isHidden = false
             saveGCDButton.isEnabled = false
-            saveOperationButton.isEnabled = false
         }
     }
-    
-    private func loadProfile(with dataManager: DataManagerProtocol) {
-        changeView(state: .loading)
-        dataManager.readProfileFromDisk { [weak self] (profile) in
-            DispatchQueue.main.async {
-                self?.profile = profile
-                self?.updateData()
-                self?.changeView(state: .view)
-            }
-        }
-    }
-    
+  
     private func saveProfileChanges(with dataManager: DataManagerProtocol) {
         Log.info("Saving profile with \(dataManager.self)")
         changeView(state: .saving)
@@ -217,17 +184,19 @@ class ProfileViewController: UIViewController {
             description: profileDescriptionTextView.text ?? "",
             avatar: profileAvatarImageView.image)
         dataManager.writeToDisk(newProfile: newProfile, oldProfile: oldProfile) { [weak self] (success) in
-            DispatchQueue.main.async {
-                self?.changeView(state: .view)
-                if success {
-                    self?.profile = newProfile
-                    self?.updateData()
-                    self?.onProfileChanged?(newProfile)
-                    self?.showAlert(withTitle: "Success", message: "Profile was successful saved")
-                } else {
-                    self?.showAlert(withTitle: "Error", message: "Error during saving profile", retryAction: {
-                        self?.saveProfileChanges(with: dataManager)
-                    })
+            UserData.shared.loadProfile { (profile) in
+                DispatchQueue.main.async {
+                    self?.changeView(state: .view)
+                    if success {
+                        self?.profile = profile
+                        self?.updateData()
+                        self?.onProfileChanged?(profile)
+                        self?.showAlert(withTitle: "Success", message: "Profile was successful saved")
+                    } else {
+                        self?.showAlert(withTitle: "Error", message: "Error during saving profile", retryAction: {
+                            self?.saveProfileChanges(with: dataManager)
+                        })
+                    }
                 }
             }
         }
@@ -258,18 +227,15 @@ class ProfileViewController: UIViewController {
         present(alertController, animated: true)
     }
 
-    // Здесь IBAction от двух кнопок сохранения
     @IBAction func saveButtonDidTap(_ sender: UIButton) {
         switch currentState {
-        case .loading, .editing, .saving:
+        case .initial, .editing, .saving:
             break
         case .view:
             changeView(state: .editing)
         case .hasChanges:
-            // Определяем реализацию DataManager-а от нажатой кнопки
-            let dataManager: DataManagerProtocol = sender === saveGCDButton ? gcdDataManager : operationDataManager
             // Сохраняем профайл
-            saveProfileChanges(with: dataManager)
+            saveProfileChanges(with: gcdDataManager)
         }
     }
     

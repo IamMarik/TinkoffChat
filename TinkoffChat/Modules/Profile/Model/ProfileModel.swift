@@ -11,7 +11,8 @@ import UIKit
 struct ProfileViewModel {
     let fullName: String
     let description: String
-    let avatar: UIImage?
+    let avatar: UIImage
+    let isStubAvatar: Bool
     
     init(fullName: String, description: String, avatar: UIImage?) {
         self.fullName = fullName
@@ -20,6 +21,7 @@ struct ProfileViewModel {
             forName: fullName,
             inRectangleOfSize: .init(width: 240, height: 240)
         )
+        self.isStubAvatar = avatar == nil
     }
 }
 

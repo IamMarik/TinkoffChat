@@ -59,7 +59,8 @@ class MessageInputView: UIView {
         messageLineView.layer.cornerRadius = 14
         messageLineView.layer.borderColor = UIColor.lightGray.cgColor
     
-        messageLineView.backgroundColor = Themes.current.colors.conversation.inputTextView
+        messageLineView.backgroundColor = Themes.current.colors.conversation.input.background
+        inputTextView.textColor = Themes.current.colors.conversation.input.text
         contentView.backgroundColor = Themes.current.colors.conversation.bottomViewBackground
     }
     

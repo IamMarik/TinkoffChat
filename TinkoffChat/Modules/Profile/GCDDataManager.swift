@@ -42,12 +42,12 @@ final class GCDDataManager: DataManagerProtocol {
             }
         }
         
-        if newProfile.avatar !== oldProfile?.avatar ||
-            !FileUtils.fileExist(fileName: ProfileItemsStoreKeys.avatar.rawValue) {
+        if !newProfile.isStubAvatar,
+           newProfile.avatar !== oldProfile?.avatar {
             group.enter()
             DispatchQueue.global(qos: .utility).async {
                 Log.info("Write profile avatar with GCD")
-                if let imageData = newProfile.avatar?.pngData() {
+                if let imageData = newProfile.avatar.pngData() {
                     successWritingAvatar = FileUtils.writeToDisk(
                         data: imageData,
                         fileName: ProfileItemsStoreKeys.avatar.rawValue)
@@ -70,11 +70,13 @@ final class GCDDataManager: DataManagerProtocol {
             Log.info("Read profile with GCD")
             if let nameData = FileUtils.readFromDisk(fileName: ProfileItemsStoreKeys.fullName.rawValue),
                let descriptionData = FileUtils.readFromDisk(fileName: ProfileItemsStoreKeys.description.rawValue),
-               let avatarData = FileUtils.readFromDisk(fileName: ProfileItemsStoreKeys.avatar.rawValue),
                let name = String(data: nameData, encoding: .utf8),
-               let description = String(data: descriptionData, encoding: .utf8),
-               let avatar = UIImage(data: avatarData) {
-                
+               let description = String(data: descriptionData, encoding: .utf8) {
+                let avatarData = FileUtils.readFromDisk(fileName: ProfileItemsStoreKeys.avatar.rawValue)
+                var avatar: UIImage?
+                if let data = avatarData {
+                    avatar = UIImage(data: data)
+                }
                 let profile = ProfileViewModel(fullName: name, description: description, avatar: avatar)
                 
                 completion(profile)
