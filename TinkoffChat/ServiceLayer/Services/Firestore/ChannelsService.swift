@@ -9,7 +9,13 @@
 import Foundation
 import Firebase
 
-final class ChannelsService {
+protocol IChannelsService {
+    func subscribeOnChannelsUpdates(handler: @escaping (Result<Bool, Error>) -> Void)
+    func createChannel(name: String, handler: @escaping (Result<String, Error>) -> Void)
+    func deleteChannel(_ channel: ChannelDB, handler: @escaping (Result<Bool, Error>) -> Void)
+}
+
+final class ChannelsService: IChannelsService {
     
     private static let logTag = "\(ChannelsService.self)"
     
@@ -89,7 +95,7 @@ final class ChannelsService {
     
     // Не смог нормально отладить из-за квоты
     func deleteChannel(_ channel: ChannelDB, handler: @escaping (Result<Bool, Error>) -> Void ) {
-        let messageService = MessageService(channel: channel)
+        let messageService = MessageService(channelId: channel.identifier)
         channels.document(channel.identifier).collection("messages").getDocuments { (querySnapshot, error) in
             if let error = error {
                 Log.error("Error getting messages for deleting", tag: Self.logTag)

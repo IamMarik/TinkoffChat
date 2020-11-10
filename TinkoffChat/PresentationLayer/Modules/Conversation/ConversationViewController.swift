@@ -55,7 +55,7 @@ class ConversationViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         if let channel = self.channel {
-            messageService = MessageService(channel: channel)
+            messageService = MessageService(channelId: channel.identifier)
         }
         setupView()
         setupTheme()

@@ -10,25 +10,30 @@ import Foundation
 import Firebase
 import CoreData
 
-final class MessageService {
+protocol IMessageService {
+    
+    func subscribeOnMessagesUpdates(handler: @escaping(Result<Bool, Error>) -> Void)
+    
+}
+
+final class MessageService: IMessageService {
     
     static let logTag = "\(MessageService.self)"
     
-    private let channel: ChannelDB
+    //private let channel: ChannelDB
     
     private let channelId: String
     
     private let db = Firestore.firestore()
     
     private lazy var messagesReference = {
-        db.collection("channels/\(channel.identifier)/messages")
+        db.collection("channels/\(channelId)/messages")
     }()
     
     private var messagesListener: ListenerRegistration?
     
-    init(channel: ChannelDB) {
-        self.channel = channel
-        self.channelId = channel.identifier
+    init(channelId: String) {
+        self.channelId = channelId
     }
     
     deinit {

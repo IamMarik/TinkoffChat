@@ -13,7 +13,9 @@ class ConversationsListViewController: UIViewController {
     
     static let logTag = "\(ConversationsListViewController.self)"
     
-    lazy var channelsService = ChannelsService()
+    var channelsService: IChannelsService?
+    
+    var logger: ILogger?
  
     private lazy var fetchedResultsController: NSFetchedResultsController<ChannelDB> = {
         let request: NSFetchRequest<ChannelDB> = ChannelDB.fetchRequest()
@@ -122,7 +124,7 @@ class ConversationsListViewController: UIViewController {
             try fetchedResultsController.performFetch()
         } catch {
             showErrorAlert(message: error.localizedDescription)
-            Log.error(error.localizedDescription, tag: Self.logTag)
+            logger?.error(error.localizedDescription)
         }
         // Подписываемся на обновления из firestore
         subscribeOnChannelUpdates()
@@ -130,9 +132,9 @@ class ConversationsListViewController: UIViewController {
     
     private func subscribeOnChannelUpdates() {
         fetchedResultsController.delegate = self
-        channelsService.subscribeOnChannelsUpdates { (result) in
+        channelsService?.subscribeOnChannelsUpdates { [weak self] (result) in
             if case Result.failure(let error) = result {
-                Log.error(error.localizedDescription)
+                self?.logger?.error(error.localizedDescription)
             }
         }
     }
@@ -151,7 +153,7 @@ class ConversationsListViewController: UIViewController {
     }
     
     private func createChannel(name: String) {
-        channelsService.createChannel(name: name) { [weak self] (result) in
+        channelsService?.createChannel(name: name) { [weak self] (result) in
             if case Result.failure(_) = result {
                 self?.showErrorAlert(message: "Error during create new channel, try later.")
             }
@@ -254,13 +256,13 @@ extension ConversationsListViewController: UITableViewDelegate {
             let alert = UIAlertController(title: "Confirmation", message: "Do you realy want to delete channel \(channel.name)", preferredStyle: .alert)
             let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
             let delete = UIAlertAction(title: "Delete", style: .destructive) { [weak self] (_) in
-                self?.channelsService.deleteChannel(channel) { (result) in
+                self?.channelsService?.deleteChannel(channel) { (result) in
                     switch result {
                     case .success:
-                        Log.info("Successful delete channel \(channel.name)", tag: Self.logTag)
+                        self?.logger?.info("Successful delete channel \(channel.name)")
                     case .failure(let error):
                         self?.showErrorAlert(message: error.localizedDescription)
-                        Log.error("Error during deleting channel \(channel.name). \(error.localizedDescription)", tag: Self.logTag)
+                        self?.logger?.error("Error during deleting channel \(channel.name). \(error.localizedDescription)")
                     }
                 }
             }
