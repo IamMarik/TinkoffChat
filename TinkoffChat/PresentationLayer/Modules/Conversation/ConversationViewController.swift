@@ -11,28 +11,25 @@ import CoreData
 
 class ConversationViewController: UIViewController {
     
-    var messageService: MessageService?
-    
-    var channel: ChannelDB?
+    var channelId: String?
+    var messageService: IMessageService?
         
-    let cellId = "\(MessageTableViewCell.self)"
+    private let cellId = "\(MessageTableViewCell.self)"
     
-    @IBOutlet var tableView: UITableView!
+    // private var messageVisibleBottomConstraint: NSLayoutConstraint?
     
-    var messageVisibleBottomConstraint: NSLayoutConstraint?
-    
-    lazy var messageInputView: MessageInputView = {
+    private lazy var messageInputView: MessageInputView = {
         let view = MessageInputView()
         view.delegate = self
         return view
     }()
     
-    var shouldScrollToBottom: Bool = false
+    private var shouldScrollToBottom: Bool = false
     
-    var fetchesCount: Int = 0
+    private var fetchesCount: Int = 0
     
     private lazy var fetchedResultsController: NSFetchedResultsController<MessageDB> = {
-        let channelId = channel?.identifier ?? ""
+        let channelId = self.channelId ?? ""
         let request: NSFetchRequest<MessageDB> = MessageDB.fetchRequest(forChannelId: channelId)
         let sortByDate = NSSortDescriptor(key: "created", ascending: true)
         request.sortDescriptors = [sortByDate]
@@ -44,6 +41,8 @@ class ConversationViewController: UIViewController {
         return controller
     }()
     
+    @IBOutlet private var tableView: UITableView!
+    
     override var inputAccessoryView: UIView? {
         return messageInputView
     }
@@ -54,9 +53,6 @@ class ConversationViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        if let channel = self.channel {
-            messageService = MessageService(channelId: channel.identifier)
-        }
         setupView()
         setupTheme()
         setupKeyboard()

@@ -17,7 +17,9 @@ protocol IChannelsService {
 
 final class ChannelsService: IChannelsService {
     
-    private static let logTag = "\(ChannelsService.self)"
+    let serviceAssembly: IServicesAssembly
+    
+    var logger: ILogger?
     
     private var db = Firestore.firestore()
     
@@ -28,6 +30,10 @@ final class ChannelsService: IChannelsService {
     }()
     
     private var fetchesCount = 0
+    
+    init(serviceAssembly: IServicesAssembly) {
+        self.serviceAssembly = serviceAssembly    
+    }
         
     deinit {
         channelsListener?.remove()
@@ -39,7 +45,7 @@ final class ChannelsService: IChannelsService {
         channelsListener = channels.addSnapshotListener(includeMetadataChanges: true) { (querySnapshot, error) in
             
             if let error = error {
-                Log.error("Error fetching channels", tag: Self.logTag)
+                self.logger?.error("Error fetching channels")
                 handler(.failure(error))
             } else if let snapshot = querySnapshot {
                 if isFirstFetch {
@@ -50,7 +56,7 @@ final class ChannelsService: IChannelsService {
                 }
                 DispatchQueue.global(qos: .default).async {
                     CoreDataStack.shared.performSave { context in
-                        Log.info("Success update channels fetch: \(snapshot.documentChanges.count)", tag: Self.logTag)
+                        self.logger?.info("Success update channels fetch: \(snapshot.documentChanges.count)")
                         
                         snapshot.documentChanges.forEach { diff in
                             print(diff.document.data()["name"] ?? "")
@@ -95,18 +101,18 @@ final class ChannelsService: IChannelsService {
     
     // Не смог нормально отладить из-за квоты
     func deleteChannel(_ channel: ChannelDB, handler: @escaping (Result<Bool, Error>) -> Void ) {
-        let messageService = MessageService(channelId: channel.identifier)
+        let messageService = serviceAssembly.messageService(channelId: channel.identifier)
         channels.document(channel.identifier).collection("messages").getDocuments { (querySnapshot, error) in
             if let error = error {
-                Log.error("Error getting messages for deleting", tag: Self.logTag)
+                self.logger?.error("Error getting messages for deleting")
                 handler(.failure(error))
             } else if let snapshot = querySnapshot {
                 snapshot.documents.forEach { document in
                     messageService.deleteMessage(withId: document.documentID, handler: { (error) in
-                        Log.error("Error delete nested document", tag: Self.logTag)
+                        self.logger?.error("Error delete nested document")
                     })
                 }
-                messageService.deleteAllMessagesFromDB()
+                //messageService.deleteAllMessagesFromDB()
                 self.channels.document(channel.identifier).delete { error in
                     if let error = error {
                         handler(.failure(error))

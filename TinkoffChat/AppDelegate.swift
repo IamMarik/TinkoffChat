@@ -14,6 +14,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     
+    private var rootAssembly = RootAssembly()
+    
     func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
         FirebaseApp.configure()
         //CoreDataStack.shared.deleteStore()
@@ -23,6 +25,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         Themes.loadApplicationTheme()
+        
+        self.window = UIWindow(frame: UIScreen.main.bounds)
+        let rootNavigationController = rootAssembly.presentationAssembly.rootNavigationViewController()
+        window?.rootViewController = rootNavigationController
+        window?.makeKeyAndVisible()
+        
         return true
     }
     

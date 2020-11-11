@@ -8,7 +8,7 @@
 
 import UIKit
 
-final class GCDDataManager: DataManagerProtocol {
+final class GCDProfileDataManager: IProfileDataManager {
         
     func writeToDisk(newProfile: ProfileViewModel, oldProfile: ProfileViewModel?, completion: @escaping((Bool) -> Void)) {
         let group = DispatchGroup()

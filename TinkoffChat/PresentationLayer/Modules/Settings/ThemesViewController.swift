@@ -10,11 +10,6 @@ import UIKit
 
 class ThemesViewController: UIViewController {
     
-    /*
-     Если не делать поле делегата weak, это может стать причиной memory leak,
-     например ссылка на объект этого класса хранится в поле объекта делегата,
-     а этот объект захватывает сильную ссылку на делегат.
-    */
     weak var delegate: ThemesPickerDelegate?
         
     let initialThemeOption = Themes.currentThemeOption

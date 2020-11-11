@@ -40,28 +40,33 @@ class PresenentationAssembly: IPresenentationAssembly {
         }
         conversationListViewController.channelsService = serviceAssembly.channelsService()
         conversationListViewController.logger = serviceAssembly.logger(for: conversationListViewController)
+        conversationListViewController.userDataStore = serviceAssembly.userDataStore
+        conversationListViewController.presentationAssembly = self
         return rootNavigationController
     }
         
     func conversationViewController(channelId: String) -> ConversationViewController {
-        guard let viewController = UIStoryboard(name: "Conversation", bundle: nil).instantiateInitialViewController() as? ConversationViewController else {
+        guard let conversationViewController = UIStoryboard(name: "Conversation", bundle: nil).instantiateInitialViewController() as? ConversationViewController else {
             fatalError("Can't instantiate ConversationViewController")
         }
-        return viewController
+        conversationViewController.channelId = channelId
+        conversationViewController.messageService = serviceAssembly.messageService(channelId: channelId)
+        return conversationViewController
     }
     
     func profileViewController() -> ProfileViewController {
-        guard let viewController = UIStoryboard(name: "Profile", bundle: nil).instantiateInitialViewController() as? ProfileViewController else {
+        guard let profileViewController = UIStoryboard(name: "Profile", bundle: nil).instantiateViewController(withIdentifier: "profileId") as? ProfileViewController else {
             fatalError("Can't instantiate ConversationViewController")
         }
-        return viewController
+        profileViewController.userDataStore = serviceAssembly.userDataStore
+        return profileViewController
     }
     
     func settingsViewController() -> ThemesViewController {
-        guard let viewController = UIStoryboard(name: "ThemeSettings", bundle: nil).instantiateInitialViewController() as? ThemesViewController else {
+        guard let settingsViewController = UIStoryboard(name: "ThemeSettings", bundle: nil).instantiateViewController(withIdentifier: "ThemeSettingsId") as? ThemesViewController else {
             fatalError("Can't instantiate ConversationViewController")
         }
-        return viewController
+        return settingsViewController
     }
     
 }

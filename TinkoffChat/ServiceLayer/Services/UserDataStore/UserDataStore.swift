@@ -8,15 +8,22 @@
 
 import Foundation
 
-/*
-    Тот случай, когда я считаю допустимым использование Singleton.
-    Если есть решение лучше, пожалуйста укажи в комментариях :)
- */
-class UserData {
+protocol IUserDataStore {
+    var identifier: String { get }
+    var profile: ProfileViewModel? { get }
+    func saveProfile(profile: ProfileViewModel, completion: @escaping (Bool) -> Void)
+    func loadProfile(completion: @escaping (ProfileViewModel) -> Void)
+}
+
+class UserDataStore: IUserDataStore {
     
-    static var shared: UserData = UserData()
+    static var shared: IUserDataStore = UserDataStore()
     
-    private init() { }
+    let profileDataManager: IProfileDataManager
+    
+    init(profileDataManager: IProfileDataManager = GCDProfileDataManager()) {
+        self.profileDataManager = profileDataManager
+    }
     
     private static var keyIdentifier = "user_identifier"
     
@@ -37,10 +44,13 @@ class UserData {
     }
         
     private(set) var profile: ProfileViewModel?
+    
+    func saveProfile(profile: ProfileViewModel, completion: @escaping (Bool) -> Void) {
+        profileDataManager.writeToDisk(newProfile: profile, oldProfile: profile, completion: completion)
+    }
         
     func loadProfile(completion: @escaping (ProfileViewModel) -> Void) {
-        let profileManager = GCDDataManager()
-        profileManager.readProfileFromDisk { (profile) in
+        profileDataManager.readProfileFromDisk { (profile) in
             if let profile = profile {
                 self.profile = profile
                 completion(profile)
@@ -48,7 +58,7 @@ class UserData {
                 let defaultProfile = ProfileViewModel(fullName: "Marat Dzhanybaev",
                                                       description: "Love coding, bbq and beer",
                                                       avatar: nil)
-                profileManager.writeToDisk(newProfile: defaultProfile, oldProfile: nil) { _ in
+                self.profileDataManager.writeToDisk(newProfile: defaultProfile, oldProfile: nil) { _ in
                     self.profile = defaultProfile
                     completion(defaultProfile)
                 }

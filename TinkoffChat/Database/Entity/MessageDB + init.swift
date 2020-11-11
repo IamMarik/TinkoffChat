@@ -13,7 +13,7 @@ import Firebase
 extension MessageDB {
     
     var isMyMessage: Bool {
-        return senderId == UserData.shared.identifier
+        return senderId == UserDataStore.shared.identifier
     }
     
     convenience init?(identifier: String, firestoreData: [String: Any], channelId: String, in context: NSManagedObjectContext) {

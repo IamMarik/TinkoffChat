@@ -9,9 +9,11 @@
 import Foundation
 
 protocol ICoreAssembly {
-    
+    func profileDataManager() -> IProfileDataManager
 }
 
 class CoreAssembly: ICoreAssembly {
-    
+    func profileDataManager() -> IProfileDataManager {
+        return GCDProfileDataManager()
+    }
 }

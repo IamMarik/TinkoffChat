@@ -9,43 +9,43 @@
 import UIKit
 
 class ProfileViewController: UIViewController {
-
-    static var logTag = "\(ProfileViewController.self)"
     
     var profile: ProfileViewModel?
     
+    var userDataStore: IUserDataStore?
+    
+    var logger: ILogger?
+    
     var onProfileChanged: ((ProfileViewModel) -> Void)?
     
-    var gcdDataManager = GCDDataManager()
+    private var currentState: ProfileViewState = .initial
         
-    lazy var imagePickerController: UIImagePickerController = {
+    private lazy var imagePickerController: UIImagePickerController = {
         let imagePicker = UIImagePickerController()
         imagePicker.delegate = self
         imagePicker.allowsEditing = false
         return imagePicker
     }()
     
-    var currentState: ProfileViewState = .initial
-    
-    @IBOutlet var scrollView: UIScrollView!
+    @IBOutlet private var scrollView: UIScrollView!
 
-    @IBOutlet var profileNavigationBar: ProfileNavigationBar!
+    @IBOutlet private var profileNavigationBar: ProfileNavigationBar!
     
-    @IBOutlet var profileAvatarImageView: UIImageView!
+    @IBOutlet private var profileAvatarImageView: UIImageView!
 
-    @IBOutlet var profileNameLabel: UILabel!
+    @IBOutlet private var profileNameLabel: UILabel!
 
-    @IBOutlet var profileNameTextField: UITextField!
+    @IBOutlet private var profileNameTextField: UITextField!
     
-    @IBOutlet var profileDescriptionTextView: UITextView!
+    @IBOutlet private var profileDescriptionTextView: UITextView!
     
-    @IBOutlet var editAvatarButton: UIButton!
+    @IBOutlet private var editAvatarButton: UIButton!
  
-    @IBOutlet var loadingView: UIView!
+    @IBOutlet private var loadingView: UIView!
     
-    @IBOutlet var saveButtonsStackView: UIStackView!
+    @IBOutlet private var saveButtonsStackView: UIStackView!
     
-    @IBOutlet var saveGCDButton: UIButton!
+    @IBOutlet private var saveGCDButton: UIButton!
  
     /// Стейты вьюхи. Сделал String для дебага
     enum ProfileViewState: String {
@@ -108,7 +108,7 @@ class ProfileViewController: UIViewController {
             imagePickerController.sourceType = .photoLibrary
             present(imagePickerController, animated: true, completion: nil)
         } else {
-            Log.error("Photo library source is not available", tag: Self.logTag)
+            logger?.error("Photo library source is not available")
             showAlert(withTitle: "Error", message: "Photo gallery is not available")
         }
     }
@@ -118,7 +118,7 @@ class ProfileViewController: UIViewController {
             imagePickerController.sourceType = .camera
             present(imagePickerController, animated: true, completion: nil)
         } else {
-            Log.error("Camera source is not available", tag: Self.logTag)
+            logger?.error("Camera source is not available")
             showAlert(withTitle: "Error", message: "Camera is not available")
         }
     }
@@ -143,7 +143,7 @@ class ProfileViewController: UIViewController {
     
     private func changeView(state: ProfileViewState) {
         guard currentState != state else { return }
-        Log.info("Changing state to: \(state.rawValue)", tag: "\(Self.self)")
+        logger?.info("Changing state to: \(state.rawValue)")
         currentState = state
         switch state {
         case .initial:
@@ -175,31 +175,34 @@ class ProfileViewController: UIViewController {
         }
     }
   
-    private func saveProfileChanges(with dataManager: DataManagerProtocol) {
-        Log.info("Saving profile with \(dataManager.self)")
+    private func saveProfileChanges() {
+        logger?.info("Saving profile")
         changeView(state: .saving)
-        guard let oldProfile = profile else { return }
         let newProfile = ProfileViewModel(
             fullName: profileNameTextField.text ?? "",
             description: profileDescriptionTextView.text ?? "",
             avatar: profileAvatarImageView.image)
-        dataManager.writeToDisk(newProfile: newProfile, oldProfile: oldProfile) { [weak self] (success) in
-            UserData.shared.loadProfile { (profile) in
+        
+        userDataStore?.saveProfile(profile: newProfile, completion: { [weak self] (success) in
+            if success {
+                self?.userDataStore?.loadProfile(completion: { (loadedProfile) in
+                    DispatchQueue.main.async {
+                        self?.changeView(state: .view)
+                        self?.profile = loadedProfile
+                        self?.updateData()
+                        self?.onProfileChanged?(loadedProfile)
+                        self?.showAlert(withTitle: "Success", message: "Profile was successful saved")
+                    }
+                })
+            } else {
                 DispatchQueue.main.async {
                     self?.changeView(state: .view)
-                    if success {
-                        self?.profile = profile
-                        self?.updateData()
-                        self?.onProfileChanged?(profile)
-                        self?.showAlert(withTitle: "Success", message: "Profile was successful saved")
-                    } else {
-                        self?.showAlert(withTitle: "Error", message: "Error during saving profile", retryAction: {
-                            self?.saveProfileChanges(with: dataManager)
-                        })
-                    }
+                    self?.showAlert(withTitle: "Error", message: "Error during saving profile", retryAction: {
+                        self?.saveProfileChanges()
+                    })
                 }
             }
-        }
+        })
     }
     
     @IBAction func editAvatarButtonDidTap(_ sender: Any) {
@@ -235,7 +238,7 @@ class ProfileViewController: UIViewController {
             changeView(state: .editing)
         case .hasChanges:
             // Сохраняем профайл
-            saveProfileChanges(with: gcdDataManager)
+            saveProfileChanges()
         }
     }
     

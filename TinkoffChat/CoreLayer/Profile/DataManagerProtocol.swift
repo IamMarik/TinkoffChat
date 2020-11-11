@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol DataManagerProtocol {
+protocol IProfileDataManager {
     
     func writeToDisk(newProfile: ProfileViewModel, oldProfile: ProfileViewModel?, completion: @escaping((Bool) -> Void))
     

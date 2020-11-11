@@ -8,7 +8,7 @@
 
 import UIKit
 
-class OperationDataManager: DataManagerProtocol {
+class OperationProfileDataManager: IProfileDataManager {
     
     lazy var operationQueue: OperationQueue =  {
         let queue = OperationQueue()

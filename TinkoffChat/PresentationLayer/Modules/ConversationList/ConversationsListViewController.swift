@@ -11,11 +11,13 @@ import CoreData
 
 class ConversationsListViewController: UIViewController {
     
-    static let logTag = "\(ConversationsListViewController.self)"
-    
     var channelsService: IChannelsService?
     
+    var userDataStore: IUserDataStore?
+    
     var logger: ILogger?
+    
+    var presentationAssembly: IPresenentationAssembly?
  
     private lazy var fetchedResultsController: NSFetchedResultsController<ChannelDB> = {
         let request: NSFetchRequest<ChannelDB> = ChannelDB.fetchRequest()
@@ -29,8 +31,6 @@ class ConversationsListViewController: UIViewController {
                                                     cacheName: nil)
         return controller
     }()
-         
-    private var profileDataManager: DataManagerProtocol = GCDDataManager()
     
     private let cellId = String(describing: ConversationTableViewCell.self)
     
@@ -46,13 +46,13 @@ class ConversationsListViewController: UIViewController {
         return button
     }()
     
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet private var tableView: UITableView!
     
-    @IBOutlet var settingsBarButtonItem: UIBarButtonItem!
+    @IBOutlet private var settingsBarButtonItem: UIBarButtonItem!
     
-    @IBOutlet var profileBarButtonItem: UIBarButtonItem!
+    @IBOutlet private var profileBarButtonItem: UIBarButtonItem!
     
-    @IBOutlet var addChannelBarButtonItem: UIBarButtonItem!
+    @IBOutlet private var addChannelBarButtonItem: UIBarButtonItem!
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         Themes.current.statusBarStyle
@@ -113,7 +113,7 @@ class ConversationsListViewController: UIViewController {
     }
     
     private func loadProfile() {
-        UserData.shared.loadProfile { [weak self] (profile) in
+        userDataStore?.loadProfile { [weak self] (profile) in
             self?.updateProfile(profile: profile)
         }
     }
@@ -161,9 +161,8 @@ class ConversationsListViewController: UIViewController {
     }
     
     @objc private func profileItemDidTap() {
-        guard let profile = UserData.shared.profile else { return }
-        guard let profileViewController = UIStoryboard(name: "Profile", bundle: nil)
-                .instantiateViewController(withIdentifier: "profileId") as? ProfileViewController else { return }
+        guard let profile = userDataStore?.profile else { return }
+        guard let profileViewController = presentationAssembly?.profileViewController() else { return }
         profileViewController.profile = profile
         profileViewController.onProfileChanged = { [weak self] (profile) in
             self?.updateProfile(profile: profile)
@@ -172,9 +171,7 @@ class ConversationsListViewController: UIViewController {
     }
     
     @IBAction func settingsItemDidTap(_ sender: Any) {
-        guard let themesViewController = UIStoryboard(name: "ThemeSettings", bundle: nil)
-                .instantiateViewController(withIdentifier: "ThemeSettingsId") as? ThemesViewController else { return }
-        
+        guard let themesViewController = presentationAssembly?.settingsViewController() else { return }
         themesViewController.delegate = self
         navigationController?.pushViewController(themesViewController, animated: true)
     }
@@ -234,14 +231,11 @@ extension ConversationsListViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        guard let conversationViewController = UIStoryboard(name: "Conversation", bundle: nil)
-                .instantiateViewController(withIdentifier: "conversationId") as? ConversationViewController else {
+        let channel = fetchedResultsController.object(at: indexPath)
+        guard let conversationVC = presentationAssembly?.conversationViewController(channelId: channel.identifier) else {
             return
         }
-        let channel = fetchedResultsController.object(at: indexPath)
-        conversationViewController.title = channel.name
-        conversationViewController.channel = channel
-        navigationController?.pushViewController(conversationViewController, animated: true)
+        navigationController?.pushViewController(conversationVC, animated: true)
     }
     
     func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
@@ -280,7 +274,6 @@ extension ConversationsListViewController: ThemesPickerDelegate {
         setupTheme()
         tableView.reloadData()
     }
-    
 }
 
 extension ConversationsListViewController: NSFetchedResultsControllerDelegate {

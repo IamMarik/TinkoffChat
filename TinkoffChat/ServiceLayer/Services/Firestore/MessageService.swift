@@ -14,15 +14,18 @@ protocol IMessageService {
     
     func subscribeOnMessagesUpdates(handler: @escaping(Result<Bool, Error>) -> Void)
     
+    func addMessage(content: String, handler: @escaping(Result<String, Error>) -> Void)
+    
+    func deleteMessage(withId identifier: String, handler: @escaping (Error?) -> Void )    
 }
 
 final class MessageService: IMessageService {
-    
-    static let logTag = "\(MessageService.self)"
-    
-    //private let channel: ChannelDB
-    
+            
     private let channelId: String
+    
+    private let userDataStore: IUserDataStore
+    
+    var logger: ILogger?
     
     private let db = Firestore.firestore()
     
@@ -32,8 +35,9 @@ final class MessageService: IMessageService {
     
     private var messagesListener: ListenerRegistration?
     
-    init(channelId: String) {
+    init(channelId: String, userDataStore: IUserDataStore) {
         self.channelId = channelId
+        self.userDataStore = userDataStore   
     }
     
     deinit {
@@ -89,13 +93,13 @@ final class MessageService: IMessageService {
     
     /// Add a new message to channel
     func addMessage(content: String, handler: @escaping(Result<String, Error>) -> Void) {
-        guard let profile = UserData.shared.profile else { return }
+        guard let profile = userDataStore.profile else { return }
         
         var ref: DocumentReference?
         ref = messagesReference.addDocument(
             data: [
                 "content": content,
-                "senderId": UserData.shared.identifier,
+                "senderId": userDataStore.identifier,
                 "senderName": profile.fullName,
                 "created": Timestamp(date: Date())
             ]) { (error) in
@@ -113,10 +117,10 @@ final class MessageService: IMessageService {
     func deleteMessage(withId identifier: String, handler: @escaping (Error?) -> Void ) {
         messagesReference.document(identifier).delete { error in
             if let error = error {
-                Log.error("Error removing message, id: \(identifier). \(error.localizedDescription)", tag: Self.logTag)
+                self.logger?.error("Error removing message, id: \(identifier). \(error.localizedDescription)")
                 handler(error)
             } else {
-                Log.info("Message successfully removed, id: \(identifier)", tag: Self.logTag)
+                self.logger?.info("Message successfully removed, id: \(identifier)")
                 handler(nil)
             }
         }
