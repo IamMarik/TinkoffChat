@@ -25,6 +25,8 @@ final class MessageService: IMessageService {
     
     private let userDataStore: IUserDataStore
     
+    private let coreDataStack: ICoreDataStack
+    
     var logger: ILogger?
     
     private let db = Firestore.firestore()
@@ -35,9 +37,10 @@ final class MessageService: IMessageService {
     
     private var messagesListener: ListenerRegistration?
     
-    init(channelId: String, userDataStore: IUserDataStore) {
+    init(channelId: String, userDataStore: IUserDataStore, coreDataStack: ICoreDataStack) {
         self.channelId = channelId
-        self.userDataStore = userDataStore   
+        self.userDataStore = userDataStore
+        self.coreDataStack = coreDataStack
     }
     
     deinit {
@@ -59,7 +62,7 @@ final class MessageService: IMessageService {
                     isFirstFetch = false
                 }
                 DispatchQueue.global(qos: .default).async {
-                    CoreDataStack.shared.performSave { context in
+                    self.coreDataStack.performSave { context in
                         snapshot.documentChanges.forEach { diff in
                             switch diff.type {
                             case .added:
@@ -82,7 +85,7 @@ final class MessageService: IMessageService {
     /// Remove all messages for current channel in Database
     func deleteAllMessagesFromDB() {
         let channelId = self.channelId
-        CoreDataStack.shared.performSave { (context) in
+        coreDataStack.performSave { (context) in
             if let result = try? context.fetch(MessageDB.fetchRequest(forChannelId: channelId)) {
                 result.forEach {
                     context.delete($0)

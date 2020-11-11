@@ -9,11 +9,18 @@
 import Foundation
 import CoreData
 
-final class CoreDataStack {
+protocol ICoreDataStack {
+    var mainContext: NSManagedObjectContext { get }
+    func performSave(_ block: (NSManagedObjectContext) -> Void)
+    func addStatisticObserver()
+    func deleteStore()
+}
+
+final class CoreDataStack: ICoreDataStack {
     
     static let logTag = "\(CoreDataStack.self)"
     
-    static var shared = CoreDataStack()
+    // static var shared = CoreDataStack()
     
     private let modelName: String
     

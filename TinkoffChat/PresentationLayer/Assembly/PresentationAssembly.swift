@@ -41,6 +41,7 @@ class PresenentationAssembly: IPresenentationAssembly {
         conversationListViewController.channelsService = serviceAssembly.channelsService()
         conversationListViewController.logger = serviceAssembly.logger(for: conversationListViewController)
         conversationListViewController.userDataStore = serviceAssembly.userDataStore
+        conversationListViewController.fetchedResultsController = serviceAssembly.channelsFetchResultsController()
         conversationListViewController.presentationAssembly = self
         return rootNavigationController
     }
@@ -51,6 +52,7 @@ class PresenentationAssembly: IPresenentationAssembly {
         }
         conversationViewController.channelId = channelId
         conversationViewController.messageService = serviceAssembly.messageService(channelId: channelId)
+        conversationViewController.fetchedResultsController = serviceAssembly.messagesFetchResultsController(channelId: channelId)
         return conversationViewController
     }
     

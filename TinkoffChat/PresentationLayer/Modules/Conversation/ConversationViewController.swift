@@ -12,12 +12,13 @@ import CoreData
 class ConversationViewController: UIViewController {
     
     var channelId: String?
+    
     var messageService: IMessageService?
+    
+    var fetchedResultsController: NSFetchedResultsController<MessageDB>?
         
     private let cellId = "\(MessageTableViewCell.self)"
-    
-    // private var messageVisibleBottomConstraint: NSLayoutConstraint?
-    
+        
     private lazy var messageInputView: MessageInputView = {
         let view = MessageInputView()
         view.delegate = self
@@ -27,20 +28,7 @@ class ConversationViewController: UIViewController {
     private var shouldScrollToBottom: Bool = false
     
     private var fetchesCount: Int = 0
-    
-    private lazy var fetchedResultsController: NSFetchedResultsController<MessageDB> = {
-        let channelId = self.channelId ?? ""
-        let request: NSFetchRequest<MessageDB> = MessageDB.fetchRequest(forChannelId: channelId)
-        let sortByDate = NSSortDescriptor(key: "created", ascending: true)
-        request.sortDescriptors = [sortByDate]
-        request.fetchBatchSize = 20
-        let controller = NSFetchedResultsController(fetchRequest: request,
-                                                    managedObjectContext: CoreDataStack.shared.mainContext,
-                                                    sectionNameKeyPath: nil,
-                                                    cacheName: nil)
-        return controller
-    }()
-    
+       
     @IBOutlet private var tableView: UITableView!
     
     override var inputAccessoryView: UIView? {
@@ -92,7 +80,7 @@ class ConversationViewController: UIViewController {
     
     private func fetchMessages() {
         do {
-            try fetchedResultsController.performFetch()
+            try fetchedResultsController?.performFetch()
         } catch {
             // showErrorAlert(message: error.localizedDescription)
             Log.error(error.localizedDescription)
@@ -101,7 +89,7 @@ class ConversationViewController: UIViewController {
     }
     
     private func subscribeOnMessagesUpdates() {
-        fetchedResultsController.delegate = self
+        fetchedResultsController?.delegate = self
         messageService?.subscribeOnMessagesUpdates(handler: { (result) in
             if case Result.failure(let error) = result {
                 Log.error(error.localizedDescription)
@@ -153,14 +141,15 @@ class ConversationViewController: UIViewController {
 extension ConversationViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return fetchedResultsController.fetchedObjects?.count ?? 0
+        return fetchedResultsController?.fetchedObjects?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as? MessageTableViewCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as? MessageTableViewCell,
+              let message = fetchedResultsController?.object(at: indexPath) else {
             return UITableViewCell()
         }
-        let message = fetchedResultsController.object(at: indexPath)
+      
         cell.configure(with: message)
         return cell
     }
@@ -222,8 +211,8 @@ extension ConversationViewController: NSFetchedResultsControllerDelegate {
             }
         case .update:
             if let indexPath = indexPath,
-               let cell = tableView.cellForRow(at: indexPath) as? MessageTableViewCell {
-                let message = fetchedResultsController.object(at: indexPath)
+               let cell = tableView.cellForRow(at: indexPath) as? MessageTableViewCell,
+               let message = fetchedResultsController?.object(at: indexPath) {                
                 cell.configure(with: message)
             }
         case .move:

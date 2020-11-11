@@ -19,18 +19,7 @@ class ConversationsListViewController: UIViewController {
     
     var presentationAssembly: IPresenentationAssembly?
  
-    private lazy var fetchedResultsController: NSFetchedResultsController<ChannelDB> = {
-        let request: NSFetchRequest<ChannelDB> = ChannelDB.fetchRequest()
-        let sortByDate = NSSortDescriptor(key: "lastActivity", ascending: false)
-        let sortById = NSSortDescriptor(key: "identifier", ascending: true)
-        request.sortDescriptors = [sortByDate, sortById]
-        request.fetchBatchSize = 20
-        let controller = NSFetchedResultsController(fetchRequest: request,
-                                                    managedObjectContext: CoreDataStack.shared.mainContext,
-                                                    sectionNameKeyPath: nil,
-                                                    cacheName: nil)
-        return controller
-    }()
+    var fetchedResultsController: NSFetchedResultsController<ChannelDB>?
     
     private let cellId = String(describing: ConversationTableViewCell.self)
     
@@ -121,7 +110,7 @@ class ConversationsListViewController: UIViewController {
     private func fetchChannels() {
         do {
             // Загружаем уже сохраненные каналы из бд
-            try fetchedResultsController.performFetch()
+            try fetchedResultsController?.performFetch()
         } catch {
             showErrorAlert(message: error.localizedDescription)
             logger?.error(error.localizedDescription)
@@ -131,7 +120,7 @@ class ConversationsListViewController: UIViewController {
     }
     
     private func subscribeOnChannelUpdates() {
-        fetchedResultsController.delegate = self
+        fetchedResultsController?.delegate = self
         channelsService?.subscribeOnChannelsUpdates { [weak self] (result) in
             if case Result.failure(let error) = result {
                 self?.logger?.error(error.localizedDescription)
@@ -208,15 +197,15 @@ extension ConversationsListViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return fetchedResultsController.fetchedObjects?.count ?? 0
+        return fetchedResultsController?.fetchedObjects?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as? ConversationTableViewCell
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as? ConversationTableViewCell,
+              let channel = fetchedResultsController?.object(at: indexPath)
             else {
             return UITableViewCell()
         }
-        let channel = fetchedResultsController.object(at: indexPath)
         cell.configure(with: channel)
         return cell
     }
@@ -231,8 +220,9 @@ extension ConversationsListViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        let channel = fetchedResultsController.object(at: indexPath)
-        guard let conversationVC = presentationAssembly?.conversationViewController(channelId: channel.identifier) else {
+       
+        guard let channel = fetchedResultsController?.object(at: indexPath),
+              let conversationVC = presentationAssembly?.conversationViewController(channelId: channel.identifier) else {
             return
         }
         navigationController?.pushViewController(conversationVC, animated: true)
@@ -245,8 +235,8 @@ extension ConversationsListViewController: UITableViewDelegate {
     }
             
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        guard let channel = self.fetchedResultsController?.object(at: indexPath) else { return }
         if editingStyle == .delete {
-            let channel = self.fetchedResultsController.object(at: indexPath)
             let alert = UIAlertController(title: "Confirmation", message: "Do you realy want to delete channel \(channel.name)", preferredStyle: .alert)
             let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
             let delete = UIAlertAction(title: "Delete", style: .destructive) { [weak self] (_) in
@@ -303,8 +293,8 @@ extension ConversationsListViewController: NSFetchedResultsControllerDelegate {
             }
         case .update:
             if let indexPath = indexPath,
-               let cell = tableView.cellForRow(at: indexPath) as? ConversationTableViewCell {
-                let channel = fetchedResultsController.object(at: indexPath)
+               let cell = tableView.cellForRow(at: indexPath) as? ConversationTableViewCell,
+               let channel = fetchedResultsController?.object(at: indexPath) {
                 cell.configure(with: channel)
             }
         case .move:

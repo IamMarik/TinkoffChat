@@ -38,6 +38,10 @@
 		EC845899253C62C100EEBCA3 /* UserDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC845898253C62C100EEBCA3 /* UserDataStore.swift */; };
 		EC84589D253C717A00EEBCA3 /* MessageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC84589C253C717A00EEBCA3 /* MessageService.swift */; };
 		EC885EF0255B9ADA0078F656 /* RootAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC885EEF255B9ADA0078F656 /* RootAssembly.swift */; };
+		EC885F45255C4E9E0078F656 /* ChannelDB+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC885F43255C4E9D0078F656 /* ChannelDB+CoreDataClass.swift */; };
+		EC885F46255C4E9E0078F656 /* ChannelDB+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC885F44255C4E9D0078F656 /* ChannelDB+CoreDataProperties.swift */; };
+		EC885F4C255C4EAC0078F656 /* MessageDB+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC885F4A255C4EAC0078F656 /* MessageDB+CoreDataClass.swift */; };
+		EC885F4D255C4EAC0078F656 /* MessageDB+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC885F4B255C4EAC0078F656 /* MessageDB+CoreDataProperties.swift */; };
 		EC89FDC6250E07CF00B22EC4 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = EC89FDC5250E07CF00B22EC4 /* README.md */; };
 		EC9C347D253306D100932552 /* OperationProfileDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC9C347C253306D100932552 /* OperationProfileDataManager.swift */; };
 		ECAB8611251F80D600BA7845 /* DateFormatter + dateOrNow.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECAB8610251F80D600BA7845 /* DateFormatter + dateOrNow.swift */; };
@@ -53,10 +57,6 @@
 		ECD9CB822527566D003FB027 /* ThemeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECD9CB812527566D003FB027 /* ThemeModel.swift */; };
 		ECDF962D2547C5F200928A3F /* ChatModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = ECDF962B2547C5F200928A3F /* ChatModel.xcdatamodeld */; };
 		ECDF96392547CE3200928A3F /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECDF96382547CE3200928A3F /* CoreDataStack.swift */; };
-		ECDF96622547D39300928A3F /* ChannelDB+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECDF965F2547D39300928A3F /* ChannelDB+CoreDataClass.swift */; };
-		ECDF96632547D39300928A3F /* ChannelDB+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECDF965E2547D39300928A3F /* ChannelDB+CoreDataProperties.swift */; };
-		ECDF96642547D39300928A3F /* MessageDB+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECDF96602547D39300928A3F /* MessageDB+CoreDataClass.swift */; };
-		ECDF96652547D39300928A3F /* MessageDB+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECDF96612547D39300928A3F /* MessageDB+CoreDataProperties.swift */; };
 		ECDF966B2547DE0C00928A3F /* ChannelDB + init.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECDF966A2547DE0C00928A3F /* ChannelDB + init.swift */; };
 		ECE22DE62537055B00A6AD76 /* UIAlert + changeColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECE22DE52537055B00A6AD76 /* UIAlert + changeColors.swift */; };
 		ECE22E0E2538B62C00A6AD76 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = ECE22E0D2538B62C00A6AD76 /* GoogleService-Info.plist */; };
@@ -105,6 +105,10 @@
 		EC845898253C62C100EEBCA3 /* UserDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDataStore.swift; sourceTree = "<group>"; };
 		EC84589C253C717A00EEBCA3 /* MessageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageService.swift; sourceTree = "<group>"; };
 		EC885EEF255B9ADA0078F656 /* RootAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootAssembly.swift; sourceTree = "<group>"; };
+		EC885F43255C4E9D0078F656 /* ChannelDB+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "ChannelDB+CoreDataClass.swift"; path = "TinkoffChat/Entities/Database/ChannelDB+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
+		EC885F44255C4E9D0078F656 /* ChannelDB+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "ChannelDB+CoreDataProperties.swift"; path = "TinkoffChat/Entities/Database/ChannelDB+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
+		EC885F4A255C4EAC0078F656 /* MessageDB+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "MessageDB+CoreDataClass.swift"; path = "TinkoffChat/Entities/Database/MessageDB+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
+		EC885F4B255C4EAC0078F656 /* MessageDB+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "MessageDB+CoreDataProperties.swift"; path = "TinkoffChat/Entities/Database/MessageDB+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		EC89FDC5250E07CF00B22EC4 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		EC9C347C253306D100932552 /* OperationProfileDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperationProfileDataManager.swift; sourceTree = "<group>"; };
 		ECAB8610251F80D600BA7845 /* DateFormatter + dateOrNow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter + dateOrNow.swift"; sourceTree = "<group>"; };
@@ -124,10 +128,6 @@
 		ECD9CB8525276A8A003FB027 /* Themes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Themes.swift; sourceTree = "<group>"; };
 		ECDF962C2547C5F200928A3F /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		ECDF96382547CE3200928A3F /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
-		ECDF965E2547D39300928A3F /* ChannelDB+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "ChannelDB+CoreDataProperties.swift"; path = "/Users/marik/projects/TinkoffChat/TinkoffChat/Database/ChannelDB+CoreDataProperties.swift"; sourceTree = "<absolute>"; };
-		ECDF965F2547D39300928A3F /* ChannelDB+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "ChannelDB+CoreDataClass.swift"; path = "/Users/marik/projects/TinkoffChat/TinkoffChat/Database/ChannelDB+CoreDataClass.swift"; sourceTree = "<absolute>"; };
-		ECDF96602547D39300928A3F /* MessageDB+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "MessageDB+CoreDataClass.swift"; path = "/Users/marik/projects/TinkoffChat/TinkoffChat/Database/MessageDB+CoreDataClass.swift"; sourceTree = "<absolute>"; };
-		ECDF96612547D39300928A3F /* MessageDB+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "MessageDB+CoreDataProperties.swift"; path = "/Users/marik/projects/TinkoffChat/TinkoffChat/Database/MessageDB+CoreDataProperties.swift"; sourceTree = "<absolute>"; };
 		ECDF966A2547DE0C00928A3F /* ChannelDB + init.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChannelDB + init.swift"; sourceTree = "<group>"; };
 		ECE22DE52537055B00A6AD76 /* UIAlert + changeColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlert + changeColors.swift"; sourceTree = "<group>"; };
 		ECE22E0D2538B62C00A6AD76 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -171,17 +171,17 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		EC03E9BF2549212C00D73B2B /* Entity */ = {
+		EC03E9BF2549212C00D73B2B /* Entities */ = {
 			isa = PBXGroup;
 			children = (
-				ECDF965F2547D39300928A3F /* ChannelDB+CoreDataClass.swift */,
-				ECDF965E2547D39300928A3F /* ChannelDB+CoreDataProperties.swift */,
+				EC885F43255C4E9D0078F656 /* ChannelDB+CoreDataClass.swift */,
+				EC885F44255C4E9D0078F656 /* ChannelDB+CoreDataProperties.swift */,
 				ECDF966A2547DE0C00928A3F /* ChannelDB + init.swift */,
-				ECDF96602547D39300928A3F /* MessageDB+CoreDataClass.swift */,
-				ECDF96612547D39300928A3F /* MessageDB+CoreDataProperties.swift */,
 				EC03E9BB25491FE100D73B2B /* MessageDB + init.swift */,
+				EC885F4A255C4EAC0078F656 /* MessageDB+CoreDataClass.swift */,
+				EC885F4B255C4EAC0078F656 /* MessageDB+CoreDataProperties.swift */,
 			);
-			path = Entity;
+			path = Entities;
 			sourceTree = "<group>";
 		};
 		EC17F38125235EAF00C6C2A7 /* Views */ = {
@@ -223,9 +223,9 @@
 		EC41AF76255A488900B783F4 /* CoreLayer */ = {
 			isa = PBXGroup;
 			children = (
-				EC41AF8C255A5C5900B783F4 /* Profile */,
 				EC41AF85255A513700B783F4 /* Assembly */,
-				EC845897253C62A400EEBCA3 /* Managers */,
+				EC41AF8C255A5C5900B783F4 /* Profile */,
+				EC885F4F255C4EC90078F656 /* CoreData */,
 			);
 			path = CoreLayer;
 			sourceTree = "<group>";
@@ -360,19 +360,47 @@
 			path = Profile;
 			sourceTree = "<group>";
 		};
-		EC845897253C62A400EEBCA3 /* Managers */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Managers;
-			sourceTree = "<group>";
-		};
 		EC885EF6255BA1B30078F656 /* UserDataStore */ = {
 			isa = PBXGroup;
 			children = (
 				EC845898253C62C100EEBCA3 /* UserDataStore.swift */,
 			);
 			path = UserDataStore;
+			sourceTree = "<group>";
+		};
+		EC885F41255C4E430078F656 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				EC3B4956251F6616002A93A8 /* Protocols */,
+				ECF7B6A425177A2B006DDB81 /* Fonts */,
+				ECED1CA72518E3DE0069EB71 /* Style */,
+				ECBFDDBF2553BD4C00C508DA /* CoreView */,
+				EC73CFC8253EFEC1001C5CB6 /* Components */,
+				ECC26947250C77C8001C08A0 /* Utils */,
+				ECC26944250C768D001C08A0 /* Extensions */,
+				ECC26939250C6FEE001C08A0 /* Assets.xcassets */,
+				ECC2693B250C6FEE001C08A0 /* LaunchScreen.storyboard */,
+				ECC2693E250C6FEE001C08A0 /* Info.plist */,
+			);
+			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		EC885F42255C4E610078F656 /* Entities */ = {
+			isa = PBXGroup;
+			children = (
+				ECDF962A2547C5D600928A3F /* Database */,
+			);
+			path = Entities;
+			sourceTree = "<group>";
+		};
+		EC885F4F255C4EC90078F656 /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				EC03E9BF2549212C00D73B2B /* Entities */,
+				ECDF962B2547C5F200928A3F /* ChatModel.xcdatamodeld */,
+				ECDF96382547CE3200928A3F /* CoreDataStack.swift */,
+			);
+			path = CoreData;
 			sourceTree = "<group>";
 		};
 		ECBFDDBE2553BD3900C508DA /* Firestore */ = {
@@ -415,23 +443,14 @@
 		ECC2692F250C6FEC001C08A0 /* TinkoffChat */ = {
 			isa = PBXGroup;
 			children = (
+				EC885F42255C4E610078F656 /* Entities */,
 				EC41AF78255A48B400B783F4 /* PresentationLayer */,
 				EC41AF77255A48A600B783F4 /* ServiceLayer */,
 				EC41AF76255A488900B783F4 /* CoreLayer */,
-				ECDF962A2547C5D600928A3F /* Database */,
-				EC3B4956251F6616002A93A8 /* Protocols */,
-				ECED1CA72518E3DE0069EB71 /* Style */,
-				ECBFDDBF2553BD4C00C508DA /* CoreView */,
-				EC73CFC8253EFEC1001C5CB6 /* Components */,
-				ECF7B6A425177A2B006DDB81 /* Fonts */,
-				ECC26947250C77C8001C08A0 /* Utils */,
-				ECC26944250C768D001C08A0 /* Extensions */,
+				EC885F41255C4E430078F656 /* Supporting Files */,
 				ECC26930250C6FEC001C08A0 /* AppDelegate.swift */,
 				EC885EEF255B9ADA0078F656 /* RootAssembly.swift */,
 				ECE22E0D2538B62C00A6AD76 /* GoogleService-Info.plist */,
-				ECC26939250C6FEE001C08A0 /* Assets.xcassets */,
-				ECC2693B250C6FEE001C08A0 /* LaunchScreen.storyboard */,
-				ECC2693E250C6FEE001C08A0 /* Info.plist */,
 			);
 			path = TinkoffChat;
 			sourceTree = "<group>";
@@ -479,9 +498,6 @@
 		ECDF962A2547C5D600928A3F /* Database */ = {
 			isa = PBXGroup;
 			children = (
-				EC03E9BF2549212C00D73B2B /* Entity */,
-				ECDF962B2547C5F200928A3F /* ChatModel.xcdatamodeld */,
-				ECDF96382547CE3200928A3F /* CoreDataStack.swift */,
 			);
 			path = Database;
 			sourceTree = "<group>";
@@ -661,15 +677,16 @@
 				EC845899253C62C100EEBCA3 /* UserDataStore.swift in Sources */,
 				EC885EF0255B9ADA0078F656 /* RootAssembly.swift in Sources */,
 				EC14A87B25307BD1007AEB5F /* GCDProfileDataManager.swift in Sources */,
+				EC885F45255C4E9E0078F656 /* ChannelDB+CoreDataClass.swift in Sources */,
 				ECCC90C625249979001C68F9 /* Date + RandomTime.swift in Sources */,
 				ECED1CA42518CFB20069EB71 /* ProfilePlaceholderImageRenderer.swift in Sources */,
 				EC73CFCE253EFFEC001C5CB6 /* Alert.swift in Sources */,
 				EC41AF7F255A4BDA00B783F4 /* ServicesAssembly.swift in Sources */,
 				EC41AF87255A515100B783F4 /* CoreAssembly.swift in Sources */,
 				EC41AF7B255A48E200B783F4 /* PresentationAssembly.swift in Sources */,
-				ECDF96632547D39300928A3F /* ChannelDB+CoreDataProperties.swift in Sources */,
+				EC885F46255C4E9E0078F656 /* ChannelDB+CoreDataProperties.swift in Sources */,
 				ECC26946250C76BE001C08A0 /* UIApplication.State + description.swift in Sources */,
-				ECDF96622547D39300928A3F /* ChannelDB+CoreDataClass.swift in Sources */,
+				EC885F4D255C4EAC0078F656 /* MessageDB+CoreDataProperties.swift in Sources */,
 				ECF5BBD5252B5BCF00B829B0 /* NightTheme.swift in Sources */,
 				ECDF962D2547C5F200928A3F /* ChatModel.xcdatamodeld in Sources */,
 				EC3B4954251F65C4002A93A8 /* ConversationsListViewController.swift in Sources */,
@@ -679,9 +696,9 @@
 				EC03E9BC25491FE100D73B2B /* MessageDB + init.swift in Sources */,
 				ECD9CB822527566D003FB027 /* ThemeModel.swift in Sources */,
 				EC73CFC6253EF602001C5CB6 /* FirebaseError.swift in Sources */,
-				ECDF96642547D39300928A3F /* MessageDB+CoreDataClass.swift in Sources */,
 				ECAB8611251F80D600BA7845 /* DateFormatter + dateOrNow.swift in Sources */,
 				ECED1CAD2518E5270069EB71 /* UIColor + hex.swift in Sources */,
+				EC885F4C255C4EAC0078F656 /* MessageDB+CoreDataClass.swift in Sources */,
 				ECF5BBCD252B5B8C00B829B0 /* ClassicTheme.swift in Sources */,
 				EC9C347D253306D100932552 /* OperationProfileDataManager.swift in Sources */,
 				EC3B4958251F662E002A93A8 /* ConfigurableView.swift in Sources */,
@@ -692,7 +709,6 @@
 				ECED1CA92518E3EC0069EB71 /* Colors.swift in Sources */,
 				EC53DCAF252C9D09000227E3 /* ThemeOptionView.swift in Sources */,
 				ECDF96392547CE3200928A3F /* CoreDataStack.swift in Sources */,
-				ECDF96652547D39300928A3F /* MessageDB+CoreDataProperties.swift in Sources */,
 				ECF7B6A225177781006DDB81 /* ProfileModel.swift in Sources */,
 				EC3B4968251F6940002A93A8 /* ConversationTableViewCell.swift in Sources */,
 				EC175EE12540468400B06B1F /* MessageInputView.swift in Sources */,

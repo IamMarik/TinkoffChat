@@ -19,6 +19,8 @@ final class ChannelsService: IChannelsService {
     
     let serviceAssembly: IServicesAssembly
     
+    let coreDataStack: ICoreDataStack
+    
     var logger: ILogger?
     
     private var db = Firestore.firestore()
@@ -31,8 +33,9 @@ final class ChannelsService: IChannelsService {
     
     private var fetchesCount = 0
     
-    init(serviceAssembly: IServicesAssembly) {
-        self.serviceAssembly = serviceAssembly    
+    init(serviceAssembly: IServicesAssembly, coreDataStack: ICoreDataStack) {
+        self.serviceAssembly = serviceAssembly
+        self.coreDataStack = coreDataStack
     }
         
     deinit {
@@ -55,7 +58,7 @@ final class ChannelsService: IChannelsService {
                     isFirstFetch = false
                 }
                 DispatchQueue.global(qos: .default).async {
-                    CoreDataStack.shared.performSave { context in
+                    self.coreDataStack.performSave { context in
                         self.logger?.info("Success update channels fetch: \(snapshot.documentChanges.count)")
                         
                         snapshot.documentChanges.forEach { diff in
@@ -127,7 +130,7 @@ final class ChannelsService: IChannelsService {
     }
      
     private func deleteAllChannelsFromDB() {
-        CoreDataStack.shared.performSave { (context) in
+        coreDataStack.performSave { (context) in
             if let result = try? context.fetch(ChannelDB.fetchRequest()) as? [ChannelDB] {
                 result.forEach {
                     context.delete($0)

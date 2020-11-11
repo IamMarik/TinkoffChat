@@ -9,6 +9,7 @@
 import Foundation
 
 protocol ICoreAssembly {
+    var coreDataStack: ICoreDataStack { get }
     func profileDataManager() -> IProfileDataManager
 }
 
@@ -16,4 +17,7 @@ class CoreAssembly: ICoreAssembly {
     func profileDataManager() -> IProfileDataManager {
         return GCDProfileDataManager()
     }
+    
+    var coreDataStack: ICoreDataStack = CoreDataStack()
+    
 }
