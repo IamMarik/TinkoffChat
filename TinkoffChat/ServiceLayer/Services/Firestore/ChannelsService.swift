@@ -10,8 +10,11 @@ import Foundation
 import Firebase
 
 protocol IChannelsService {
+    
     func subscribeOnChannelsUpdates(handler: @escaping (Result<Bool, Error>) -> Void)
+    
     func createChannel(name: String, handler: @escaping (Result<String, Error>) -> Void)
+    
     func deleteChannel(_ channel: ChannelDB, handler: @escaping (Result<Bool, Error>) -> Void)
 }
 
@@ -62,7 +65,8 @@ final class ChannelsService: IChannelsService {
                         self.logger?.info("Success update channels fetch: \(snapshot.documentChanges.count)")
                         
                         snapshot.documentChanges.forEach { diff in
-                            print(diff.document.data()["name"] ?? "")
+                            let channelName = (diff.document.data()["name"] as? String) ?? ""
+                            self.logger?.info(channelName, tag: "")
                             switch diff.type {
                             case .added, .modified:
                                 _ = ChannelDB(identifier: diff.document.documentID,
@@ -115,7 +119,6 @@ final class ChannelsService: IChannelsService {
                         self.logger?.error("Error delete nested document")
                     })
                 }
-                //messageService.deleteAllMessagesFromDB()
                 self.channels.document(channel.identifier).delete { error in
                     if let error = error {
                         handler(.failure(error))
@@ -123,6 +126,7 @@ final class ChannelsService: IChannelsService {
                         handler(.success(true))
                     }
                 }
+                self.deleteAllMessageFromDB(channelId: channel.identifier)
             } else {
                 handler(.failure(FirebaseError.snapshotIsNil))
             }
@@ -130,10 +134,24 @@ final class ChannelsService: IChannelsService {
     }
      
     private func deleteAllChannelsFromDB() {
-        coreDataStack.performSave { (context) in
-            if let result = try? context.fetch(ChannelDB.fetchRequest()) as? [ChannelDB] {
-                result.forEach {
-                    context.delete($0)
+        DispatchQueue.main.async {
+            self.coreDataStack.performSave { (context) in
+                if let result = try? context.fetch(ChannelDB.fetchRequest()) as? [ChannelDB] {
+                    result.forEach {
+                        context.delete($0)
+                    }
+                }
+            }
+        }
+    }
+    
+    private func deleteAllMessageFromDB(channelId: String) {
+        DispatchQueue.main.async {
+            self.coreDataStack.performSave { (context) in
+                if let result = try? context.fetch(MessageDB.fetchRequest(forChannelId: channelId)) as? [MessageDB] {
+                    result.forEach {
+                        context.delete($0)
+                    }
                 }
             }
         }

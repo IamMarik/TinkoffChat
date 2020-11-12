@@ -46,7 +46,7 @@ class UserDataStore: IUserDataStore {
     private(set) var profile: ProfileViewModel?
     
     func saveProfile(profile: ProfileViewModel, completion: @escaping (Bool) -> Void) {
-        profileDataManager.writeToDisk(newProfile: profile, oldProfile: profile, completion: completion)
+        profileDataManager.writeToDisk(newProfile: profile, oldProfile: self.profile, completion: completion)
     }
         
     func loadProfile(completion: @escaping (ProfileViewModel) -> Void) {

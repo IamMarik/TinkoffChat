@@ -9,6 +9,8 @@
 import UIKit
 import CoreText
 
+// Все методы статик, более того, врядли придется проверять создание изображения в юнит тестах
+// Поэтому тоже не будем инжектить как зависимость
 class ProfilePlaceholderImageRenderer {
 
     static var colors: [UIColor] = [.systemBlue, .systemPink, .systemTeal, Colors.sunFlower, .systemGreen]
@@ -16,7 +18,6 @@ class ProfilePlaceholderImageRenderer {
     static func drawProfilePlaceholderImage(forName name: String, inRectangleOfSize rectangleSize: CGSize) -> UIImage {
         
         guard let font = UIFont(name: "Roboto-Medium", size: rectangleSize.width / 2) else {
-            Log.error("Font not found")
             return UIImage()
         }
         

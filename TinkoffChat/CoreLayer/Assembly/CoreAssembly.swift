@@ -11,13 +11,20 @@ import Foundation
 protocol ICoreAssembly {
     var coreDataStack: ICoreDataStack { get }
     func profileDataManager() -> IProfileDataManager
+    func logger(for object: Any?) -> ILogger
 }
 
 class CoreAssembly: ICoreAssembly {
-    func profileDataManager() -> IProfileDataManager {
-        return GCDProfileDataManager()
-    }
-    
     var coreDataStack: ICoreDataStack = CoreDataStack()
     
+    func profileDataManager() -> IProfileDataManager {
+        let profileDataManager = GCDProfileDataManager()
+        profileDataManager.logger = logger(for: profileDataManager)
+        return profileDataManager
+    }
+    
+    func logger(for object: Any?) -> ILogger {
+        let logger = Logger(for: object)
+        return logger
+    }
 }

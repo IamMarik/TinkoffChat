@@ -293,7 +293,7 @@ extension ProfileViewController: UINavigationControllerDelegate, UIImagePickerCo
             self.profileAvatarImageView.image = image
            
         } else {
-            Log.error("Awaited an image from UIImagePickerController, but got nil")
+            logger?.error("Awaited an image from UIImagePickerController, but got nil")
         }
         picker.dismiss(animated: true) {
             self.checkProfileDataForChanges()          

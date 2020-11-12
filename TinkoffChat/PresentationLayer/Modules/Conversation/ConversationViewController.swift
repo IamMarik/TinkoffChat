@@ -16,6 +16,8 @@ class ConversationViewController: UIViewController {
     var messageService: IMessageService?
     
     var fetchedResultsController: NSFetchedResultsController<MessageDB>?
+    
+    var logger: ILogger?
         
     private let cellId = "\(MessageTableViewCell.self)"
         
@@ -83,16 +85,16 @@ class ConversationViewController: UIViewController {
             try fetchedResultsController?.performFetch()
         } catch {
             // showErrorAlert(message: error.localizedDescription)
-            Log.error(error.localizedDescription)
+            logger?.error(error.localizedDescription)
         }
         subscribeOnMessagesUpdates()
     }
     
     private func subscribeOnMessagesUpdates() {
         fetchedResultsController?.delegate = self
-        messageService?.subscribeOnMessagesUpdates(handler: { (result) in
+        messageService?.subscribeOnMessagesUpdates(handler: { [weak self] (result) in
             if case Result.failure(let error) = result {
-                Log.error(error.localizedDescription)
+                self?.logger?.error(error.localizedDescription)
             }
         })
     }

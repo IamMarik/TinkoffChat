@@ -25,7 +25,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Themes.loadApplicationTheme()
         
         self.window = UIWindow(frame: UIScreen.main.bounds)
-        let rootNavigationController = rootAssembly.presentationAssembly.rootNavigationViewController()
+        let conversationsViewController = rootAssembly.presentationAssembly.conversationListViewController()
+        let rootNavigationController = rootAssembly.presentationAssembly
+            .rootNavigationViewController(conversationsViewController)
         window?.rootViewController = rootNavigationController
         window?.makeKeyAndVisible()
         

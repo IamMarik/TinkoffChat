@@ -10,6 +10,8 @@ import UIKit
 
 class OperationProfileDataManager: IProfileDataManager {
     
+    var logger: ILogger?
+    
     lazy var operationQueue: OperationQueue =  {
         let queue = OperationQueue()
         queue.qualityOfService = .utility
@@ -70,8 +72,7 @@ class LoadDataFromDiskOperation: Operation {
         self.fileName = fileName
     }
     
-    override func main() {
-        Log.info("Start LoadDataFromDiskOperation for filename: \(fileName)")
+    override func main() {       
         guard !isCancelled else { return }
         data = FileUtils.readFromDisk(fileName: fileName)
     }
@@ -99,7 +100,6 @@ class ReadProfileOperation: Operation {
     }
     
     override func main() {
-        Log.info("Start ReadProfileOperation")
         guard !isCancelled else { return }
         guard let nameData = nameOperation.data,
               let descriptionData = descriptionOperation.data,
@@ -130,7 +130,6 @@ class WriteDataToDiskOperation: Operation {
     }
     
     override func main() {
-        Log.info("Start WriteDataToDiskOperation for filename: \(fileName)")
         guard !isCancelled else { return }
         isSuccessWriting = FileUtils.writeToDisk(data: data, fileName: fileName)
     }
@@ -150,7 +149,6 @@ class WriteProfileOperation: Operation {
     }
     
     override func main() {
-        Log.info("Start WriteProfileOperation")
         guard !isCancelled else {
             completion(false)
             return

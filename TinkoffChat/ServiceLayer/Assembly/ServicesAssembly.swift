@@ -78,8 +78,7 @@ class ServicesAssembly: IServicesAssembly {
     }
     
     func logger(for object: Any?) -> ILogger {
-        let logger = Log(for: object)
-        return logger
+        return coreAssembly.logger(for: object)
     }
     
 }

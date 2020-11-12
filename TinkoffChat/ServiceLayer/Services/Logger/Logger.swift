@@ -10,23 +10,21 @@ import Foundation
 
 protocol ILogger {
     init(for object: Any?)
-    func info(_ message: String, tag: String)
-    func warning(_ message: String, tag: String)
-    func error(_ message: String, tag: String)
+    func info(_ message: String, tag: String?)
+    func warning(_ message: String, tag: String?)
+    func error(_ message: String, tag: String?)
 }
 
 extension ILogger {
-    func info(_ message: String) { self.info(message, tag: "") }
-    func warning(_ message: String) { self.warning(message, tag: "") }
-    func error(_ message: String) { self.error(message, tag: "") }
+    func info(_ message: String) { self.info(message, tag: nil) }
+    func warning(_ message: String) { self.warning(message, tag: nil) }
+    func error(_ message: String) { self.error(message, tag: nil) }
 }
 
-protocol Loggable {}
-
 /// Util-class for logging
-public class Log: ILogger {
+public class Logger: ILogger {
    
-    let logTag: String?
+    private var classTag: String?
 
     /// Set false to disable logging
     static var isEnabled: Bool = true
@@ -38,20 +36,37 @@ public class Log: ILogger {
     static var isErrorEnabled: Bool = true
         
     required init(for object: Any?) {
-        self.logTag = object is Loggable ? String(describing: object.self) : nil
+        if let object = object {
+            self.classTag = "\(object.self)"
+        }
     }
     
-    func info(_ message: String, tag: String) {
+    private func tagString(_ suggestedTag: String?) -> String {
+        if let tag = suggestedTag {
+            return tag
+        } else if let classTag = self.classTag {
+            return classTag
+        } else {
+            return ""
+        }
+    }
+    
+    func info(_ message: String, tag: String?) {
+        let tag = tagString(tag)
         guard Self.isEnabled, Self.isInfoEnabled, !Self.disabledLogTags.contains(tag) else { return }
         print("[Info] " + (tag.isEmpty ? "" : "[\(tag)] ") + message)
     }
     
-    func warning(_ message: String, tag: String) {
-        
+    func warning(_ message: String, tag: String?) {
+        let tag = tagString(tag)
+        guard Self.isEnabled, Self.isWarningEnabled, !Self.disabledLogTags.contains(tag) else { return }
+        print("[Warning] " + (tag.isEmpty ? "" : "[\(tag)] ") + message)
     }
     
-    func error(_ message: String, tag: String) {
-        
+    func error(_ message: String, tag: String?) {
+        let tag = tagString(tag)
+        guard Self.isEnabled, Self.isErrorEnabled, !Self.disabledLogTags.contains(tag) else { return }
+        print("[Error] " + (tag.isEmpty ? "" : "[\(tag)] ") + message)
     }
 
     /**

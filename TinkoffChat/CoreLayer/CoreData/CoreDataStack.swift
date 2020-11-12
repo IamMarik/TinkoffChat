@@ -18,10 +18,8 @@ protocol ICoreDataStack {
 
 final class CoreDataStack: ICoreDataStack {
     
-    static let logTag = "\(CoreDataStack.self)"
-    
-    // static var shared = CoreDataStack()
-    
+    var logger: ILogger?
+        
     private let modelName: String
     
     private let modelExtension: String
@@ -36,7 +34,7 @@ final class CoreDataStack: ICoreDataStack {
             fatalError("Documents path not found")
         }
         let url = documentsDirectoryURL.appendingPathComponent("\(modelName).sqlite")
-        Log.info("DB path: " + url.absoluteString)
+        logger?.info("DB path: " + url.absoluteString)
         return url
     }()
     
@@ -98,7 +96,7 @@ final class CoreDataStack: ICoreDataStack {
                 do {
                     try context.obtainPermanentIDs(for: Array(context.insertedObjects))
                 } catch {
-                    Log.error(error.localizedDescription, tag: Self.logTag)
+                    logger?.error(error.localizedDescription)
                 }                
                 performSave(in: context)
             }
@@ -129,19 +127,19 @@ final class CoreDataStack: ICoreDataStack {
         let insertCount = (userInfo[NSInsertedObjectsKey] as? Set<NSManagedObject>)?.count ?? 0
         let updateCount = (userInfo[NSUpdatedObjectsKey] as? Set<NSManagedObject>)?.count ?? 0
         let deleteCount = (userInfo[NSDeletedObjectsKey] as? Set<NSManagedObject>)?.count ?? 0
-        Log.info("DBContext changes stats: inserted=\(insertCount), updated=\(updateCount), deleted=\(deleteCount)")
+        logger?.info("DBContext changes stats: inserted=\(insertCount), updated=\(updateCount), deleted=\(deleteCount)")
     }
         
     func deleteStore() {
         let coordinator = NSPersistentStoreCoordinator(managedObjectModel: managedObjectModel)
         do {
-            Log.info("Trying to remove db", tag: Self.logTag)
+            logger?.info("Trying to remove db")
             try coordinator.destroyPersistentStore(at: storeURL,
                                                     ofType: NSSQLiteStoreType,
                                                     options: nil)
-            Log.info("DB was successful removed", tag: Self.logTag)
+            logger?.info("DB was successful removed")
         } catch {
-            Log.error(error.localizedDescription, tag: Self.logTag)
+            logger?.error(error.localizedDescription)
         }
     }
     

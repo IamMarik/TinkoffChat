@@ -9,6 +9,8 @@
 import UIKit
 
 final class GCDProfileDataManager: IProfileDataManager {
+    
+    var logger: ILogger?
         
     func writeToDisk(newProfile: ProfileViewModel, oldProfile: ProfileViewModel?, completion: @escaping((Bool) -> Void)) {
         let group = DispatchGroup()
@@ -19,8 +21,8 @@ final class GCDProfileDataManager: IProfileDataManager {
         if newProfile.fullName != oldProfile?.fullName ||
             !FileUtils.fileExist(fileName: ProfileItemsStoreKeys.fullName.rawValue) {
             group.enter()
-            DispatchQueue.global(qos: .utility).async {
-                Log.info("Write profile name with GCD")
+            DispatchQueue.global(qos: .utility).async { [weak self] in
+                self?.logger?.info("Write profile name with GCD")
                 successWritingName = FileUtils.writeToDisk(
                     data: newProfile.fullName.data(using: .utf8),
                     fileName: ProfileItemsStoreKeys.fullName.rawValue
@@ -32,8 +34,8 @@ final class GCDProfileDataManager: IProfileDataManager {
         if newProfile.description != oldProfile?.description ||
             !FileUtils.fileExist(fileName: ProfileItemsStoreKeys.description.rawValue) {
             group.enter()
-            DispatchQueue.global(qos: .utility).async {
-                Log.info("Write profile description with GCD")
+            DispatchQueue.global(qos: .utility).async { [weak self] in
+                self?.logger?.info("Write profile description with GCD")
                 successWritingDescription = FileUtils.writeToDisk(
                     data: newProfile.description.data(using: .utf8),
                     fileName: ProfileItemsStoreKeys.description.rawValue
@@ -45,8 +47,8 @@ final class GCDProfileDataManager: IProfileDataManager {
         if !newProfile.isStubAvatar,
            newProfile.avatar !== oldProfile?.avatar {
             group.enter()
-            DispatchQueue.global(qos: .utility).async {
-                Log.info("Write profile avatar with GCD")
+            DispatchQueue.global(qos: .utility).async { [weak self] in
+                self?.logger?.info("Write profile avatar with GCD")
                 if let imageData = newProfile.avatar.pngData() {
                     successWritingAvatar = FileUtils.writeToDisk(
                         data: imageData,
@@ -58,16 +60,16 @@ final class GCDProfileDataManager: IProfileDataManager {
             }
         }
         
-        group.notify(queue: .global(qos: .default)) {
-            Log.info("Complete writing profile with GCD")
+        group.notify(queue: .global(qos: .default)) { [weak self] in
+            self?.logger?.info("Complete writing profile with GCD")
             let successWriting = successWritingName && successWritingDescription && successWritingAvatar
             completion(successWriting)
         }
     }
     
     func readProfileFromDisk(completion: @escaping((ProfileViewModel?) -> Void)) {
-        DispatchQueue.global(qos: .utility).async {
-            Log.info("Read profile with GCD")
+        DispatchQueue.global(qos: .utility).async { [weak self] in
+            self?.logger?.info("Read profile with GCD")
             if let nameData = FileUtils.readFromDisk(fileName: ProfileItemsStoreKeys.fullName.rawValue),
                let descriptionData = FileUtils.readFromDisk(fileName: ProfileItemsStoreKeys.description.rawValue),
                let name = String(data: nameData, encoding: .utf8),

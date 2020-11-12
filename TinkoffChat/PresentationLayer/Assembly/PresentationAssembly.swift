@@ -11,9 +11,9 @@ import UIKit
 
 protocol IPresenentationAssembly {
     
-    func rootNavigationViewController() -> RootNavigationController
+    func rootNavigationViewController(_ rootViewController: UIViewController?) -> RootNavigationController
     
-    //func conversationListViewController() -> ConversationsListViewController
+    func conversationListViewController() -> ConversationsListViewController
     
     func conversationViewController(channelId: String) -> ConversationViewController
     
@@ -31,19 +31,25 @@ class PresenentationAssembly: IPresenentationAssembly {
         self.serviceAssembly = serviceAssembly
     }
     
-    func rootNavigationViewController() -> RootNavigationController {
-        guard let rootNavigationController = UIStoryboard(name: "Conversations", bundle: nil).instantiateInitialViewController() as? RootNavigationController else {
-            fatalError("Can't instantiate RootNavigationController")
+    func rootNavigationViewController(_ rootViewController: UIViewController?) -> RootNavigationController {
+        if let rootVC = rootViewController {
+           return RootNavigationController(rootViewController: rootVC)
+        } else {
+            return RootNavigationController()
         }
-        guard let conversationListViewController = rootNavigationController.topViewController as? ConversationsListViewController else {
-            fatalError("Top view controller of RootNavigationController is not ConversationListViewController")
+    }
+    
+    func conversationListViewController() -> ConversationsListViewController {
+        guard let conversationListViewController = UIStoryboard(name: "Conversations", bundle: nil)
+                .instantiateViewController(withIdentifier: "ConversationListId") as? ConversationsListViewController else {
+            fatalError("Can't instantiate ConversationListViewController")
         }
         conversationListViewController.channelsService = serviceAssembly.channelsService()
         conversationListViewController.logger = serviceAssembly.logger(for: conversationListViewController)
         conversationListViewController.userDataStore = serviceAssembly.userDataStore
         conversationListViewController.fetchedResultsController = serviceAssembly.channelsFetchResultsController()
         conversationListViewController.presentationAssembly = self
-        return rootNavigationController
+        return conversationListViewController
     }
         
     func conversationViewController(channelId: String) -> ConversationViewController {
@@ -53,6 +59,7 @@ class PresenentationAssembly: IPresenentationAssembly {
         conversationViewController.channelId = channelId
         conversationViewController.messageService = serviceAssembly.messageService(channelId: channelId)
         conversationViewController.fetchedResultsController = serviceAssembly.messagesFetchResultsController(channelId: channelId)
+        conversationViewController.logger = serviceAssembly.logger(for: conversationViewController)
         return conversationViewController
     }
     
@@ -65,7 +72,8 @@ class PresenentationAssembly: IPresenentationAssembly {
     }
     
     func settingsViewController() -> ThemesViewController {
-        guard let settingsViewController = UIStoryboard(name: "ThemeSettings", bundle: nil).instantiateViewController(withIdentifier: "ThemeSettingsId") as? ThemesViewController else {
+        guard let settingsViewController = UIStoryboard(name: "ThemeSettings", bundle: nil)
+                .instantiateViewController(withIdentifier: "ThemeSettingsId") as? ThemesViewController else {
             fatalError("Can't instantiate ConversationViewController")
         }
         return settingsViewController
