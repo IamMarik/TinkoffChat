@@ -384,14 +384,6 @@
 			path = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		EC885F42255C4E610078F656 /* Entities */ = {
-			isa = PBXGroup;
-			children = (
-				ECDF962A2547C5D600928A3F /* Database */,
-			);
-			path = Entities;
-			sourceTree = "<group>";
-		};
 		EC885F4F255C4EC90078F656 /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
@@ -442,7 +434,6 @@
 		ECC2692F250C6FEC001C08A0 /* TinkoffChat */ = {
 			isa = PBXGroup;
 			children = (
-				EC885F42255C4E610078F656 /* Entities */,
 				EC41AF78255A48B400B783F4 /* PresentationLayer */,
 				EC41AF77255A48A600B783F4 /* ServiceLayer */,
 				EC41AF76255A488900B783F4 /* CoreLayer */,
@@ -493,13 +484,6 @@
 				ECD9CB7825273F56003FB027 /* ThemeSettings.storyboard */,
 			);
 			path = Settings;
-			sourceTree = "<group>";
-		};
-		ECDF962A2547C5D600928A3F /* Database */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Database;
 			sourceTree = "<group>";
 		};
 		ECED1CA72518E3DE0069EB71 /* Style */ = {
