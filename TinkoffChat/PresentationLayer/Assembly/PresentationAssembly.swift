@@ -21,6 +21,8 @@ protocol IPresenentationAssembly {
     
     func settingsViewController() -> ThemesViewController
     
+    func avatarListViewController() -> AvatarListViewController
+    
 }
 
 class PresenentationAssembly: IPresenentationAssembly {
@@ -77,6 +79,14 @@ class PresenentationAssembly: IPresenentationAssembly {
             fatalError("Can't instantiate ConversationViewController")
         }
         return settingsViewController
+    }
+    
+    func avatarListViewController() -> AvatarListViewController {
+        guard let avatarListViewController = UIStoryboard(name: "Avatars", bundle: nil)
+                .instantiateViewController(withIdentifier: "AvatarListId") as? AvatarListViewController else {
+            fatalError("Can't instantiate AvatarListViewController")
+        }
+        return avatarListViewController
     }
     
 }

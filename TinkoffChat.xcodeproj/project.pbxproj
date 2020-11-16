@@ -46,6 +46,10 @@
 		EC9C347D253306D100932552 /* OperationProfileDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC9C347C253306D100932552 /* OperationProfileDataManager.swift */; };
 		ECAB8611251F80D600BA7845 /* DateFormatter + dateOrNow.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECAB8610251F80D600BA7845 /* DateFormatter + dateOrNow.swift */; };
 		ECAB8616251F85E900BA7845 /* DateFormatter + init.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECAB8615251F85E900BA7845 /* DateFormatter + init.swift */; };
+		ECC12B5E25622AC000328158 /* AvatarListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC12B5D25622AC000328158 /* AvatarListViewController.swift */; };
+		ECC12B6225622ACE00328158 /* Avatars.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ECC12B6125622ACE00328158 /* Avatars.storyboard */; };
+		ECC12B6725622B6B00328158 /* AvatarItemCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC12B6525622B6B00328158 /* AvatarItemCollectionViewCell.swift */; };
+		ECC12B6825622B6B00328158 /* AvatarItemCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = ECC12B6625622B6B00328158 /* AvatarItemCollectionViewCell.xib */; };
 		ECC26931250C6FEC001C08A0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC26930250C6FEC001C08A0 /* AppDelegate.swift */; };
 		ECC2693A250C6FEE001C08A0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ECC26939250C6FEE001C08A0 /* Assets.xcassets */; };
 		ECC2693D250C6FEE001C08A0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ECC2693B250C6FEE001C08A0 /* LaunchScreen.storyboard */; };
@@ -113,6 +117,10 @@
 		EC9C347C253306D100932552 /* OperationProfileDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperationProfileDataManager.swift; sourceTree = "<group>"; };
 		ECAB8610251F80D600BA7845 /* DateFormatter + dateOrNow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter + dateOrNow.swift"; sourceTree = "<group>"; };
 		ECAB8615251F85E900BA7845 /* DateFormatter + init.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter + init.swift"; sourceTree = "<group>"; };
+		ECC12B5D25622AC000328158 /* AvatarListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarListViewController.swift; sourceTree = "<group>"; };
+		ECC12B6125622ACE00328158 /* Avatars.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Avatars.storyboard; sourceTree = "<group>"; };
+		ECC12B6525622B6B00328158 /* AvatarItemCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarItemCollectionViewCell.swift; sourceTree = "<group>"; };
+		ECC12B6625622B6B00328158 /* AvatarItemCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AvatarItemCollectionViewCell.xib; sourceTree = "<group>"; };
 		ECC2692D250C6FEC001C08A0 /* TinkoffChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TinkoffChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ECC26930250C6FEC001C08A0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		ECC26939250C6FEE001C08A0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -344,6 +352,7 @@
 				EC3B494F251F6587002A93A8 /* ConversationList */,
 				EC6794612520293000DB8002 /* Conversation */,
 				EC73E3032514AF1F006D5ADF /* Profile */,
+				ECC12B5C25622A7000328158 /* Avatar */,
 				ECD9CB7725273F3E003FB027 /* Settings */,
 			);
 			path = Modules;
@@ -410,6 +419,25 @@
 				ECE295C12528AE2100F30BAA /* RootNavigationController.swift */,
 			);
 			path = CoreView;
+			sourceTree = "<group>";
+		};
+		ECC12B5C25622A7000328158 /* Avatar */ = {
+			isa = PBXGroup;
+			children = (
+				ECC12B6425622B4000328158 /* Views */,
+				ECC12B5D25622AC000328158 /* AvatarListViewController.swift */,
+				ECC12B6125622ACE00328158 /* Avatars.storyboard */,
+			);
+			path = Avatar;
+			sourceTree = "<group>";
+		};
+		ECC12B6425622B4000328158 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				ECC12B6525622B6B00328158 /* AvatarItemCollectionViewCell.swift */,
+				ECC12B6625622B6B00328158 /* AvatarItemCollectionViewCell.xib */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		ECC26924250C6FEC001C08A0 = {
@@ -587,8 +615,10 @@
 				EC73E3052514AF57006D5ADF /* Profile.storyboard in Resources */,
 				EC175EE425404B8E00B06B1F /* MessageInputView.xib in Resources */,
 				EC89FDC6250E07CF00B22EC4 /* README.md in Resources */,
+				ECC12B6225622ACE00328158 /* Avatars.storyboard in Resources */,
 				ECD9CB7925273F56003FB027 /* ThemeSettings.storyboard in Resources */,
 				EC3B4951251F659E002A93A8 /* Conversations.storyboard in Resources */,
+				ECC12B6825622B6B00328158 /* AvatarItemCollectionViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -669,6 +699,7 @@
 				EC41AF87255A515100B783F4 /* CoreAssembly.swift in Sources */,
 				EC41AF7B255A48E200B783F4 /* PresentationAssembly.swift in Sources */,
 				EC885F46255C4E9E0078F656 /* ChannelDB+CoreDataProperties.swift in Sources */,
+				ECC12B5E25622AC000328158 /* AvatarListViewController.swift in Sources */,
 				ECC26946250C76BE001C08A0 /* UIApplication.State + description.swift in Sources */,
 				EC885F4D255C4EAC0078F656 /* MessageDB+CoreDataProperties.swift in Sources */,
 				ECF5BBD5252B5BCF00B829B0 /* NightTheme.swift in Sources */,
@@ -706,6 +737,7 @@
 				EC14A88025309EFB007AEB5F /* DataManagerProtocol.swift in Sources */,
 				ECC26931250C6FEC001C08A0 /* AppDelegate.swift in Sources */,
 				ECD9CB7F2527453A003FB027 /* ThemesViewController.swift in Sources */,
+				ECC12B6725622B6B00328158 /* AvatarItemCollectionViewCell.swift in Sources */,
 				EC17F3862523601F00C6C2A7 /* ProfileNavigationBar.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

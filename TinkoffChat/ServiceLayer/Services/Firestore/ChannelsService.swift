@@ -148,7 +148,7 @@ final class ChannelsService: IChannelsService {
     private func deleteAllMessageFromDB(channelId: String) {
         DispatchQueue.main.async {
             self.coreDataStack.performSave { (context) in
-                if let result = try? context.fetch(MessageDB.fetchRequest(forChannelId: channelId)) as? [MessageDB] {
+                if let result = try? context.fetch(MessageDB.fetchRequest(forChannelId: channelId)) {
                     result.forEach {
                         context.delete($0)
                     }
