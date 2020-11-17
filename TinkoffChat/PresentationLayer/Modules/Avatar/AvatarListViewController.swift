@@ -10,6 +10,8 @@ import UIKit
 
 class AvatarListViewController: UIViewController {
     
+    var avatarService: IAvatarService?
+    
     var imageViewModels: [AvatarItemViewModel] = [
         .init(urlPath: "", image: nil),
         .init(urlPath: "", image: nil),
@@ -30,6 +32,7 @@ class AvatarListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupCollectionView()
+        loadAvatarList()
     }
     
     private func setupCollectionView() {
@@ -37,6 +40,17 @@ class AvatarListViewController: UIViewController {
         collectionView.delegate = self
         collectionView.register(UINib(nibName: "\(AvatarItemCollectionViewCell.self)", bundle: nil),
                                 forCellWithReuseIdentifier: "\(AvatarItemCollectionViewCell.self)")
+    }
+    
+    private func loadAvatarList() {
+        avatarService?.loadImageList(handler: { (result) in
+            switch result {
+            case .success(let models):
+                print(models)
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        })
     }
     
 }
@@ -77,6 +91,5 @@ extension AvatarListViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return itemSpacing
     }
-    
     
 }

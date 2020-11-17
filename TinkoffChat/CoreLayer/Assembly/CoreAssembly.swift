@@ -11,6 +11,8 @@ import Foundation
 protocol ICoreAssembly {
     var coreDataStack: ICoreDataStack { get }
     func profileDataManager() -> IProfileDataManager
+    func networkManager() -> INetworkManager
+    func privateStore() -> IStore
     func logger(for object: Any?) -> ILogger
 }
 
@@ -21,6 +23,15 @@ class CoreAssembly: ICoreAssembly {
         let profileDataManager = GCDProfileDataManager()
         profileDataManager.logger = logger(for: profileDataManager)
         return profileDataManager
+    }
+    
+    func networkManager() -> INetworkManager {
+        let manager = NetworkManager()
+        return manager
+    }
+    
+    func privateStore() -> IStore {
+        return PrivateStore()
     }
     
     func logger(for object: Any?) -> ILogger {

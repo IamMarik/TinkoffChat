@@ -86,6 +86,7 @@ class PresenentationAssembly: IPresenentationAssembly {
                 .instantiateViewController(withIdentifier: "AvatarListId") as? AvatarListViewController else {
             fatalError("Can't instantiate AvatarListViewController")
         }
+        avatarListViewController.avatarService = serviceAssembly.avatarService()
         return avatarListViewController
     }
     
