@@ -31,8 +31,6 @@
 		EC73E3052514AF57006D5ADF /* Profile.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EC73E3042514AF57006D5ADF /* Profile.storyboard */; };
 		EC73E3082514AF6C006D5ADF /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC73E3072514AF6C006D5ADF /* ProfileViewController.swift */; };
 		EC793CA32531605E005F6E08 /* FileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC793CA22531605E005F6E08 /* FileManager.swift */; };
-		EC84588E253C4CD100EEBCA3 /* Channel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC84588D253C4CD100EEBCA3 /* Channel.swift */; };
-		EC845891253C4D1300EEBCA3 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC845890253C4D1300EEBCA3 /* Message.swift */; };
 		EC845894253C4F0B00EEBCA3 /* ChannelsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC845893253C4F0B00EEBCA3 /* ChannelsService.swift */; };
 		EC845899253C62C100EEBCA3 /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC845898253C62C100EEBCA3 /* UserData.swift */; };
 		EC84589D253C717A00EEBCA3 /* MessageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC84589C253C717A00EEBCA3 /* MessageService.swift */; };
@@ -96,8 +94,6 @@
 		EC73E3042514AF57006D5ADF /* Profile.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Profile.storyboard; sourceTree = "<group>"; };
 		EC73E3072514AF6C006D5ADF /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		EC793CA22531605E005F6E08 /* FileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManager.swift; sourceTree = "<group>"; };
-		EC84588D253C4CD100EEBCA3 /* Channel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Channel.swift; sourceTree = "<group>"; };
-		EC845890253C4D1300EEBCA3 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		EC845893253C4F0B00EEBCA3 /* ChannelsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelsService.swift; sourceTree = "<group>"; };
 		EC845898253C62C100EEBCA3 /* UserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
 		EC84589C253C717A00EEBCA3 /* MessageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageService.swift; sourceTree = "<group>"; };
@@ -193,11 +189,8 @@
 			isa = PBXGroup;
 			children = (
 				EC3B4965251F6924002A93A8 /* Views */,
-				EC3B495A251F6663002A93A8 /* Model */,
 				EC3B4953251F65C4002A93A8 /* ConversationsListViewController.swift */,
-				ECE295C12528AE2100F30BAA /* RootNavigationController.swift */,
 				EC3B4950251F659E002A93A8 /* Conversations.storyboard */,
-				EC845893253C4F0B00EEBCA3 /* ChannelsService.swift */,
 			);
 			path = ConversationList;
 			sourceTree = "<group>";
@@ -208,14 +201,6 @@
 				EC3B4957251F662E002A93A8 /* ConfigurableView.swift */,
 			);
 			path = Protocols;
-			sourceTree = "<group>";
-		};
-		EC3B495A251F6663002A93A8 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				EC84588D253C4CD100EEBCA3 /* Channel.swift */,
-			);
-			path = Model;
 			sourceTree = "<group>";
 		};
 		EC3B4965251F6924002A93A8 /* Views */ = {
@@ -239,10 +224,8 @@
 			isa = PBXGroup;
 			children = (
 				EC6794682520299B00DB8002 /* Views */,
-				EC67946E252029BB00DB8002 /* Model */,
-				EC8458A0253C7B8B00EEBCA3 /* Data */,
-				EC6794622520295000DB8002 /* Conversation.storyboard */,
 				EC6794652520298000DB8002 /* ConversationViewController.swift */,
+				EC6794622520295000DB8002 /* Conversation.storyboard */,
 			);
 			path = Conversation;
 			sourceTree = "<group>";
@@ -258,18 +241,9 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
-		EC67946E252029BB00DB8002 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				EC845890253C4D1300EEBCA3 /* Message.swift */,
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
 		EC73CFC4253EF5F0001C5CB6 /* Errors */ = {
 			isa = PBXGroup;
 			children = (
-				EC73CFC5253EF602001C5CB6 /* FirebaseError.swift */,
 			);
 			path = Errors;
 			sourceTree = "<group>";
@@ -314,12 +288,22 @@
 			path = Managers;
 			sourceTree = "<group>";
 		};
-		EC8458A0253C7B8B00EEBCA3 /* Data */ = {
+		ECBFDDBE2553BD3900C508DA /* Firestore */ = {
 			isa = PBXGroup;
 			children = (
+				EC73CFC5253EF602001C5CB6 /* FirebaseError.swift */,
 				EC84589C253C717A00EEBCA3 /* MessageService.swift */,
+				EC845893253C4F0B00EEBCA3 /* ChannelsService.swift */,
 			);
-			path = Data;
+			path = Firestore;
+			sourceTree = "<group>";
+		};
+		ECBFDDBF2553BD4C00C508DA /* CoreView */ = {
+			isa = PBXGroup;
+			children = (
+				ECE295C12528AE2100F30BAA /* RootNavigationController.swift */,
+			);
+			path = CoreView;
 			sourceTree = "<group>";
 		};
 		ECC26924250C6FEC001C08A0 = {
@@ -344,11 +328,13 @@
 		ECC2692F250C6FEC001C08A0 /* TinkoffChat */ = {
 			isa = PBXGroup;
 			children = (
+				ECBFDDBE2553BD3900C508DA /* Firestore */,
 				ECDF962A2547C5D600928A3F /* Database */,
 				EC3B4956251F6616002A93A8 /* Protocols */,
 				EC73CFC4253EF5F0001C5CB6 /* Errors */,
 				EC845897253C62A400EEBCA3 /* Managers */,
 				ECED1CA72518E3DE0069EB71 /* Style */,
+				ECBFDDBF2553BD4C00C508DA /* CoreView */,
 				EC73CFC8253EFEC1001C5CB6 /* Components */,
 				ECF7B6A425177A2B006DDB81 /* Fonts */,
 				ECC26947250C77C8001C08A0 /* Utils */,
@@ -620,11 +606,9 @@
 				ECDF96392547CE3200928A3F /* CoreDataStack.swift in Sources */,
 				ECDF96652547D39300928A3F /* MessageDB+CoreDataProperties.swift in Sources */,
 				ECF7B6A225177781006DDB81 /* ProfileModel.swift in Sources */,
-				EC84588E253C4CD100EEBCA3 /* Channel.swift in Sources */,
 				EC3B4968251F6940002A93A8 /* ConversationTableViewCell.swift in Sources */,
 				EC175EE12540468400B06B1F /* MessageInputView.swift in Sources */,
 				ECE295C22528AE2100F30BAA /* RootNavigationController.swift in Sources */,
-				EC845891253C4D1300EEBCA3 /* Message.swift in Sources */,
 				ECF5BBC8252B485700B829B0 /* Themes.swift in Sources */,
 				EC53DCAA252C9BF7000227E3 /* ThemesPickerDelegate.swift in Sources */,
 				EC845894253C4F0B00EEBCA3 /* ChannelsService.swift in Sources */,

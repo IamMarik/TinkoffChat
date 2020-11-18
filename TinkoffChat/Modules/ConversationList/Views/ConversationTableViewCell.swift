@@ -26,7 +26,7 @@ class ConversationTableViewCell: UITableViewCell {
 
 extension ConversationTableViewCell: ConfigurableView {
     
-    func configure(with model: Channel) {
+    func configure(with model: ChannelDB) {
         let theme = Themes.current
         
         nameLabel.text = model.name

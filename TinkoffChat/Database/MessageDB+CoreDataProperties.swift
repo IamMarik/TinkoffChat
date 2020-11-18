@@ -17,9 +17,15 @@ extension MessageDB {
         return NSFetchRequest<MessageDB>(entityName: className)
     }
     
-    @nonobjc public class func fetchRequest(withChannelId channelId: String) -> NSFetchRequest<MessageDB> {
+    @nonobjc public class func fetchRequest(withId identifier: String) -> NSFetchRequest<MessageDB> {
         let request = NSFetchRequest<MessageDB>(entityName: className)
-        request.predicate = NSPredicate(format: "channelId == %@", channelId)
+        request.predicate = NSPredicate(format: "identifier == %@", identifier)
+        return request
+    }
+    
+    @nonobjc public class func fetchRequest(forChannelId identifier: String) -> NSFetchRequest<MessageDB> {
+        let request = NSFetchRequest<MessageDB>(entityName: className)
+        request.predicate = NSPredicate(format: "channelId == %@", identifier)
         return request
     }
     

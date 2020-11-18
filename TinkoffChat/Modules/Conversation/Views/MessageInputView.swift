@@ -62,6 +62,8 @@ class MessageInputView: UIView {
         messageLineView.backgroundColor = Themes.current.colors.conversation.input.background
         inputTextView.textColor = Themes.current.colors.conversation.input.text
         contentView.backgroundColor = Themes.current.colors.conversation.bottomViewBackground
+        
+        sendButton.isEnabled = false
     }
     
     func clearInput() {
@@ -84,5 +86,8 @@ extension MessageInputView: UITextViewDelegate {
         if shouldInvalidateContenSize {
             textView.invalidateIntrinsicContentSize()
         }
+        
+        let text = textView.text ?? ""
+        sendButton.isEnabled = !text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
     }
 }

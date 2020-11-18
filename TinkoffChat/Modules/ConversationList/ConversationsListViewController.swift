@@ -7,17 +7,33 @@
 //
 
 import UIKit
+import CoreData
 
 class ConversationsListViewController: UIViewController {
     
-    lazy var channelsService = ChannelsService()
+    static let logTag = "\(ConversationsListViewController.self)"
     
-    var channels: [Channel] = []
-     
-    var profileDataManager: DataManagerProtocol = GCDDataManager()
+    lazy var channelsService = ChannelsService()
+ 
+    private lazy var fetchedResultsController: NSFetchedResultsController<ChannelDB> = {
+        let request: NSFetchRequest<ChannelDB> = ChannelDB.fetchRequest()
+        let sortByDate = NSSortDescriptor(key: "lastActivity", ascending: false)
+        let sortById = NSSortDescriptor(key: "identifier", ascending: true)
+        request.sortDescriptors = [sortByDate, sortById]
+        request.fetchBatchSize = 20
+        let controller = NSFetchedResultsController(fetchRequest: request,
+                                                    managedObjectContext: CoreDataStack.shared.mainContext,
+                                                    sectionNameKeyPath: nil,
+                                                    cacheName: nil)
+        return controller
+    }()
+         
+    private var profileDataManager: DataManagerProtocol = GCDDataManager()
     
     private let cellId = String(describing: ConversationTableViewCell.self)
     
+    private var fetchesCount = 0
+        
     lazy var profileAvatarButton: UIButton = {
         let button = UIButton()
         button.frame = CGRect(x: 0, y: 0, width: 36, height: 36)
@@ -48,7 +64,7 @@ class ConversationsListViewController: UIViewController {
         setupNavigationBar()
         setupTheme()
         loadProfile()
-        loadChannels()
+        fetchChannels()
     }
         
     private func setupTableView() {
@@ -100,21 +116,27 @@ class ConversationsListViewController: UIViewController {
         }
     }
     
-    private func loadChannels() {
-        channelsService.subscribeOnChannels { [weak self] (result) in
-            switch result {
-            case .success(let channels):
-                DispatchQueue.main.async {
-                    self?.channels = channels
-                    // По-хорошему можно обновлять с анимацией добавления, перемещения канала
-                    self?.tableView.reloadData()
-                }
-            case .failure(let error):
-                Log.error("Error during update channels: \(error.localizedDescription)")
+    private func fetchChannels() {
+        do {
+            // Загружаем уже сохраненные каналы из бд
+            try fetchedResultsController.performFetch()
+        } catch {
+            showErrorAlert(message: error.localizedDescription)
+            Log.error(error.localizedDescription, tag: Self.logTag)
+        }
+        // Подписываемся на обновления из firestore
+        subscribeOnChannelUpdates()
+    }
+    
+    private func subscribeOnChannelUpdates() {
+        fetchedResultsController.delegate = self
+        channelsService.subscribeOnChannelsUpdates { (result) in
+            if case Result.failure(let error) = result {
+                Log.error(error.localizedDescription)
             }
         }
     }
-    
+        
     private func updateProfile(profile: ProfileViewModel) {
         RunLoop.main.perform(inModes: [.default]) { [weak self] in
             self?.profileAvatarButton.isEnabled = true
@@ -126,6 +148,14 @@ class ConversationsListViewController: UIViewController {
         let alert = UIAlertController.themeAlert(title: "Error", message: message)
         alert.addAction(UIAlertAction(title: "Got it", style: .default, handler: nil))
         present(alert, animated: true, completion: nil)
+    }
+    
+    private func createChannel(name: String) {
+        channelsService.createChannel(name: name) { [weak self] (result) in
+            if case Result.failure(_) = result {
+                self?.showErrorAlert(message: "Error during create new channel, try later.")
+            }
+        }
     }
     
     @objc private func profileItemDidTap() {
@@ -157,15 +187,15 @@ class ConversationsListViewController: UIViewController {
         
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         alert.addAction(UIAlertAction(title: "Create", style: .default, handler: { [weak self] _ in
-            if let name = alert.textFields?.first?.text,
-               !name.isEmpty {
-                self?.channelsService.createChannel(name: name) { (result) in
-                    if case Result.failure(_) = result {
-                        self?.showErrorAlert(message: "Error during create new channel, try later.")
-                    }
+            if let nameText = alert.textFields?.first?.text {
+                let name = nameText.trimmingCharacters(in: .whitespacesAndNewlines)
+                if !name.isEmpty {
+                    self?.createChannel(name: name)
+                } else {
+                    self?.showErrorAlert(message: "Channel name can't be empty")
                 }
             } else {
-                self?.showErrorAlert(message: "Channel name can't be empty.")
+                self?.showErrorAlert(message: "Channel name can't be nil.")
             }
         }))
         present(alert, animated: true)
@@ -179,14 +209,15 @@ extension ConversationsListViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return channels.count
+        return fetchedResultsController.fetchedObjects?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as? ConversationTableViewCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as? ConversationTableViewCell
+            else {
             return UITableViewCell()
         }
-        let channel = channels[indexPath.row]
+        let channel = fetchedResultsController.object(at: indexPath)
         cell.configure(with: channel)
         return cell
     }
@@ -205,9 +236,9 @@ extension ConversationsListViewController: UITableViewDelegate {
                 .instantiateViewController(withIdentifier: "conversationId") as? ConversationViewController else {
             return
         }
-        let chanel = channels[indexPath.row]
-        conversationViewController.title = chanel.name
-        conversationViewController.channel = chanel
+        let channel = fetchedResultsController.object(at: indexPath)
+        conversationViewController.title = channel.name
+        conversationViewController.channel = channel
         navigationController?.pushViewController(conversationViewController, animated: true)
     }
     
@@ -215,7 +246,28 @@ extension ConversationsListViewController: UITableViewDelegate {
         guard let headerView = view as? UITableViewHeaderFooterView else { return }
         headerView.contentView.backgroundColor = Themes.current.colors.conversationList.table.sectionHeaderBackground
         headerView.textLabel?.textColor = Themes.current.colors.conversationList.table.sectionHeaderTitle
-        
+    }
+            
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            let channel = self.fetchedResultsController.object(at: indexPath)
+            let alert = UIAlertController(title: "Confirmation", message: "Do you realy want to delete channel \(channel.name)", preferredStyle: .alert)
+            let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+            let delete = UIAlertAction(title: "Delete", style: .destructive) { [weak self] (_) in
+                self?.channelsService.deleteChannel(channel) { (result) in
+                    switch result {
+                    case .success:
+                        Log.info("Successful delete channel \(channel.name)", tag: Self.logTag)
+                    case .failure(let error):
+                        self?.showErrorAlert(message: error.localizedDescription)
+                        Log.error("Error during deleting channel \(channel.name). \(error.localizedDescription)", tag: Self.logTag)
+                    }
+                }
+            }
+            alert.addAction(cancel)
+            alert.addAction(delete)
+            present(alert, animated: true, completion: nil)
+        }
     }
     
 }
@@ -227,4 +279,53 @@ extension ConversationsListViewController: ThemesPickerDelegate {
         tableView.reloadData()
     }
     
+}
+
+extension ConversationsListViewController: NSFetchedResultsControllerDelegate {
+    
+    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        UIView.setAnimationsEnabled(fetchesCount > 1)
+        tableView.beginUpdates()
+    }
+    
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        tableView.endUpdates()
+        fetchesCount += 1
+    }
+    
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
+                    didChange anObject: Any,
+                    at indexPath: IndexPath?,
+                    for type: NSFetchedResultsChangeType,
+                    newIndexPath: IndexPath?) {
+        
+        let withoutAnimation = fetchesCount < 2
+        
+        switch type {
+        case .insert:
+            if let indexPath = newIndexPath {
+                tableView.insertRows(at: [indexPath], with: withoutAnimation ? .none : .automatic)
+            }
+        case .update:
+            if let indexPath = indexPath,
+               let cell = tableView.cellForRow(at: indexPath) as? ConversationTableViewCell {
+                let channel = fetchedResultsController.object(at: indexPath)
+                cell.configure(with: channel)
+            }
+        case .move:
+            if let indexPath = indexPath {
+                tableView.deleteRows(at: [indexPath], with: .none)
+            }
+            if let newIndexPath = newIndexPath {
+                tableView.insertRows(at: [newIndexPath], with: withoutAnimation ? .none : .automatic)
+            }
+        case .delete:
+            if let indexPath = indexPath {
+                tableView.deleteRows(at: [indexPath], with: withoutAnimation ? .none : .fade)
+            }
+        @unknown default:
+            fatalError()
+        }
+        
+    }
 }
