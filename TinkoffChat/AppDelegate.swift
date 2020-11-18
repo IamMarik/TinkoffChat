@@ -25,12 +25,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Themes.loadApplicationTheme()
         
         self.window = UIWindow(frame: UIScreen.main.bounds)
-//        let conversationsViewController = rootAssembly.presentationAssembly.conversationListViewController()
-//        let rootNavigationController = rootAssembly.presentationAssembly
-//            .rootNavigationViewController(conversationsViewController)
-//        window?.rootViewController = rootNavigationController
-        let avatarListViewController = rootAssembly.presentationAssembly.avatarListViewController()
-        window?.rootViewController = avatarListViewController
+        let conversationsViewController = rootAssembly.presentationAssembly.conversationListViewController()
+        let rootNavigationController = rootAssembly.presentationAssembly
+            .rootNavigationViewController(conversationsViewController)
+        window?.rootViewController = rootNavigationController
+//        let avatarListViewController = rootAssembly.presentationAssembly.avatarListViewController()
+//        window?.rootViewController = avatarListViewController
         window?.makeKeyAndVisible()
         
         return true

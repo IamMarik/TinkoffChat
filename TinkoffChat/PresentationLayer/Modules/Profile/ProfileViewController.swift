@@ -14,6 +14,8 @@ class ProfileViewController: UIViewController {
     
     var userDataStore: IUserDataStore?
     
+    var presentationAssembly: IPresenentationAssembly?
+    
     var logger: ILogger?
     
     var onProfileChanged: ((ProfileViewModel) -> Void)?
@@ -122,6 +124,13 @@ class ProfileViewController: UIViewController {
             showAlert(withTitle: "Error", message: "Camera is not available")
         }
     }
+    
+    private func openNetworkImagePicker() {
+        guard let imagePickerViewController = presentationAssembly?.networkImagePickerViewController(delegate: self) else {
+            return
+        }
+        present(imagePickerViewController, animated: true, completion: nil)
+    }
 
     private func showAlert(withTitle title: String, message: String, retryAction: (() -> Void)? = nil) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
@@ -220,11 +229,16 @@ class ProfileViewController: UIViewController {
         let chooseFromGalleryAction = UIAlertAction(title: "Photo Gallery", style: .default) { _ in
             self.openGallery()
         }
+        
+        let chooseFromNetwork = UIAlertAction(title: "Load from network", style: .default) { _ in
+            self.openNetworkImagePicker()
+        }
 
         let cancelAction = UIAlertAction(title: "Cancel", style: .default)
 
         alertController.addAction(takeShotAction)
         alertController.addAction(chooseFromGalleryAction)
+        alertController.addAction(chooseFromNetwork)
         alertController.addAction(cancelAction)
         
         present(alertController, animated: true)
@@ -297,6 +311,19 @@ extension ProfileViewController: UINavigationControllerDelegate, UIImagePickerCo
         }
         picker.dismiss(animated: true) {
             self.checkProfileDataForChanges()          
+        }
+    }
+}
+
+extension ProfileViewController: ImagePickerViewControllerDelegate {
+    func imagePicker(_ viewController: ImagePickerViewController, didSelectedImage image: UIImage?) {
+        if let image = image {
+            profileAvatarImageView.image = image
+        } else {
+            logger?.error("Awaited an image from ImagePickerViewController, but got nil")
+        }
+        viewController.dismiss(animated: true) {
+            self.checkProfileDataForChanges()
         }
     }
 }

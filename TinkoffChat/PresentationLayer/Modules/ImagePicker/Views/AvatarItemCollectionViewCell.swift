@@ -11,6 +11,7 @@ import UIKit
 struct AvatarItemViewModel {
     let urlPath: String
     var image: UIImage?
+    var isFetching: Bool = false
 }
 
 class AvatarItemCollectionViewCell: UICollectionViewCell, ConfigurableView {

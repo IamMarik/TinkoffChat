@@ -46,8 +46,9 @@
 		EC9C347D253306D100932552 /* OperationProfileDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC9C347C253306D100932552 /* OperationProfileDataManager.swift */; };
 		ECAB8611251F80D600BA7845 /* DateFormatter + dateOrNow.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECAB8610251F80D600BA7845 /* DateFormatter + dateOrNow.swift */; };
 		ECAB8616251F85E900BA7845 /* DateFormatter + init.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECAB8615251F85E900BA7845 /* DateFormatter + init.swift */; };
-		ECC12B5E25622AC000328158 /* AvatarListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC12B5D25622AC000328158 /* AvatarListViewController.swift */; };
-		ECC12B6225622ACE00328158 /* Avatars.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ECC12B6125622ACE00328158 /* Avatars.storyboard */; };
+		ECB798082564D57C008DFB61 /* ImageRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECB798072564D57C008DFB61 /* ImageRequest.swift */; };
+		ECC12B5E25622AC000328158 /* ImagePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC12B5D25622AC000328158 /* ImagePickerViewController.swift */; };
+		ECC12B6225622ACE00328158 /* ImagePicker.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ECC12B6125622ACE00328158 /* ImagePicker.storyboard */; };
 		ECC12B6725622B6B00328158 /* AvatarItemCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC12B6525622B6B00328158 /* AvatarItemCollectionViewCell.swift */; };
 		ECC12B6825622B6B00328158 /* AvatarItemCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = ECC12B6625622B6B00328158 /* AvatarItemCollectionViewCell.xib */; };
 		ECC26931250C6FEC001C08A0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC26930250C6FEC001C08A0 /* AppDelegate.swift */; };
@@ -125,8 +126,9 @@
 		EC9C347C253306D100932552 /* OperationProfileDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperationProfileDataManager.swift; sourceTree = "<group>"; };
 		ECAB8610251F80D600BA7845 /* DateFormatter + dateOrNow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter + dateOrNow.swift"; sourceTree = "<group>"; };
 		ECAB8615251F85E900BA7845 /* DateFormatter + init.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter + init.swift"; sourceTree = "<group>"; };
-		ECC12B5D25622AC000328158 /* AvatarListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarListViewController.swift; sourceTree = "<group>"; };
-		ECC12B6125622ACE00328158 /* Avatars.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Avatars.storyboard; sourceTree = "<group>"; };
+		ECB798072564D57C008DFB61 /* ImageRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageRequest.swift; sourceTree = "<group>"; };
+		ECC12B5D25622AC000328158 /* ImagePickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerViewController.swift; sourceTree = "<group>"; };
+		ECC12B6125622ACE00328158 /* ImagePicker.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ImagePicker.storyboard; sourceTree = "<group>"; };
 		ECC12B6525622B6B00328158 /* AvatarItemCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarItemCollectionViewCell.swift; sourceTree = "<group>"; };
 		ECC12B6625622B6B00328158 /* AvatarItemCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AvatarItemCollectionViewCell.xib; sourceTree = "<group>"; };
 		ECC2692D250C6FEC001C08A0 /* TinkoffChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TinkoffChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -360,6 +362,7 @@
 		EC73CFC8253EFEC1001C5CB6 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				ECB7980D2564E318008DFB61 /* LoadingView */,
 				EC73CFCD253EFFEC001C5CB6 /* Alert.swift */,
 			);
 			path = Components;
@@ -371,7 +374,7 @@
 				EC3B494F251F6587002A93A8 /* ConversationList */,
 				EC6794612520293000DB8002 /* Conversation */,
 				EC73E3032514AF1F006D5ADF /* Profile */,
-				ECC12B5C25622A7000328158 /* Avatar */,
+				ECC12B5C25622A7000328158 /* ImagePicker */,
 				ECD9CB7725273F3E003FB027 /* Settings */,
 			);
 			path = Modules;
@@ -422,6 +425,13 @@
 			path = CoreData;
 			sourceTree = "<group>";
 		};
+		ECB7980D2564E318008DFB61 /* LoadingView */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = LoadingView;
+			sourceTree = "<group>";
+		};
 		ECBFDDBE2553BD3900C508DA /* Firestore */ = {
 			isa = PBXGroup;
 			children = (
@@ -440,14 +450,14 @@
 			path = CoreView;
 			sourceTree = "<group>";
 		};
-		ECC12B5C25622A7000328158 /* Avatar */ = {
+		ECC12B5C25622A7000328158 /* ImagePicker */ = {
 			isa = PBXGroup;
 			children = (
 				ECC12B6425622B4000328158 /* Views */,
-				ECC12B5D25622AC000328158 /* AvatarListViewController.swift */,
-				ECC12B6125622ACE00328158 /* Avatars.storyboard */,
+				ECC12B5D25622AC000328158 /* ImagePickerViewController.swift */,
+				ECC12B6125622ACE00328158 /* ImagePicker.storyboard */,
 			);
-			path = Avatar;
+			path = ImagePicker;
 			sourceTree = "<group>";
 		};
 		ECC12B6425622B4000328158 /* Views */ = {
@@ -574,6 +584,7 @@
 			children = (
 				ECDE779625637E41000300D2 /* IRequest.swift */,
 				ECDE77A52563880F000300D2 /* ImageListRequest.swift */,
+				ECB798072564D57C008DFB61 /* ImageRequest.swift */,
 			);
 			path = Request;
 			sourceTree = "<group>";
@@ -695,7 +706,7 @@
 				EC73E3052514AF57006D5ADF /* Profile.storyboard in Resources */,
 				EC175EE425404B8E00B06B1F /* MessageInputView.xib in Resources */,
 				EC89FDC6250E07CF00B22EC4 /* README.md in Resources */,
-				ECC12B6225622ACE00328158 /* Avatars.storyboard in Resources */,
+				ECC12B6225622ACE00328158 /* ImagePicker.storyboard in Resources */,
 				ECD9CB7925273F56003FB027 /* ThemeSettings.storyboard in Resources */,
 				EC3B4951251F659E002A93A8 /* Conversations.storyboard in Resources */,
 				ECC12B6825622B6B00328158 /* AvatarItemCollectionViewCell.xib in Resources */,
@@ -779,7 +790,7 @@
 				EC41AF87255A515100B783F4 /* CoreAssembly.swift in Sources */,
 				EC41AF7B255A48E200B783F4 /* PresentationAssembly.swift in Sources */,
 				EC885F46255C4E9E0078F656 /* ChannelDB+CoreDataProperties.swift in Sources */,
-				ECC12B5E25622AC000328158 /* AvatarListViewController.swift in Sources */,
+				ECC12B5E25622AC000328158 /* ImagePickerViewController.swift in Sources */,
 				ECC26946250C76BE001C08A0 /* UIApplication.State + description.swift in Sources */,
 				EC885F4D255C4EAC0078F656 /* MessageDB+CoreDataProperties.swift in Sources */,
 				ECDE779E256386CC000300D2 /* AvatarService.swift in Sources */,
@@ -817,6 +828,7 @@
 				EC845894253C4F0B00EEBCA3 /* ChannelsService.swift in Sources */,
 				ECDE779725637E41000300D2 /* IRequest.swift in Sources */,
 				ECDE77AE25638EC5000300D2 /* PrivateStore.swift in Sources */,
+				ECB798082564D57C008DFB61 /* ImageRequest.swift in Sources */,
 				EC84589D253C717A00EEBCA3 /* MessageService.swift in Sources */,
 				ECC26949250C77D2001C08A0 /* Logger.swift in Sources */,
 				ECDE77A62563880F000300D2 /* ImageListRequest.swift in Sources */,
