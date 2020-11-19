@@ -22,5 +22,6 @@ class AvatarItemCollectionViewCell: UICollectionViewCell, ConfigurableView {
     
     func configure(with model: AvatarItemViewModel) {
        imageView.image = model.image ?? Self.imagePlaceholder
+       contentView.backgroundColor = Themes.current.colors.primaryBackground
     }
 }

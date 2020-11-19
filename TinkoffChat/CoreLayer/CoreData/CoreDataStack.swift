@@ -80,16 +80,16 @@ final class CoreDataStack: ICoreDataStack {
         return context
     }()
     
-    private(set) lazy var saveContext: NSManagedObjectContext = {
+    private func saveContext() -> NSManagedObjectContext {
         let context = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
         context.parent = mainContext
         context.automaticallyMergesChangesFromParent = true
         context.mergePolicy = NSOverwriteMergePolicy
         return context
-    }()
+    }
     
     func performSave(_ block: (NSManagedObjectContext) -> Void) {
-        let context = saveContext
+        let context = saveContext()
         context.performAndWait {
             block(context)
             if context.hasChanges {

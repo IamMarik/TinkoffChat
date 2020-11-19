@@ -66,7 +66,6 @@ final class ChannelsService: IChannelsService {
                         
                         snapshot.documentChanges.forEach { diff in
                             let channelName = (diff.document.data()["name"] as? String) ?? ""
-                            self.logger?.info(channelName, tag: "")
                             switch diff.type {
                             case .added, .modified:
                                 _ = ChannelDB(identifier: diff.document.documentID,

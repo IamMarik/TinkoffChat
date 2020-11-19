@@ -29,6 +29,8 @@ class ProfileViewController: UIViewController {
         return imagePicker
     }()
     
+    private lazy var loadingViewController = LoadingViewController()
+    
     @IBOutlet private var scrollView: UIScrollView!
 
     @IBOutlet private var profileNavigationBar: ProfileNavigationBar!
@@ -42,9 +44,7 @@ class ProfileViewController: UIViewController {
     @IBOutlet private var profileDescriptionTextView: UITextView!
     
     @IBOutlet private var editAvatarButton: UIButton!
- 
-    @IBOutlet private var loadingView: UIView!
-    
+     
     @IBOutlet private var saveButtonsStackView: UIStackView!
     
     @IBOutlet private var saveGCDButton: UIButton!
@@ -74,10 +74,6 @@ class ProfileViewController: UIViewController {
     private func setupView() {
         saveGCDButton.layer.cornerRadius = 14
         profileAvatarImageView.layer.cornerRadius = 120
-        loadingView.layer.cornerRadius = 14
-        loadingView.layer.shadowColor = UIColor.black.withAlphaComponent(0.4).cgColor
-        loadingView.layer.shadowRadius = 1.63
-        loadingView.layer.shadowOffset = CGSize(width: 0, height: 2)
         profileNavigationBar.delegate = self
         profileNameTextField.delegate = self
         profileNameTextField.addTarget(self, action: #selector(checkProfileDataForChanges), for: .editingChanged)
@@ -102,7 +98,6 @@ class ProfileViewController: UIViewController {
         profileNameTextField.textColor = theme.colors.profile.name
         profileDescriptionTextView.textColor = theme.colors.profile.description
         saveGCDButton.backgroundColor = theme.colors.profile.saveButtonBackground
-        loadingView.backgroundColor = theme.colors.profile.loadingViewBackground
     }
 
     private func openGallery() {
@@ -165,7 +160,7 @@ class ProfileViewController: UIViewController {
             profileNameLabel.isHidden = false
             profileDescriptionTextView.isEditable = false
             profileDescriptionTextView.isSelectable = false
-            loadingView.isHidden = true
+            loadingViewController.hide()
         case .editing:
             editAvatarButton.isHidden = false
             saveGCDButton.isEnabled = false
@@ -175,11 +170,10 @@ class ProfileViewController: UIViewController {
             profileNameTextField.text = profile?.fullName
             profileDescriptionTextView.isEditable = true
             profileDescriptionTextView.isSelectable = true
-            loadingView.isHidden = true
         case .hasChanges:
             saveGCDButton.isEnabled = true
         case .saving:
-            loadingView.isHidden = false
+            loadingViewController.show(in: view)
             saveGCDButton.isEnabled = false
         }
     }

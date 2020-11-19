@@ -49,7 +49,7 @@ final class GCDProfileDataManager: IProfileDataManager {
             group.enter()
             DispatchQueue.global(qos: .utility).async { [weak self] in
                 self?.logger?.info("Write profile avatar with GCD")
-                if let imageData = newProfile.avatar.pngData() {
+                if let imageData = newProfile.avatar.jpegData(compressionQuality: 1.0) {
                     successWritingAvatar = FileUtils.writeToDisk(
                         data: imageData,
                         fileName: ProfileItemsStoreKeys.avatar.rawValue)

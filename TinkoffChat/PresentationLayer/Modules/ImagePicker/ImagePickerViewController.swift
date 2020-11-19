@@ -25,13 +25,21 @@ class ImagePickerViewController: UIViewController {
     private var itemPerRow: CGFloat = 3
     
     private let itemSpacing: CGFloat = 10
+    
+    private lazy var loadingViewController = LoadingViewController()
  
     @IBOutlet var collectionView: UICollectionView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupCollectionView()
+        setupCollectionView()    
+        setupTheme()
         loadAvatarList()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
     }
     
     private func setupCollectionView() {
@@ -41,8 +49,17 @@ class ImagePickerViewController: UIViewController {
                                 forCellWithReuseIdentifier: "\(AvatarItemCollectionViewCell.self)")
     }
     
+    private func setupTheme() {
+        view.backgroundColor = Themes.current.colors.primaryBackground
+        collectionView.backgroundColor = .clear
+    }
+    
     private func loadAvatarList() {
+        loadingViewController.show(in: view)
         avatarService?.loadImageList(handler: { [weak self] (result) in
+            DispatchQueue.main.async {
+                self?.loadingViewController.hide()
+            }
             switch result {
             case .success(let imageLinkList):
                 let avatarModels = imageLinkList.map {
@@ -50,7 +67,7 @@ class ImagePickerViewController: UIViewController {
                 }
                 self?.update(with: avatarModels)
             case .failure(let error):
-                print(error.localizedDescription)
+                self?.logger?.error(error.localizedDescription)
             }
         })
     }
@@ -120,7 +137,7 @@ extension ImagePickerViewController: UICollectionViewDelegateFlowLayout {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 0, left: itemSpacing, bottom: 0, right: itemSpacing)
+        return UIEdgeInsets(top: itemSpacing, left: itemSpacing, bottom: 0, right: itemSpacing)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
