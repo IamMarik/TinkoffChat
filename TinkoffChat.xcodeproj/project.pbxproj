@@ -28,6 +28,7 @@
 		EC5553EE25661F5D009F9DD4 /* LoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC5553EC25661F5D009F9DD4 /* LoadingViewController.swift */; };
 		EC5553EF25661F5D009F9DD4 /* LoadingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EC5553ED25661F5D009F9DD4 /* LoadingViewController.xib */; };
 		EC650D6C256E18A200098E84 /* UIViewController + emitEmblems.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC650D6B256E18A200098E84 /* UIViewController + emitEmblems.swift */; };
+		EC650D6F256EB45600098E84 /* UIView + shakeAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC650D6E256EB45600098E84 /* UIView + shakeAnimation.swift */; };
 		EC6794632520295000DB8002 /* Conversation.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EC6794622520295000DB8002 /* Conversation.storyboard */; };
 		EC6794662520298000DB8002 /* ConversationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC6794652520298000DB8002 /* ConversationViewController.swift */; };
 		EC67946B252029B600DB8002 /* MessageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC679469252029B600DB8002 /* MessageTableViewCell.swift */; };
@@ -111,6 +112,7 @@
 		EC5553EC25661F5D009F9DD4 /* LoadingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingViewController.swift; sourceTree = "<group>"; };
 		EC5553ED25661F5D009F9DD4 /* LoadingViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoadingViewController.xib; sourceTree = "<group>"; };
 		EC650D6B256E18A200098E84 /* UIViewController + emitEmblems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController + emitEmblems.swift"; sourceTree = "<group>"; };
+		EC650D6E256EB45600098E84 /* UIView + shakeAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView + shakeAnimation.swift"; sourceTree = "<group>"; };
 		EC6794622520295000DB8002 /* Conversation.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Conversation.storyboard; sourceTree = "<group>"; };
 		EC6794652520298000DB8002 /* ConversationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationViewController.swift; sourceTree = "<group>"; };
 		EC679469252029B600DB8002 /* MessageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageTableViewCell.swift; sourceTree = "<group>"; };
@@ -521,6 +523,7 @@
 				ECCC90C525249979001C68F9 /* Date + RandomTime.swift */,
 				ECE22DE52537055B00A6AD76 /* UIAlert + changeColors.swift */,
 				EC650D6B256E18A200098E84 /* UIViewController + emitEmblems.swift */,
+				EC650D6E256EB45600098E84 /* UIView + shakeAnimation.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -835,6 +838,7 @@
 				ECE295C22528AE2100F30BAA /* RootNavigationController.swift in Sources */,
 				ECF5BBC8252B485700B829B0 /* Themes.swift in Sources */,
 				ECDE779425637C2A000300D2 /* ResponseParser.swift in Sources */,
+				EC650D6F256EB45600098E84 /* UIView + shakeAnimation.swift in Sources */,
 				ECDE77AA25638A32000300D2 /* PixabayImageInfo.swift in Sources */,
 				EC53DCAA252C9BF7000227E3 /* ThemesPickerDelegate.swift in Sources */,
 				EC845894253C4F0B00EEBCA3 /* ChannelsService.swift in Sources */,

@@ -65,7 +65,7 @@ final class ChannelsService: IChannelsService {
                         self.logger?.info("Success update channels fetch: \(snapshot.documentChanges.count)")
                         
                         snapshot.documentChanges.forEach { diff in
-                            let channelName = (diff.document.data()["name"] as? String) ?? ""
+                           // let channelName = (diff.document.data()["name"] as? String) ?? ""
                             switch diff.type {
                             case .added, .modified:
                                 _ = ChannelDB(identifier: diff.document.documentID,

@@ -15,6 +15,7 @@ extension UIViewController {
         let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(touchHandler(_:)))
         longPressGesture.minimumPressDuration = 0
         longPressGesture.cancelsTouchesInView = false
+        longPressGesture.delegate = EmitGestureRecognizerManager.shared
         view.addGestureRecognizer(longPressGesture)
     }
         
@@ -31,7 +32,7 @@ extension UIViewController {
         emblemLayer.frame = view.bounds
     }
     
-    private func makeEmblemCell() -> CAEmitterCell{
+    private func makeEmblemCell() -> CAEmitterCell {
         let cell = CAEmitterCell()
         cell.contents = UIImage(named: "Launch")?.cgImage
         cell.scale = 0.2
@@ -50,7 +51,7 @@ extension UIViewController {
     @objc private func touchHandler(_ sender: UILongPressGestureRecognizer) {
         switch sender.state {
         case .began:
-            addEmblemLayer(at:  sender.location(in: view))
+            addEmblemLayer(at: sender.location(in: view))
         case .changed:
             guard let layer = view.layer.sublayers?.first(where: { $0.name == Self.emblemLayerName })
                     as? CAEmitterLayer else {
@@ -63,5 +64,13 @@ extension UIViewController {
         default:
             break
         }
+    }
+}
+
+private class EmitGestureRecognizerManager: NSObject, UIGestureRecognizerDelegate {
+    static let shared = EmitGestureRecognizerManager()
+    
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
     }
 }
