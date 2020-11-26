@@ -14,6 +14,8 @@ class ProfileViewController: UIViewController {
     
     var userDataStore: IUserDataStore?
     
+    var presentationAssembly: IPresenentationAssembly?
+    
     var logger: ILogger?
     
     var onProfileChanged: ((ProfileViewModel) -> Void)?
@@ -26,6 +28,8 @@ class ProfileViewController: UIViewController {
         imagePicker.allowsEditing = false
         return imagePicker
     }()
+    
+    private lazy var loadingViewController = LoadingViewController()
     
     @IBOutlet private var scrollView: UIScrollView!
 
@@ -40,9 +44,7 @@ class ProfileViewController: UIViewController {
     @IBOutlet private var profileDescriptionTextView: UITextView!
     
     @IBOutlet private var editAvatarButton: UIButton!
- 
-    @IBOutlet private var loadingView: UIView!
-    
+     
     @IBOutlet private var saveButtonsStackView: UIStackView!
     
     @IBOutlet private var saveGCDButton: UIButton!
@@ -72,10 +74,6 @@ class ProfileViewController: UIViewController {
     private func setupView() {
         saveGCDButton.layer.cornerRadius = 14
         profileAvatarImageView.layer.cornerRadius = 120
-        loadingView.layer.cornerRadius = 14
-        loadingView.layer.shadowColor = UIColor.black.withAlphaComponent(0.4).cgColor
-        loadingView.layer.shadowRadius = 1.63
-        loadingView.layer.shadowOffset = CGSize(width: 0, height: 2)
         profileNavigationBar.delegate = self
         profileNameTextField.delegate = self
         profileNameTextField.addTarget(self, action: #selector(checkProfileDataForChanges), for: .editingChanged)
@@ -100,7 +98,6 @@ class ProfileViewController: UIViewController {
         profileNameTextField.textColor = theme.colors.profile.name
         profileDescriptionTextView.textColor = theme.colors.profile.description
         saveGCDButton.backgroundColor = theme.colors.profile.saveButtonBackground
-        loadingView.backgroundColor = theme.colors.profile.loadingViewBackground
     }
 
     private func openGallery() {
@@ -121,6 +118,13 @@ class ProfileViewController: UIViewController {
             logger?.error("Camera source is not available")
             showAlert(withTitle: "Error", message: "Camera is not available")
         }
+    }
+    
+    private func openNetworkImagePicker() {
+        guard let imagePickerViewController = presentationAssembly?.networkImagePickerViewController(delegate: self) else {
+            return
+        }
+        present(imagePickerViewController, animated: true, completion: nil)
     }
 
     private func showAlert(withTitle title: String, message: String, retryAction: (() -> Void)? = nil) {
@@ -156,7 +160,7 @@ class ProfileViewController: UIViewController {
             profileNameLabel.isHidden = false
             profileDescriptionTextView.isEditable = false
             profileDescriptionTextView.isSelectable = false
-            loadingView.isHidden = true
+            loadingViewController.hide()
         case .editing:
             editAvatarButton.isHidden = false
             saveGCDButton.isEnabled = false
@@ -166,11 +170,10 @@ class ProfileViewController: UIViewController {
             profileNameTextField.text = profile?.fullName
             profileDescriptionTextView.isEditable = true
             profileDescriptionTextView.isSelectable = true
-            loadingView.isHidden = true
         case .hasChanges:
             saveGCDButton.isEnabled = true
         case .saving:
-            loadingView.isHidden = false
+            loadingViewController.show(in: view)
             saveGCDButton.isEnabled = false
         }
     }
@@ -220,11 +223,16 @@ class ProfileViewController: UIViewController {
         let chooseFromGalleryAction = UIAlertAction(title: "Photo Gallery", style: .default) { _ in
             self.openGallery()
         }
+        
+        let chooseFromNetwork = UIAlertAction(title: "Load from network", style: .default) { _ in
+            self.openNetworkImagePicker()
+        }
 
         let cancelAction = UIAlertAction(title: "Cancel", style: .default)
 
         alertController.addAction(takeShotAction)
         alertController.addAction(chooseFromGalleryAction)
+        alertController.addAction(chooseFromNetwork)
         alertController.addAction(cancelAction)
         
         present(alertController, animated: true)
@@ -297,6 +305,19 @@ extension ProfileViewController: UINavigationControllerDelegate, UIImagePickerCo
         }
         picker.dismiss(animated: true) {
             self.checkProfileDataForChanges()          
+        }
+    }
+}
+
+extension ProfileViewController: ImagePickerViewControllerDelegate {
+    func imagePicker(_ viewController: ImagePickerViewController, didSelectedImage image: UIImage?) {
+        if let image = image {
+            profileAvatarImageView.image = image
+        } else {
+            logger?.error("Awaited an image from ImagePickerViewController, but got nil")
+        }
+        viewController.dismiss(animated: true) {
+            self.checkProfileDataForChanges()
         }
     }
 }

@@ -20,6 +20,8 @@ protocol IServicesAssembly {
     func channelsFetchResultsController() -> NSFetchedResultsController<ChannelDB>
     
     func messagesFetchResultsController(channelId: String) -> NSFetchedResultsController<MessageDB>
+    
+    func avatarService() -> IAvatarService
    
     func logger(for object: Any?) -> ILogger
 }
@@ -75,6 +77,13 @@ class ServicesAssembly: IServicesAssembly {
                                                     sectionNameKeyPath: nil,
                                                     cacheName: nil)
         return controller
+    }
+    
+    func avatarService() -> IAvatarService {
+        let networkManager = coreAssembly.networkManager()
+        let privateStore = coreAssembly.privateStore()
+        let service = AvatarService(networkManager: networkManager, apiKey: privateStore.pixabayApiKey)
+        return service
     }
     
     func logger(for object: Any?) -> ILogger {

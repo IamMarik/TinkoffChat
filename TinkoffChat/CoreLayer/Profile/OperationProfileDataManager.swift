@@ -38,7 +38,7 @@ class OperationProfileDataManager: IProfileDataManager {
         if newProfile.avatar !== oldProfile?.avatar,
            !newProfile.isStubAvatar {
             writeOperations.append(WriteDataToDiskOperation(
-                                    data: newProfile.avatar.pngData(),
+                                    data: newProfile.avatar.jpegData(compressionQuality: 1.0),
                                     fileName: ProfileItemsStoreKeys.avatar.rawValue)
             )
         }

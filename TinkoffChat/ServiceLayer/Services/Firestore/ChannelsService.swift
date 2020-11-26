@@ -66,7 +66,6 @@ final class ChannelsService: IChannelsService {
                         
                         snapshot.documentChanges.forEach { diff in
                             let channelName = (diff.document.data()["name"] as? String) ?? ""
-                            self.logger?.info(channelName, tag: "")
                             switch diff.type {
                             case .added, .modified:
                                 _ = ChannelDB(identifier: diff.document.documentID,
@@ -148,7 +147,7 @@ final class ChannelsService: IChannelsService {
     private func deleteAllMessageFromDB(channelId: String) {
         DispatchQueue.main.async {
             self.coreDataStack.performSave { (context) in
-                if let result = try? context.fetch(MessageDB.fetchRequest(forChannelId: channelId)) as? [MessageDB] {
+                if let result = try? context.fetch(MessageDB.fetchRequest(forChannelId: channelId)) {
                     result.forEach {
                         context.delete($0)
                     }

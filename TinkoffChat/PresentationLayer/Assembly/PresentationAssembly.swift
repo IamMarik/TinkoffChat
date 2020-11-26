@@ -21,6 +21,8 @@ protocol IPresenentationAssembly {
     
     func settingsViewController() -> ThemesViewController
     
+    func networkImagePickerViewController(delegate: ImagePickerViewControllerDelegate?) -> ImagePickerViewController
+    
 }
 
 class PresenentationAssembly: IPresenentationAssembly {
@@ -68,6 +70,7 @@ class PresenentationAssembly: IPresenentationAssembly {
             fatalError("Can't instantiate ConversationViewController")
         }
         profileViewController.userDataStore = serviceAssembly.userDataStore
+        profileViewController.presentationAssembly = self
         return profileViewController
     }
     
@@ -77,6 +80,16 @@ class PresenentationAssembly: IPresenentationAssembly {
             fatalError("Can't instantiate ConversationViewController")
         }
         return settingsViewController
+    }
+    
+    func networkImagePickerViewController(delegate: ImagePickerViewControllerDelegate?) -> ImagePickerViewController {
+        guard let imagePickerViewController = UIStoryboard(name: "ImagePicker", bundle: nil)
+                .instantiateViewController(withIdentifier: "AvatarListId") as? ImagePickerViewController else {
+            fatalError("Can't instantiate NetworkImagePickerViewController")
+        }
+        imagePickerViewController.avatarService = serviceAssembly.avatarService()
+        imagePickerViewController.delegate = delegate
+        return imagePickerViewController
     }
     
 }

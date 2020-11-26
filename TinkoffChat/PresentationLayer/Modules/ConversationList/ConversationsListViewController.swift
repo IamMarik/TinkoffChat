@@ -103,7 +103,9 @@ class ConversationsListViewController: UIViewController {
     
     private func loadProfile() {
         userDataStore?.loadProfile { [weak self] (profile) in
-            self?.updateProfile(profile: profile)
+            DispatchQueue.main.async {
+                self?.updateProfile(profile: profile)
+            }            
         }
     }
     
@@ -129,10 +131,8 @@ class ConversationsListViewController: UIViewController {
     }
         
     private func updateProfile(profile: ProfileViewModel) {
-        RunLoop.main.perform(inModes: [.default]) { [weak self] in
-            self?.profileAvatarButton.isEnabled = true
-            self?.profileAvatarButton.setImage(profile.avatar, for: .normal)
-        }
+        profileAvatarButton.isEnabled = true
+        profileAvatarButton.setImage(profile.avatar, for: .normal)
     }
     
     private func showErrorAlert(message: String) {
@@ -154,7 +154,9 @@ class ConversationsListViewController: UIViewController {
         guard let profileViewController = presentationAssembly?.profileViewController() else { return }
         profileViewController.profile = profile
         profileViewController.onProfileChanged = { [weak self] (profile) in
-            self?.updateProfile(profile: profile)
+            DispatchQueue.main.async {
+                self?.updateProfile(profile: profile)
+            }
         }
         navigationController?.present(profileViewController, animated: true, completion: nil)
     }
@@ -275,6 +277,7 @@ extension ConversationsListViewController: NSFetchedResultsControllerDelegate {
     
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         tableView.endUpdates()
+        tableView.layoutIfNeeded()
         fetchesCount += 1
     }
     
