@@ -23,12 +23,13 @@ extension UIWindow {
         
     private func addEmblemLayer(at point: CGPoint) {
         let emblemLayer = CAEmitterLayer()
+        let count = 4
         emblemLayer.name = Self.emblemLayerName
         emblemLayer.emitterPosition = point
         emblemLayer.emitterShape = .circle
         emblemLayer.beginTime = 0
         emblemLayer.timeOffset = 0.01
-        emblemLayer.emitterCells = [makeEmblemCell()]
+        emblemLayer.emitterCells = (1...count).map { _ in makeEmblemCell() }
         layer.addSublayer(emblemLayer)
         emblemLayer.frame = bounds
     }
@@ -39,7 +40,7 @@ extension UIWindow {
         cell.scale = 0.1
         cell.emissionRange = .pi * 2
         cell.lifetime = 10
-        cell.birthRate = 10
+        cell.birthRate = 4
         cell.velocity = 300
         cell.velocityRange = 20
         cell.yAcceleration = 100
@@ -47,7 +48,7 @@ extension UIWindow {
         cell.alphaRange = 0.5
         cell.alphaSpeed = -0.4
         cell.spin = 0.5
-        cell.spinRange = 2
+        cell.spinRange = .pi
         return cell
     }
     

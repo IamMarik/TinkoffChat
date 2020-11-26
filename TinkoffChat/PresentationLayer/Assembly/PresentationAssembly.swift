@@ -17,7 +17,7 @@ protocol IPresenentationAssembly {
     
     func conversationViewController(channelId: String) -> ConversationViewController
     
-    func profileViewController() -> ProfileViewController
+    func profileViewController(transitioningDelegate: UIViewControllerTransitioningDelegate?) -> ProfileViewController
     
     func settingsViewController() -> ThemesViewController
     
@@ -65,12 +65,14 @@ class PresenentationAssembly: IPresenentationAssembly {
         return conversationViewController
     }
     
-    func profileViewController() -> ProfileViewController {
+    func profileViewController(transitioningDelegate: UIViewControllerTransitioningDelegate?) -> ProfileViewController {
         guard let profileViewController = UIStoryboard(name: "Profile", bundle: nil).instantiateViewController(withIdentifier: "profileId") as? ProfileViewController else {
             fatalError("Can't instantiate ConversationViewController")
         }
         profileViewController.userDataStore = serviceAssembly.userDataStore
         profileViewController.presentationAssembly = self
+        profileViewController.transitioningDelegate = transitioningDelegate
+        profileViewController.modalPresentationStyle = .overFullScreen
         return profileViewController
     }
     

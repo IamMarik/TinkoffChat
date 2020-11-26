@@ -15,6 +15,7 @@
 		EC175EE425404B8E00B06B1F /* MessageInputView.xib in Resources */ = {isa = PBXBuildFile; fileRef = EC175EE325404B8E00B06B1F /* MessageInputView.xib */; };
 		EC17F38325235EF000C6C2A7 /* ProfileNavigationBar.xib in Resources */ = {isa = PBXBuildFile; fileRef = EC17F38225235EF000C6C2A7 /* ProfileNavigationBar.xib */; };
 		EC17F3862523601F00C6C2A7 /* ProfileNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC17F3852523601F00C6C2A7 /* ProfileNavigationBar.swift */; };
+		EC2CC1EB256F6B53006A6012 /* ConversationListViewController + transitioning.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC2CC1EA256F6B53006A6012 /* ConversationListViewController + transitioning.swift */; };
 		EC3B4951251F659E002A93A8 /* Conversations.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EC3B4950251F659E002A93A8 /* Conversations.storyboard */; };
 		EC3B4954251F65C4002A93A8 /* ConversationsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC3B4953251F65C4002A93A8 /* ConversationsListViewController.swift */; };
 		EC3B4958251F662E002A93A8 /* ConfigurableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC3B4957251F662E002A93A8 /* ConfigurableView.swift */; };
@@ -100,6 +101,7 @@
 		EC175EE325404B8E00B06B1F /* MessageInputView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MessageInputView.xib; sourceTree = "<group>"; };
 		EC17F38225235EF000C6C2A7 /* ProfileNavigationBar.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProfileNavigationBar.xib; sourceTree = "<group>"; };
 		EC17F3852523601F00C6C2A7 /* ProfileNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileNavigationBar.swift; sourceTree = "<group>"; };
+		EC2CC1EA256F6B53006A6012 /* ConversationListViewController + transitioning.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationListViewController + transitioning.swift"; sourceTree = "<group>"; };
 		EC3B4950251F659E002A93A8 /* Conversations.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Conversations.storyboard; sourceTree = "<group>"; };
 		EC3B4953251F65C4002A93A8 /* ConversationsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationsListViewController.swift; sourceTree = "<group>"; };
 		EC3B4957251F662E002A93A8 /* ConfigurableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurableView.swift; sourceTree = "<group>"; };
@@ -227,9 +229,18 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		EC2CC1E9256F6B2C006A6012 /* Transitioning */ = {
+			isa = PBXGroup;
+			children = (
+				EC2CC1EA256F6B53006A6012 /* ConversationListViewController + transitioning.swift */,
+			);
+			path = Transitioning;
+			sourceTree = "<group>";
+		};
 		EC3B494F251F6587002A93A8 /* ConversationList */ = {
 			isa = PBXGroup;
 			children = (
+				EC2CC1E9256F6B2C006A6012 /* Transitioning */,
 				EC3B4965251F6924002A93A8 /* Views */,
 				EC3B4953251F65C4002A93A8 /* ConversationsListViewController.swift */,
 				EC3B4950251F659E002A93A8 /* Conversations.storyboard */,
@@ -817,6 +828,7 @@
 				ECAB8616251F85E900BA7845 /* DateFormatter + init.swift in Sources */,
 				EC03E9BC25491FE100D73B2B /* MessageDB + init.swift in Sources */,
 				ECD9CB822527566D003FB027 /* ThemeModel.swift in Sources */,
+				EC2CC1EB256F6B53006A6012 /* ConversationListViewController + transitioning.swift in Sources */,
 				EC73CFC6253EF602001C5CB6 /* FirebaseError.swift in Sources */,
 				ECAB8611251F80D600BA7845 /* DateFormatter + dateOrNow.swift in Sources */,
 				ECED1CAD2518E5270069EB71 /* UIColor + hex.swift in Sources */,
