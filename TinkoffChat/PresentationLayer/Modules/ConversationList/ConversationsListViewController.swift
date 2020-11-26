@@ -56,7 +56,7 @@ class ConversationsListViewController: UIViewController {
         setupTheme()
         loadProfile()
         fetchChannels()
-        emitEmblemOnTouch()
+       // emitEmblemOnTouch()
     }
         
     private func setupTableView() {
