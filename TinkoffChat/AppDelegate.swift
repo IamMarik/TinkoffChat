@@ -14,15 +14,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     
+    private var rootAssembly = RootAssembly()
+    
     func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
         FirebaseApp.configure()
-        //CoreDataStack.shared.deleteStore()
-        CoreDataStack.shared.addStatisticObserver()
         return true
     }
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         Themes.loadApplicationTheme()
+        
+        self.window = UIWindow(frame: UIScreen.main.bounds)
+        let conversationsViewController = rootAssembly.presentationAssembly.conversationListViewController()
+        let rootNavigationController = rootAssembly.presentationAssembly
+            .rootNavigationViewController(conversationsViewController)
+        window?.rootViewController = rootNavigationController
+        window?.makeKeyAndVisible()
+        
         return true
     }
     
