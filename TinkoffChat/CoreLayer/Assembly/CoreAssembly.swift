@@ -14,6 +14,10 @@ protocol ICoreAssembly {
     func networkManager() -> INetworkManager
     func privateStore() -> IStore
     func logger(for object: Any?) -> ILogger
+    func observeService<Model: FirestoreModel>(parentCollection: String,
+                                               parentIdentifier: String,
+                                               collectionName: String,
+                                               modelType: Model.Type) -> IObserveService
 }
 
 class CoreAssembly: ICoreAssembly {
@@ -37,5 +41,16 @@ class CoreAssembly: ICoreAssembly {
     func logger(for object: Any?) -> ILogger {
         let logger = Logger(for: object)
         return logger
+    }
+    
+    func observeService<Model: FirestoreModel>(parentCollection: String,
+                                               parentIdentifier: String,
+                                               collectionName: String,
+                                               modelType: Model.Type) -> IObserveService {
+        
+        let firestoreObserve = FireStoreObserveService<Model>(parentCollection: parentCollection,
+                                                              parentIdentifier: parentIdentifier,
+                                                              collectionName: collectionName)
+        return firestoreObserve
     }
 }

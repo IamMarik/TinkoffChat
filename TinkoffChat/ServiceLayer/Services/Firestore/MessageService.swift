@@ -37,7 +37,10 @@ final class MessageService: IMessageService {
     
     private var messagesListener: ListenerRegistration?
     
-    init(channelId: String, userDataStore: IUserDataStore, coreDataStack: ICoreDataStack) {
+    private let observeService: IObserveService
+    
+    init(fireStoreService: IObserveService, channelId: String, userDataStore: IUserDataStore, coreDataStack: ICoreDataStack) {
+        self.observeService = fireStoreService
         self.channelId = channelId
         self.userDataStore = userDataStore
         self.coreDataStack = coreDataStack
@@ -49,35 +52,25 @@ final class MessageService: IMessageService {
     
     /// Create subscription to message list update
     func subscribeOnMessagesUpdates(handler: @escaping(Result<Bool, Error>) -> Void) {
-        let channelId = self.channelId
-        var isFirstFetch = true
-        messagesListener = messagesReference.addSnapshotListener { (querySnapshot, error) in
-            if let error = error {
-                handler(.failure(error))
-            } else if let snapshot = querySnapshot {
-                if isFirstFetch {
-                    // Удалим все сообщения, на случай если канал удалён, наша бд не должна содержать сообщений
-                    // Также это поможет избежать дублирования строк в таблице
+        
+        observeService.subscribeOnListUpdate { [weak self] (result: Result<[Message], Error>, fetchCount) in
+            guard let self = self else { return }
+                    
+            switch result {
+            case .success(let messages):
+                if fetchCount == 1 {
                     self.deleteAllMessagesFromDB()
-                    isFirstFetch = false
                 }
                 DispatchQueue.global(qos: .default).async {
                     self.coreDataStack.performSave { context in
-                        snapshot.documentChanges.forEach { diff in
-                            switch diff.type {
-                            case .added:
-                                self.putMessageIn(context: context, document: diff.document, channelId: channelId)             
-                            case .modified:
-                                self.putMessageIn(context: context, document: diff.document, channelId: channelId)
-                            case .removed:
-                                self.putMessageIn(context: context, document: diff.document, channelId: channelId)
-                            }
+                        messages.forEach {
+                            _ = MessageDB(message: $0, in: context)
                         }
                         handler(.success(true))
                     }
                 }
-            } else {
-                handler(.failure(FirebaseError.snapshotIsNil))
+            case .failure(let error):
+                handler(.failure(error))
             }
         }
     }
@@ -98,27 +91,24 @@ final class MessageService: IMessageService {
     func addMessage(content: String, handler: @escaping(Result<String, Error>) -> Void) {
         guard let profile = userDataStore.profile else { return }
         
-        var ref: DocumentReference?
-        ref = messagesReference.addDocument(
-            data: [
-                "content": content,
-                "senderId": userDataStore.identifier,
-                "senderName": profile.fullName,
-                "created": Timestamp(date: Date())
-            ]) { (error) in
-            if let error = error {
+        let message = Message(channelId: channelId,
+                              content: content,
+                              senderId: userDataStore.identifier,
+                              senderName: profile.fullName)
+        
+        observeService.add(model: message) { (result) in
+            switch result {
+            case .success(let id):
+                handler(.success(id))
+            case .failure(let error):
                 handler(.failure(error))
-            } else if let documentId = ref?.documentID {
-                handler(.success(documentId))
-            } else {
-                handler(.failure(FirebaseError.referenceIsNil))
             }
         }
     }
     
     /// Delete message from channel
     func deleteMessage(withId identifier: String, handler: @escaping (Error?) -> Void ) {
-        messagesReference.document(identifier).delete { error in
+        observeService.delete(modelWithId: identifier) { (error) in
             if let error = error {
                 self.logger?.error("Error removing message, id: \(identifier). \(error.localizedDescription)")
                 handler(error)
