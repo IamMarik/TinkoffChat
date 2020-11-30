@@ -9,6 +9,8 @@
 import Foundation
 
 protocol IObserveService: AnyObject {
+    
+    func getList<Model: FirestoreModel>(handler: @escaping (Result<[Model], Error>) -> Void)
         
     func subscribeOnListUpdate<Model: FirestoreModel>(handler: @escaping(Result<[Model], Error>, Int) -> Void)
     

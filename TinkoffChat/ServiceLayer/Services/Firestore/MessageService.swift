@@ -16,11 +16,13 @@ protocol IMessageService {
     
     func addMessage(content: String, handler: @escaping(Result<String, Error>) -> Void)
     
-    func deleteMessage(withId identifier: String, handler: @escaping (Error?) -> Void )    
+    func deleteMessage(withId identifier: String, handler: @escaping (Error?) -> Void)
+    
+    func deleteAllMessages(handler: @escaping (Error?) -> Void)
 }
 
 final class MessageService: IMessageService {
-            
+  
     private let channelId: String
     
     private let userDataStore: IUserDataStore
@@ -29,31 +31,19 @@ final class MessageService: IMessageService {
     
     var logger: ILogger?
     
-    private let db = Firestore.firestore()
+    private let messagesFirestoreService: IObserveService
     
-    private lazy var messagesReference = {
-        db.collection("channels/\(channelId)/messages")
-    }()
-    
-    private var messagesListener: ListenerRegistration?
-    
-    private let observeService: IObserveService
-    
-    init(fireStoreService: IObserveService, channelId: String, userDataStore: IUserDataStore, coreDataStack: ICoreDataStack) {
-        self.observeService = fireStoreService
+    init(firestoreService: IObserveService, channelId: String, userDataStore: IUserDataStore, coreDataStack: ICoreDataStack) {
+        self.messagesFirestoreService = firestoreService
         self.channelId = channelId
         self.userDataStore = userDataStore
         self.coreDataStack = coreDataStack
     }
-    
-    deinit {
-        messagesListener?.remove()
-    }
-    
+        
     /// Create subscription to message list update
     func subscribeOnMessagesUpdates(handler: @escaping(Result<Bool, Error>) -> Void) {
         
-        observeService.subscribeOnListUpdate { [weak self] (result: Result<[Message], Error>, fetchCount) in
+        messagesFirestoreService.subscribeOnListUpdate { [weak self] (result: Result<[Message], Error>, fetchCount) in
             guard let self = self else { return }
                     
             switch result {
@@ -71,6 +61,26 @@ final class MessageService: IMessageService {
                 }
             case .failure(let error):
                 handler(.failure(error))
+            }
+        }
+    }
+    
+    func deleteAllMessages(handler: @escaping (Error?) -> Void) {
+        messagesFirestoreService.getList { [weak self] (result: Result<[Message], Error>) in
+            guard let self = self else { return }
+            switch result {
+            case .success(let messages):
+                messages.forEach { message in
+                    self.messagesFirestoreService.delete(modelWithId: message.identifier) { (error) in
+                        if let error = error {
+                            self.logger?.error("Error delete nested document: \(error.localizedDescription)")
+                        }
+                    }
+                    self.deleteAllMessagesFromDB()
+                    handler(nil)
+                }
+            case .failure(let error):
+                handler(error)
             }
         }
     }
@@ -96,7 +106,7 @@ final class MessageService: IMessageService {
                               senderId: userDataStore.identifier,
                               senderName: profile.fullName)
         
-        observeService.add(model: message) { (result) in
+        messagesFirestoreService.add(model: message) { (result) in
             switch result {
             case .success(let id):
                 handler(.success(id))
@@ -108,7 +118,7 @@ final class MessageService: IMessageService {
     
     /// Delete message from channel
     func deleteMessage(withId identifier: String, handler: @escaping (Error?) -> Void ) {
-        observeService.delete(modelWithId: identifier) { (error) in
+        messagesFirestoreService.delete(modelWithId: identifier) { (error) in
             if let error = error {
                 self.logger?.error("Error removing message, id: \(identifier). \(error.localizedDescription)")
                 handler(error)

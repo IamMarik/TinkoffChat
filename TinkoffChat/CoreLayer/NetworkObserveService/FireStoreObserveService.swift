@@ -38,6 +38,22 @@ class FireStoreObserveService<Model: FirestoreModel>: IObserveService {
         collectionListener?.remove()
     }
     
+    func getList<Model: FirestoreModel>(handler: @escaping (Result<[Model], Error>) -> Void) {
+        
+        collectionReference.getDocuments { [weak self] (querySnapshot, error) in
+            guard let self = self else { return }
+            
+            if let error = error {
+                handler(.failure(error))
+            } else if let snapshot = querySnapshot {
+                let documents = snapshot.documents.compactMap { Model(from: $0, parentIdentifier: self.parentIdentifier, changeType: .added)}
+                handler(.success(documents))
+            } else {
+                handler(.failure(FirebaseError.snapshotIsNil))
+            }
+        }   
+    }
+    
     func subscribeOnListUpdate<Model: FirestoreModel>(handler: @escaping (Result<[Model], Error>, Int) -> Void) {
         collectionListener = collectionReference.addSnapshotListener { [weak self] (querySnapshot, error) in
             guard let self = self else { return }
@@ -46,7 +62,8 @@ class FireStoreObserveService<Model: FirestoreModel>: IObserveService {
                 handler(.failure(error), self.fetchCount)
             } else if let snapshot = querySnapshot {
                 self.fetchCount += 1
-                let documents = snapshot.documentChanges.compactMap { Model(from: $0, parentIdentifier: self.parentIdentifier) }
+            
+                let documents = snapshot.documentChanges.compactMap { Model(from: $0.document, parentIdentifier: self.parentIdentifier, changeType: $0.type) }
                 handler(.success(documents), self.fetchCount)
             } else {
                 handler(.failure(FirebaseError.snapshotIsNil), self.fetchCount)

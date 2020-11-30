@@ -40,7 +40,13 @@ class ServicesAssembly: IServicesAssembly {
     }()
     
     func channelsService() -> IChannelsService {
-        let channelsService = ChannelsService(serviceAssembly: self,
+        let firestoreSevice = coreAssembly.observeService(parentCollection: "",
+                                                          parentIdentifier: "",
+                                                          collectionName: "channels",
+                                                          modelType: Channel.self)
+        
+        let channelsService = ChannelsService(firestoreService: firestoreSevice,
+                                              serviceAssembly: self,
                                               coreDataStack: coreAssembly.coreDataStack)
         channelsService.logger = logger(for: channelsService)
         return channelsService
@@ -52,7 +58,7 @@ class ServicesAssembly: IServicesAssembly {
                                                           collectionName: "messages",
                                                           modelType: Message.self)
         
-        let messageService = MessageService(fireStoreService: firestoreSevice,
+        let messageService = MessageService(firestoreService: firestoreSevice,
                                             channelId: channelId,
                                             userDataStore: userDataStore,
                                             coreDataStack: coreAssembly.coreDataStack)

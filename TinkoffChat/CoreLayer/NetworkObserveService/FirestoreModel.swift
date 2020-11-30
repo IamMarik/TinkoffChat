@@ -13,8 +13,9 @@ protocol FirestoreModel {
     
     var identifier: String { get }
     var parentIdentifier: String { get }
+    var diffType: DocumentChangeType { get }
     
-    init?(from change: DocumentChange, parentIdentifier: String)
+    init?(from document: DocumentSnapshot, parentIdentifier: String, changeType: DocumentChangeType)
             
     func serialize() -> [String: Any]
 }

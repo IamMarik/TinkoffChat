@@ -243,7 +243,7 @@ extension ConversationsListViewController: UITableViewDelegate {
             let alert = UIAlertController(title: "Confirmation", message: "Do you realy want to delete channel \(channel.name)", preferredStyle: .alert)
             let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
             let delete = UIAlertAction(title: "Delete", style: .destructive) { [weak self] (_) in
-                self?.channelsService?.deleteChannel(channel) { (result) in
+                self?.channelsService?.deleteChannel(with: channel.identifier) { (result) in
                     switch result {
                     case .success:
                         self?.logger?.info("Successful delete channel \(channel.name)")
