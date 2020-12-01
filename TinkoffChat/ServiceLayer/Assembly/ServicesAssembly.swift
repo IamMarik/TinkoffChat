@@ -58,8 +58,8 @@ class ServicesAssembly: IServicesAssembly {
                                                           collectionName: "messages",
                                                           modelType: Message.self)
         
-        let messageService = MessageService(firestoreService: firestoreSevice,
-                                            channelId: channelId,
+        let messageService = MessageService(channelId: channelId,
+                                            firestoreService: firestoreSevice,
                                             userDataStore: userDataStore,
                                             coreDataStack: coreAssembly.coreDataStack)
         messageService.logger = logger(for: messageService)

@@ -13,13 +13,22 @@ final class MockUserDataStore: IUserDataStore {
     
     var saveProfileCount = 0
     var loadProfileCount = 0
+    var getIdentifierCount = 0
+    var getProfileCount = 0
     
-    let identifier: String = "test_id"
+    var idetifierReturn = "testId"
     
-    var profile: ProfileViewModel? = {
-        let profile = ProfileViewModel(fullName: "Test Name", description: "Test Description", avatar: nil)
-        return profile
-    }()
+    var profileReturn = ProfileViewModel(fullName: "Test Name", description: "Test Description", avatar: nil)
+    
+    var identifier: String {
+        getIdentifierCount += 1
+        return idetifierReturn
+    }
+    
+    var profile: ProfileViewModel? {
+        getProfileCount += 1
+        return profileReturn
+    }
     
     func saveProfile(profile: ProfileViewModel, completion: @escaping (Bool) -> Void) {
         saveProfileCount += 1

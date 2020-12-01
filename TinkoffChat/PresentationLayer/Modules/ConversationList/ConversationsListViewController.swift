@@ -225,7 +225,7 @@ extension ConversationsListViewController: UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: true)
        
         guard let channel = fetchedResultsController?.object(at: indexPath),
-              let conversationVC = presentationAssembly?.conversationViewController(channelId: channel.identifier) else {
+              let conversationVC = presentationAssembly?.conversationViewController(channelId: channel.identifier, channelName: channel.name) else {
             return
         }
         navigationController?.pushViewController(conversationVC, animated: true)

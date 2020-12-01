@@ -33,7 +33,7 @@ final class MessageService: IMessageService {
     
     private let messagesFirestoreService: IObserveService
     
-    init(firestoreService: IObserveService, channelId: String, userDataStore: IUserDataStore, coreDataStack: ICoreDataStack) {
+    init(channelId: String, firestoreService: IObserveService, userDataStore: IUserDataStore, coreDataStack: ICoreDataStack) {
         self.messagesFirestoreService = firestoreService
         self.channelId = channelId
         self.userDataStore = userDataStore
