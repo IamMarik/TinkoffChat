@@ -38,15 +38,20 @@ class MessageServiceTests: XCTestCase {
         
         messageService.addMessage(content: "test") { (result) in
             if case let .success(id) = result {
-                assert(id == "foo")
+                XCTAssert(id == "foo")
             } else {
-                assertionFailure()
+                XCTFail("Message adding handler return error")
             }
         }
         
-        assert(mockFirestoreService.addCount == 1)
-        assert(mockCoreDataStack.performSaveCount == 0)
-        assert(mockUserDataStore.getIdentifierCount == 1)
+        XCTAssert(mockFirestoreService.addCount == 1)
+        XCTAssert(mockCoreDataStack.performSaveCount == 0)
+        XCTAssert(mockUserDataStore.getIdentifierCount == 1)
+        let addedModel = mockFirestoreService.addModel
+        XCTAssertNotNil(addedModel)
+        let messageModel = addedModel as? Message
+        XCTAssertNotNil(messageModel)
+        XCTAssert(messageModel?.content == "test")
     }
     
     func testAddMessageError() throws {
@@ -54,24 +59,15 @@ class MessageServiceTests: XCTestCase {
         mockFirestoreService.addError = mockError
         messageService.addMessage(content: "test") { (result) in
             if case let .failure(error) = result {
-                assert((error as NSError) === mockError)
+                XCTAssert((error as NSError) === mockError)
             } else {
-                assertionFailure()
+                XCTFail("Result should be failure")
             }
         }
         
-        assert(mockFirestoreService.addCount == 1)
-        assert(mockCoreDataStack.performSaveCount == 0)
-        assert(mockUserDataStore.getIdentifierCount == 1)
+        XCTAssert(mockFirestoreService.addCount == 1)
+        XCTAssert(mockCoreDataStack.performSaveCount == 0)
+        XCTAssert(mockUserDataStore.getIdentifierCount == 1)
     }
-    
-    func testSubscribe() throws {
-        let testChannelId = "123456"
-        let service = MessageService(channelId: testChannelId,
-                                     firestoreService: mockFirestoreService,
-                                     userDataStore: mockUserDataStore,
-                                     coreDataStack: mockCoreDataStack)
         
-    }
-    
 }

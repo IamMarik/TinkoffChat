@@ -9,7 +9,7 @@
 import Foundation
 @testable import TinkoffChat
 
-class MockFirestoreService<Model: FirestoreModel>: IObserveService {
+class MockFirestoreService<Model: FirestoreModel>: IRemoteStorage {
     
     var getListCount = 0
     var subscribeOnListUpdateCount = 0
@@ -23,6 +23,7 @@ class MockFirestoreService<Model: FirestoreModel>: IObserveService {
     var subscribeCounts = 0
     var addReturnId: String?
     var addError: Error?
+    var addModel: Any?
     var deleteHandlerError: Error?
     
     func getList<Model>(handler: @escaping (Result<[Model], Error>) -> Void) where Model: FirestoreModel {
@@ -49,6 +50,7 @@ class MockFirestoreService<Model: FirestoreModel>: IObserveService {
     
     func add<Model>(model: Model, handler: @escaping (Result<String, Error>) -> Void) where Model: FirestoreModel {
         addCount += 1
+        addModel = model
         if let error = addError {
             handler(.failure(error))
         } else if let returnId = addReturnId {

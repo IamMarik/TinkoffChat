@@ -17,7 +17,7 @@ protocol ICoreAssembly {
     func observeService<Model: FirestoreModel>(parentCollection: String,
                                                parentIdentifier: String,
                                                collectionName: String,
-                                               modelType: Model.Type) -> IObserveService
+                                               modelType: Model.Type) -> IRemoteStorage
 }
 
 class CoreAssembly: ICoreAssembly {
@@ -46,7 +46,7 @@ class CoreAssembly: ICoreAssembly {
     func observeService<Model: FirestoreModel>(parentCollection: String,
                                                parentIdentifier: String,
                                                collectionName: String,
-                                               modelType: Model.Type) -> IObserveService {
+                                               modelType: Model.Type) -> IRemoteStorage {
         
         let firestoreObserve = FireStoreObserveService<Model>(parentCollection: parentCollection,
                                                               parentIdentifier: parentIdentifier,

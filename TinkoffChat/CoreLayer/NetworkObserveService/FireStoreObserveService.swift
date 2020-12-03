@@ -9,7 +9,7 @@
 import Foundation
 import Firebase
 
-class FireStoreObserveService<Model: FirestoreModel>: IObserveService {
+class FireStoreObserveService<Model: FirestoreModel>: IRemoteStorage {
 
     private let collectionPath: String
     

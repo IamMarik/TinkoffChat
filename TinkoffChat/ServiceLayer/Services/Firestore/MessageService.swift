@@ -31,9 +31,9 @@ final class MessageService: IMessageService {
     
     var logger: ILogger?
     
-    private let messagesFirestoreService: IObserveService
+    private let messagesFirestoreService: IRemoteStorage
     
-    init(channelId: String, firestoreService: IObserveService, userDataStore: IUserDataStore, coreDataStack: ICoreDataStack) {
+    init(channelId: String, firestoreService: IRemoteStorage, userDataStore: IUserDataStore, coreDataStack: ICoreDataStack) {
         self.messagesFirestoreService = firestoreService
         self.channelId = channelId
         self.userDataStore = userDataStore

@@ -13,6 +13,8 @@ class MockProfileDataManager: IProfileDataManager {
     
     var writeToDiskCount = 0
     var readProfileFromDiskCount = 0
+    var passingNewProfile: ProfileViewModel?
+    var passingOldProfile: ProfileViewModel?
     
     private let mockProfile: ProfileViewModel
     
@@ -22,6 +24,8 @@ class MockProfileDataManager: IProfileDataManager {
     
     func writeToDisk(newProfile: ProfileViewModel, oldProfile: ProfileViewModel?, completion: @escaping ((Bool) -> Void)) {
         writeToDiskCount += 1
+        passingNewProfile = newProfile
+        passingOldProfile = oldProfile
         completion(true)
     }
     

@@ -9,7 +9,7 @@
 import Foundation
 import Firebase
 
-protocol FirestoreModel {
+protocol FirestoreModel: Any {
     
     var identifier: String { get }
     var parentIdentifier: String { get }

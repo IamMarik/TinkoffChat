@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol IObserveService: AnyObject {
+protocol IRemoteStorage {
     
     func getList<Model: FirestoreModel>(handler: @escaping (Result<[Model], Error>) -> Void)
         

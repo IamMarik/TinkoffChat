@@ -25,11 +25,11 @@ final class ChannelsService: IChannelsService {
     
     var logger: ILogger?
  
-    private let channelsFirestoreService: IObserveService
+    private let channelsFirestoreService: IRemoteStorage
     
     private var messageRemovalServices: [Any] = []
     
-    init(firestoreService: IObserveService, serviceAssembly: IServicesAssembly, coreDataStack: ICoreDataStack) {
+    init(firestoreService: IRemoteStorage, serviceAssembly: IServicesAssembly, coreDataStack: ICoreDataStack) {
         self.channelsFirestoreService = firestoreService
         self.serviceAssembly = serviceAssembly
         self.coreDataStack = coreDataStack

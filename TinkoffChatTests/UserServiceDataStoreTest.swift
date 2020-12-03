@@ -11,28 +11,23 @@ import XCTest
 
 class UserServiceDataStoreTest: XCTestCase {
        
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-    }
-
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
-
     func testCallMethods() throws {
         let mockProfile = ProfileViewModel(fullName: "foo", description: "baz", avatar: nil)
         let mockProfileDataManager = MockProfileDataManager(mockProfile: mockProfile)
         let userDataStore = UserDataStore(profileDataManager: mockProfileDataManager)
-        
+        let newProfile = ProfileViewModel(fullName: "newfoo", description: "newbaz", avatar: nil)
         userDataStore.loadProfile { (profile) in
-            assert(mockProfile == profile, "Profiles should be the same")
+            XCTAssert(mockProfile == profile, "Profiles should be the same")
         }
         
-        assert(mockProfileDataManager.readProfileFromDiskCount == 1, "ReadProfileFromDisk should be called exact 1 time")
+        XCTAssert(mockProfileDataManager.readProfileFromDiskCount == 1, "ReadProfileFromDisk should be called exact 1 time")
         
-        userDataStore.saveProfile(profile: mockProfile) { _ in }
+        userDataStore.saveProfile(profile: newProfile) { _ in }
+        
+        XCTAssert(mockProfileDataManager.passingOldProfile == mockProfile)
+        XCTAssert(mockProfileDataManager.passingNewProfile == newProfile)
       
-        assert(mockProfileDataManager.writeToDiskCount == 1, "writeToDisk should be called exact 1 time")
+        XCTAssert(mockProfileDataManager.writeToDiskCount == 1, "writeToDisk should be called exact 1 time")
     }
 
 }

@@ -11,32 +11,25 @@ import XCTest
 class TinkoffChatUITests: XCTestCase {
 
     override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-
-        // In UI tests it is usually best to stop immediately when a failure occurs.
         continueAfterFailure = false
-
     }
 
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
-
-    func testExample() throws {
-        // UI tests must launch the application that they test.
+    func testProfile() throws {
+     
         let app = XCUIApplication()
         app.launch()
-
-        // Use recording to get started writing UI tests.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+        sleep(3)
+        let profileButton = app.buttons["profileBarButton"].firstMatch
+        XCTAssert(profileButton.waitForExistence(timeout: 1))
+        profileButton.tap()
+        sleep(2)
+        let editButton = app.buttons["profileEditButton"].firstMatch
+        XCTAssert(profileButton.waitForExistence(timeout: 1))
+        editButton.tap()
+        let nameTextField = app.textFields["profileNameTextField"].firstMatch
+        XCTAssert(nameTextField.waitForExistence(timeout: 1))
+        let descriptionTextView = app.textViews["profileDescriptionTextView"].firstMatch
+        XCTAssert(descriptionTextView.waitForExistence(timeout: 1))
     }
 
-    func testLaunchPerformance() throws {
-        if #available(macOS 10.15, iOS 13.0, tvOS 13.0, *) {
-            // This measures how long it takes to launch your application.
-            measure(metrics: [XCTApplicationLaunchMetric()]) {
-                XCUIApplication().launch()
-            }
-        }
-    }
 }

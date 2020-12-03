@@ -32,6 +32,7 @@ class ConversationsListViewController: UIViewController {
         button.imageView?.layer.cornerRadius = 18
         button.imageView?.clipsToBounds = true
         button.addTarget(self, action: #selector(profileItemDidTap), for: .touchUpInside)
+        button.accessibilityIdentifier = AccessibilityIdentifiers.profileBarButton
         return button
     }()
     

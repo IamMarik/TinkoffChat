@@ -25,6 +25,8 @@
 		EC41AF7B255A48E200B783F4 /* PresentationAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC41AF7A255A48E200B783F4 /* PresentationAssembly.swift */; };
 		EC41AF7F255A4BDA00B783F4 /* ServicesAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC41AF7E255A4BDA00B783F4 /* ServicesAssembly.swift */; };
 		EC41AF87255A515100B783F4 /* CoreAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC41AF86255A515100B783F4 /* CoreAssembly.swift */; };
+		EC4D3FE025789F33006A7F69 /* AccessibilityIdentifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4D3FDF25789F33006A7F69 /* AccessibilityIdentifiers.swift */; };
+		EC4D3FED2578B0C6006A7F69 /* IRemoteStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC7E4B922573ED6F001E7090 /* IRemoteStorage.swift */; };
 		EC53DCAA252C9BF7000227E3 /* ThemesPickerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC53DCA9252C9BF7000227E3 /* ThemesPickerDelegate.swift */; };
 		EC53DCAF252C9D09000227E3 /* ThemeOptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECD9CB7B25274043003FB027 /* ThemeOptionView.swift */; };
 		EC5553EE25661F5D009F9DD4 /* LoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC5553EC25661F5D009F9DD4 /* LoadingViewController.swift */; };
@@ -40,14 +42,12 @@
 		EC73E3052514AF57006D5ADF /* Profile.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EC73E3042514AF57006D5ADF /* Profile.storyboard */; };
 		EC73E3082514AF6C006D5ADF /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC73E3072514AF6C006D5ADF /* ProfileViewController.swift */; };
 		EC793CA32531605E005F6E08 /* FileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC793CA22531605E005F6E08 /* FileManager.swift */; };
-		EC7E4B252573D5CF001E7090 /* TinkoffChatTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC7E4B242573D5CF001E7090 /* TinkoffChatTests.swift */; };
 		EC7E4B352573D5E2001E7090 /* TinkoffChatUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC7E4B342573D5E2001E7090 /* TinkoffChatUITests.swift */; };
 		EC7E4B452573D6F4001E7090 /* MessageServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC7E4B442573D6F4001E7090 /* MessageServiceTests.swift */; };
 		EC7E4B6F2573D8B5001E7090 /* MockCoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC7E4B6E2573D8B5001E7090 /* MockCoreDataStack.swift */; };
 		EC7E4B802573DA44001E7090 /* MockUserDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC7E4B7F2573DA44001E7090 /* MockUserDataStore.swift */; };
 		EC7E4B852573E49E001E7090 /* UserServiceDataStoreTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC7E4B842573E49E001E7090 /* UserServiceDataStoreTest.swift */; };
 		EC7E4B8A2573E513001E7090 /* MockProfileDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC7E4B892573E513001E7090 /* MockProfileDataManager.swift */; };
-		EC7E4B932573ED6F001E7090 /* IObserveService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC7E4B922573ED6F001E7090 /* IObserveService.swift */; };
 		EC7E4BA12573EE67001E7090 /* FireStoreObserveService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC7E4BA02573EE67001E7090 /* FireStoreObserveService.swift */; };
 		EC7E4BA62573F077001E7090 /* FirestoreModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC7E4BA52573F077001E7090 /* FirestoreModel.swift */; };
 		EC7E4BAC2573FBB6001E7090 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC7E4BAB2573FBB6001E7090 /* Message.swift */; };
@@ -145,6 +145,7 @@
 		EC41AF7A255A48E200B783F4 /* PresentationAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentationAssembly.swift; sourceTree = "<group>"; };
 		EC41AF7E255A4BDA00B783F4 /* ServicesAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServicesAssembly.swift; sourceTree = "<group>"; };
 		EC41AF86255A515100B783F4 /* CoreAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreAssembly.swift; sourceTree = "<group>"; };
+		EC4D3FDF25789F33006A7F69 /* AccessibilityIdentifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessibilityIdentifiers.swift; sourceTree = "<group>"; };
 		EC53DCA9252C9BF7000227E3 /* ThemesPickerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemesPickerDelegate.swift; sourceTree = "<group>"; };
 		EC5553EC25661F5D009F9DD4 /* LoadingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingViewController.swift; sourceTree = "<group>"; };
 		EC5553ED25661F5D009F9DD4 /* LoadingViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoadingViewController.xib; sourceTree = "<group>"; };
@@ -160,7 +161,6 @@
 		EC73E3072514AF6C006D5ADF /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		EC793CA22531605E005F6E08 /* FileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManager.swift; sourceTree = "<group>"; };
 		EC7E4B222573D5CF001E7090 /* TinkoffChatTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TinkoffChatTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		EC7E4B242573D5CF001E7090 /* TinkoffChatTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TinkoffChatTests.swift; sourceTree = "<group>"; };
 		EC7E4B262573D5CF001E7090 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EC7E4B322573D5E2001E7090 /* TinkoffChatUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TinkoffChatUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EC7E4B342573D5E2001E7090 /* TinkoffChatUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TinkoffChatUITests.swift; sourceTree = "<group>"; };
@@ -170,7 +170,7 @@
 		EC7E4B7F2573DA44001E7090 /* MockUserDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockUserDataStore.swift; sourceTree = "<group>"; };
 		EC7E4B842573E49E001E7090 /* UserServiceDataStoreTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserServiceDataStoreTest.swift; sourceTree = "<group>"; };
 		EC7E4B892573E513001E7090 /* MockProfileDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockProfileDataManager.swift; sourceTree = "<group>"; };
-		EC7E4B922573ED6F001E7090 /* IObserveService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IObserveService.swift; sourceTree = "<group>"; };
+		EC7E4B922573ED6F001E7090 /* IRemoteStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IRemoteStorage.swift; sourceTree = "<group>"; };
 		EC7E4BA02573EE67001E7090 /* FireStoreObserveService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireStoreObserveService.swift; sourceTree = "<group>"; };
 		EC7E4BA52573F077001E7090 /* FirestoreModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreModel.swift; sourceTree = "<group>"; };
 		EC7E4BAB2573FBB6001E7090 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
@@ -486,10 +486,9 @@
 			isa = PBXGroup;
 			children = (
 				EC7E4B732573D999001E7090 /* Mocks */,
-				EC7E4B242573D5CF001E7090 /* TinkoffChatTests.swift */,
-				EC7E4B262573D5CF001E7090 /* Info.plist */,
 				EC7E4B442573D6F4001E7090 /* MessageServiceTests.swift */,
 				EC7E4B842573E49E001E7090 /* UserServiceDataStoreTest.swift */,
+				EC7E4B262573D5CF001E7090 /* Info.plist */,
 			);
 			path = TinkoffChatTests;
 			sourceTree = "<group>";
@@ -519,7 +518,7 @@
 			isa = PBXGroup;
 			children = (
 				EC7E4BAA2573FBA4001E7090 /* Entity */,
-				EC7E4B922573ED6F001E7090 /* IObserveService.swift */,
+				EC7E4B922573ED6F001E7090 /* IRemoteStorage.swift */,
 				EC7E4BA02573EE67001E7090 /* FireStoreObserveService.swift */,
 				EC7E4BA52573F077001E7090 /* FirestoreModel.swift */,
 			);
@@ -555,6 +554,7 @@
 				ECC26944250C768D001C08A0 /* Extensions */,
 				ECC26939250C6FEE001C08A0 /* Assets.xcassets */,
 				ECC2693B250C6FEE001C08A0 /* LaunchScreen.storyboard */,
+				EC4D3FDF25789F33006A7F69 /* AccessibilityIdentifiers.swift */,
 			);
 			path = "Supporting Files";
 			sourceTree = "<group>";
@@ -1033,7 +1033,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EC7E4B252573D5CF001E7090 /* TinkoffChatTests.swift in Sources */,
 				EC7E4B8A2573E513001E7090 /* MockProfileDataManager.swift in Sources */,
 				ECE6B85C25760142006184BA /* MockFirestoreService.swift in Sources */,
 				EC7E4B6F2573D8B5001E7090 /* MockCoreDataStack.swift in Sources */,
@@ -1059,6 +1058,7 @@
 				EC845899253C62C100EEBCA3 /* UserDataStore.swift in Sources */,
 				EC885EF0255B9ADA0078F656 /* RootAssembly.swift in Sources */,
 				EC14A87B25307BD1007AEB5F /* GCDProfileDataManager.swift in Sources */,
+				EC4D3FED2578B0C6006A7F69 /* IRemoteStorage.swift in Sources */,
 				EC885F45255C4E9E0078F656 /* ChannelDB+CoreDataClass.swift in Sources */,
 				ECCC90C625249979001C68F9 /* Date + RandomTime.swift in Sources */,
 				ECED1CA42518CFB20069EB71 /* ProfilePlaceholderImageRenderer.swift in Sources */,
@@ -1087,7 +1087,6 @@
 				ECAB8611251F80D600BA7845 /* DateFormatter + dateOrNow.swift in Sources */,
 				ECED1CAD2518E5270069EB71 /* UIColor + hex.swift in Sources */,
 				EC885F4C255C4EAC0078F656 /* MessageDB+CoreDataClass.swift in Sources */,
-				EC7E4B932573ED6F001E7090 /* IObserveService.swift in Sources */,
 				EC650D6C256E18A200098E84 /* UIWindow+ emitEmblems.swift in Sources */,
 				ECF5BBCD252B5B8C00B829B0 /* ClassicTheme.swift in Sources */,
 				EC9C347D253306D100932552 /* OperationProfileDataManager.swift in Sources */,
@@ -1123,6 +1122,7 @@
 				ECC26931250C6FEC001C08A0 /* AppDelegate.swift in Sources */,
 				ECD9CB7F2527453A003FB027 /* ThemesViewController.swift in Sources */,
 				ECDE779A25638402000300D2 /* NetworkErrors.swift in Sources */,
+				EC4D3FE025789F33006A7F69 /* AccessibilityIdentifiers.swift in Sources */,
 				ECC12B6725622B6B00328158 /* AvatarItemCollectionViewCell.swift in Sources */,
 				EC17F3862523601F00C6C2A7 /* ProfileNavigationBar.swift in Sources */,
 			);
