@@ -1,29 +1,22 @@
-# This file contains the fastlane.tools configuration
-# You can find the documentation at https://docs.fastlane.tools
-#
-# For a list of all available actions, check out
-#
-#     https://docs.fastlane.tools/actions
-#
-# For a list of all available plugins, check out
-#
-#     https://docs.fastlane.tools/plugins/available-plugins
-#
+#setup_travis
 
-# Uncomment the line if you want fastlane to automatically update itself
-# update_fastlane
-
-
-desc "Hello"
-lane :hello do
-  puts 'Hello!'
-end
-
-lane :build_for_testing do 
-  #cocoapods
+lane :build_for_testing do
+  cocoapods
   scan(
-    clean: false,
+    clean: true,
     devices: ["iPhone 11"]
   )
 end
 
+lane :run_tests do 
+  scan(
+    clean: false,
+    devices: ["iPhone 11"]
+  )
+end  
+
+lane :build_and_test do 
+  build_for_testing
+  run_tests
+  add_badge
+end
