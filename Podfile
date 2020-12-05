@@ -15,6 +15,12 @@ target 'TinkoffChatTests' do
 
 end
 
+target 'TinkoffChatUITests' do
+  
+  pod 'Firebase/Firestore'
+
+end
+
 
 
 post_install do |installer|

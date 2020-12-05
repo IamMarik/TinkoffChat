@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6996478E5C12D91E53FAFDA5 /* libPods-TinkoffChatUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 032D9DE858DD3A67C2C65157 /* libPods-TinkoffChatUITests.a */; };
 		DBE1A06AFE135851619B4988 /* libPods-TinkoffChatTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 971174EE4F35C175312103DC /* libPods-TinkoffChatTests.a */; };
 		E79031BED610C9E527CF963B /* Pods_TinkoffChat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 11B9C0B97B42898FF35FA32A /* Pods_TinkoffChat.framework */; };
 		EC03E9BC25491FE100D73B2B /* MessageDB + init.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC03E9BB25491FE100D73B2B /* MessageDB + init.swift */; };
@@ -42,7 +43,7 @@
 		EC73E3052514AF57006D5ADF /* Profile.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EC73E3042514AF57006D5ADF /* Profile.storyboard */; };
 		EC73E3082514AF6C006D5ADF /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC73E3072514AF6C006D5ADF /* ProfileViewController.swift */; };
 		EC793CA32531605E005F6E08 /* FileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC793CA22531605E005F6E08 /* FileManager.swift */; };
-		EC7E4B352573D5E2001E7090 /* TinkoffChatUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC7E4B342573D5E2001E7090 /* TinkoffChatUITests.swift */; };
+		EC7E4B352573D5E2001E7090 /* ProfileUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC7E4B342573D5E2001E7090 /* ProfileUITests.swift */; };
 		EC7E4B452573D6F4001E7090 /* MessageServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC7E4B442573D6F4001E7090 /* MessageServiceTests.swift */; };
 		EC7E4B6F2573D8B5001E7090 /* MockCoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC7E4B6E2573D8B5001E7090 /* MockCoreDataStack.swift */; };
 		EC7E4B802573DA44001E7090 /* MockUserDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC7E4B7F2573DA44001E7090 /* MockUserDataStore.swift */; };
@@ -123,12 +124,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		032D9DE858DD3A67C2C65157 /* libPods-TinkoffChatUITests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TinkoffChatUITests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0CAC4ED939047A1509758ABD /* Pods-TinkoffChat.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TinkoffChat.release.xcconfig"; path = "Target Support Files/Pods-TinkoffChat/Pods-TinkoffChat.release.xcconfig"; sourceTree = "<group>"; };
 		0CE4FE4EC6794B49C7E49012 /* Pods-TinkoffChat.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TinkoffChat.debug.xcconfig"; path = "Target Support Files/Pods-TinkoffChat/Pods-TinkoffChat.debug.xcconfig"; sourceTree = "<group>"; };
 		11B9C0B97B42898FF35FA32A /* Pods_TinkoffChat.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TinkoffChat.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		634C2333047183DE3148F06D /* Pods-TinkoffChatTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TinkoffChatTests.debug.xcconfig"; path = "Target Support Files/Pods-TinkoffChatTests/Pods-TinkoffChatTests.debug.xcconfig"; sourceTree = "<group>"; };
 		971174EE4F35C175312103DC /* libPods-TinkoffChatTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TinkoffChatTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		9A2664823F53A65A0515A1D2 /* Pods-TinkoffChatUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TinkoffChatUITests.debug.xcconfig"; path = "Target Support Files/Pods-TinkoffChatUITests/Pods-TinkoffChatUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		9DD839927BC6F7E02ABC9D25 /* Pods-TinkoffChatTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TinkoffChatTests.release.xcconfig"; path = "Target Support Files/Pods-TinkoffChatTests/Pods-TinkoffChatTests.release.xcconfig"; sourceTree = "<group>"; };
+		CA55C8915228D1C74717EA43 /* Pods-TinkoffChatUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TinkoffChatUITests.release.xcconfig"; path = "Target Support Files/Pods-TinkoffChatUITests/Pods-TinkoffChatUITests.release.xcconfig"; sourceTree = "<group>"; };
 		EC03E9BB25491FE100D73B2B /* MessageDB + init.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessageDB + init.swift"; sourceTree = "<group>"; };
 		EC14A87A25307BD1007AEB5F /* GCDProfileDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GCDProfileDataManager.swift; sourceTree = "<group>"; };
 		EC14A87F25309EFB007AEB5F /* DataManagerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManagerProtocol.swift; sourceTree = "<group>"; };
@@ -163,7 +167,7 @@
 		EC7E4B222573D5CF001E7090 /* TinkoffChatTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TinkoffChatTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EC7E4B262573D5CF001E7090 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EC7E4B322573D5E2001E7090 /* TinkoffChatUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TinkoffChatUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		EC7E4B342573D5E2001E7090 /* TinkoffChatUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TinkoffChatUITests.swift; sourceTree = "<group>"; };
+		EC7E4B342573D5E2001E7090 /* ProfileUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileUITests.swift; sourceTree = "<group>"; };
 		EC7E4B362573D5E2001E7090 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EC7E4B442573D6F4001E7090 /* MessageServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageServiceTests.swift; sourceTree = "<group>"; };
 		EC7E4B6E2573D8B5001E7090 /* MockCoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockCoreDataStack.swift; sourceTree = "<group>"; };
@@ -244,6 +248,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6996478E5C12D91E53FAFDA5 /* libPods-TinkoffChatUITests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -265,6 +270,8 @@
 				0CAC4ED939047A1509758ABD /* Pods-TinkoffChat.release.xcconfig */,
 				634C2333047183DE3148F06D /* Pods-TinkoffChatTests.debug.xcconfig */,
 				9DD839927BC6F7E02ABC9D25 /* Pods-TinkoffChatTests.release.xcconfig */,
+				9A2664823F53A65A0515A1D2 /* Pods-TinkoffChatUITests.debug.xcconfig */,
+				CA55C8915228D1C74717EA43 /* Pods-TinkoffChatUITests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -274,6 +281,7 @@
 			children = (
 				11B9C0B97B42898FF35FA32A /* Pods_TinkoffChat.framework */,
 				971174EE4F35C175312103DC /* libPods-TinkoffChatTests.a */,
+				032D9DE858DD3A67C2C65157 /* libPods-TinkoffChatUITests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -496,7 +504,7 @@
 		EC7E4B332573D5E2001E7090 /* TinkoffChatUITests */ = {
 			isa = PBXGroup;
 			children = (
-				EC7E4B342573D5E2001E7090 /* TinkoffChatUITests.swift */,
+				EC7E4B342573D5E2001E7090 /* ProfileUITests.swift */,
 				EC7E4B362573D5E2001E7090 /* Info.plist */,
 			);
 			path = TinkoffChatUITests;
@@ -813,9 +821,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = EC7E4B392573D5E2001E7090 /* Build configuration list for PBXNativeTarget "TinkoffChatUITests" */;
 			buildPhases = (
+				AC4DBCD093BE16B1A4DF297C /* [CP] Check Pods Manifest.lock */,
 				EC7E4B2E2573D5E2001E7090 /* Sources */,
 				EC7E4B2F2573D5E2001E7090 /* Frameworks */,
 				EC7E4B302573D5E2001E7090 /* Resources */,
+				56AA8682154B29824A311CB0 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -953,6 +963,23 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		56AA8682154B29824A311CB0 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-TinkoffChatUITests/Pods-TinkoffChatUITests-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-TinkoffChatUITests/Pods-TinkoffChatUITests-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TinkoffChatUITests/Pods-TinkoffChatUITests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		65AC09DFFB5DDD20C3C00552 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -985,6 +1012,28 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TinkoffChatTests/Pods-TinkoffChatTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		AC4DBCD093BE16B1A4DF297C /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-TinkoffChatUITests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		EBB875CB677018DDCA60EC81 /* [CP] Check Pods Manifest.lock */ = {
@@ -1047,7 +1096,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EC7E4B352573D5E2001E7090 /* TinkoffChatUITests.swift in Sources */,
+				EC7E4B352573D5E2001E7090 /* ProfileUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1201,6 +1250,7 @@
 		};
 		EC7E4B3A2573D5E2001E7090 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9A2664823F53A65A0515A1D2 /* Pods-TinkoffChatUITests.debug.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = VJTA597XSC;
@@ -1221,6 +1271,7 @@
 		};
 		EC7E4B3B2573D5E2001E7090 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = CA55C8915228D1C74717EA43 /* Pods-TinkoffChatUITests.release.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = VJTA597XSC;
