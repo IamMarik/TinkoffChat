@@ -19,27 +19,22 @@ or alternatively using `brew install fastlane`
 ```
 fastlane build_for_testing
 ```
-
+Build app without running tests
 ### run_tests
 ```
 fastlane run_tests
 ```
-
+Run tests without building
 ### build_and_test
 ```
 fastlane build_and_test
 ```
-
-### post_to_discord
+Build app, run tests and report to discord channel
+### discord_report
 ```
-fastlane post_to_discord
+fastlane discord_report
 ```
-
-### test_discord
-```
-fastlane test_discord
-```
-
+Send report message to discord channel
 
 ----
 

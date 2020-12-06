@@ -1,5 +1,12 @@
 setup_travis
+app_name = "Tinkoff Chat"
+repo_url = "https://github.com/IamMarik/TinkoffChat/"
+author_name = "Marat Dzhanybaev"
+icon_url = "https://acdn.tinkoff.ru/static/documents/80f3f5f9-eabc-4b45-9c5f-30c048a8a756.png"
+last_commit_hash = ""
+last_build_and_test_result = "New build successfully uploaded and tested."
 
+desc "Build app without running tests"
 lane :build_for_testing do
   cocoapods
   scan(
@@ -8,6 +15,7 @@ lane :build_for_testing do
   )
 end
 
+desc "Run tests without building"
 lane :run_tests do 
   scan(
     clean: false,
@@ -16,27 +24,31 @@ lane :run_tests do
   )
 end  
 
+desc "Build app, run tests and report to discord channel"
 lane :build_and_test do
-  ENV['last_commit_hash'] = last_git_commit.hash
+  last_commit_hash = last_git_commit[:commit_hash]
   build_for_testing
   run_tests
   discord_report
+rescue => ex
+  last_build_and_test_result = "New build failed uploaded and tested."
+  discord_report
 end
 
+desc "Send report message to discord channel"
 lane :discord_report do
-  webhook_url = ENV['DISCORD_WEBHOOK_URL']
-  last_commit_hash = ENV['last_commit_hash']
+  webhook_url = ENV['DISCORD_WEBHOOK_URL'] 
   client = Discordrb::Webhooks::Client.new(url: webhook_url)
   client.execute do |builder|
     builder.add_embed do |embed|
-      embed.title = "Tinkoff Chat"
+      embed.title = app_name
       embed.colour = 0x3c9b00
-      embed.url = "https://github.com/IamMarik/TinkoffChat/commit/" + hash
-      embed.description = "New build successfully uploaded and tested."
+      embed.url = repo_url + "commit/" + last_commit_hash
+      embed.description = last_build_and_test_result
       embed.author = Discordrb::Webhooks::EmbedAuthor.new(
-        name: "Marat Dzhanybaev", 
-        url: "https://github.com/IamMarik/TinkoffChat", 
-        icon_url: "https://acdn.tinkoff.ru/static/documents/80f3f5f9-eabc-4b45-9c5f-30c048a8a756.png")
+        name: author_name, 
+        url: repo_url, 
+        icon_url: icon_url)
       embed.timestamp = Time.now
     end
   end
