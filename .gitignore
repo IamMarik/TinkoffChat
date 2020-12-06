@@ -32,3 +32,4 @@ Pods/
 ## Fastlane
 fastlane/report.xml
 fastlane/test_output/
+fastlane/.env

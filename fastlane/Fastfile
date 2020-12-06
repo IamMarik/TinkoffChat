@@ -3,7 +3,6 @@ setup_travis
 lane :build_for_testing do
   cocoapods
   scan(
-    clean: true,
     build_for_testing: true,
     devices: ["iPhone 11"]
   )
@@ -17,8 +16,28 @@ lane :run_tests do
   )
 end  
 
-lane :build_and_test do 
+lane :build_and_test do
+  ENV['last_commit_hash'] = last_git_commit.hash
   build_for_testing
   run_tests
-  add_badge
+  discord_report
+end
+
+lane :discord_report do
+  webhook_url = ENV['DISCORD_WEBHOOK_URL']
+  last_commit_hash = ENV['last_commit_hash']
+  client = Discordrb::Webhooks::Client.new(url: webhook_url)
+  client.execute do |builder|
+    builder.add_embed do |embed|
+      embed.title = "Tinkoff Chat"
+      embed.colour = 0x3c9b00
+      embed.url = "https://github.com/IamMarik/TinkoffChat/commit/" + hash
+      embed.description = "New build successfully uploaded and tested."
+      embed.author = Discordrb::Webhooks::EmbedAuthor.new(
+        name: "Marat Dzhanybaev", 
+        url: "https://github.com/IamMarik/TinkoffChat", 
+        icon_url: "https://acdn.tinkoff.ru/static/documents/80f3f5f9-eabc-4b45-9c5f-30c048a8a756.png")
+      embed.timestamp = Time.now
+    end
+  end
 end

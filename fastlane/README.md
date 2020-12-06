@@ -30,6 +30,16 @@ fastlane run_tests
 fastlane build_and_test
 ```
 
+### post_to_discord
+```
+fastlane post_to_discord
+```
+
+### test_discord
+```
+fastlane test_discord
+```
+
 
 ----
 
