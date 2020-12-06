@@ -4,7 +4,7 @@ repo_url = "https://github.com/IamMarik/TinkoffChat/"
 author_name = "Marat Dzhanybaev"
 icon_url = "https://acdn.tinkoff.ru/static/documents/80f3f5f9-eabc-4b45-9c5f-30c048a8a756.png"
 last_commit_hash = ""
-last_build_and_test_result = "New build successfully uploaded and tested."
+last_build_and_test_result = "New commit successfully builded and tested."
 
 desc "Build app without running tests"
 lane :build_for_testing do
@@ -31,14 +31,16 @@ lane :build_and_test do
   run_tests
   discord_report
 rescue => ex
-  last_build_and_test_result = "New build failed uploaded and tested."
+  last_build_and_test_result = "Commit failed build and tests."
   discord_report
 end
 
 desc "Send report message to discord channel"
 lane :discord_report do
-  webhook_url = ENV['DISCORD_WEBHOOK_URL'] 
-  client = Discordrb::Webhooks::Client.new(url: webhook_url)
+  webhook_url = ENV['DISCORD_WEBHOOK_URL']
+  secret_token = ENV['DISCORD_TOKEN']
+  client_url = webhook_url + secret_token
+  client = Discordrb::Webhooks::Client.new(url: client_url)
   client.execute do |builder|
     builder.add_embed do |embed|
       embed.title = app_name
