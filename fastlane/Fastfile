@@ -1,9 +1,10 @@
-#setup_travis
+setup_travis
 
 lane :build_for_testing do
   cocoapods
   scan(
     clean: true,
+    build_for_testing: true,
     devices: ["iPhone 11"]
   )
 end
@@ -11,6 +12,7 @@ end
 lane :run_tests do 
   scan(
     clean: false,
+    skip_build: true,
     devices: ["iPhone 11"]
   )
 end  
