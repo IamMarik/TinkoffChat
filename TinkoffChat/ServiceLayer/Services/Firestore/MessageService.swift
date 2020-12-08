@@ -16,11 +16,13 @@ protocol IMessageService {
     
     func addMessage(content: String, handler: @escaping(Result<String, Error>) -> Void)
     
-    func deleteMessage(withId identifier: String, handler: @escaping (Error?) -> Void )    
+    func deleteMessage(withId identifier: String, handler: @escaping (Error?) -> Void)
+    
+    func deleteAllMessages(handler: @escaping (Error?) -> Void)
 }
 
 final class MessageService: IMessageService {
-            
+  
     private let channelId: String
     
     private let userDataStore: IUserDataStore
@@ -29,55 +31,56 @@ final class MessageService: IMessageService {
     
     var logger: ILogger?
     
-    private let db = Firestore.firestore()
+    private let messagesFirestoreService: IRemoteStorage
     
-    private lazy var messagesReference = {
-        db.collection("channels/\(channelId)/messages")
-    }()
-    
-    private var messagesListener: ListenerRegistration?
-    
-    init(channelId: String, userDataStore: IUserDataStore, coreDataStack: ICoreDataStack) {
+    init(channelId: String, firestoreService: IRemoteStorage, userDataStore: IUserDataStore, coreDataStack: ICoreDataStack) {
+        self.messagesFirestoreService = firestoreService
         self.channelId = channelId
         self.userDataStore = userDataStore
         self.coreDataStack = coreDataStack
     }
-    
-    deinit {
-        messagesListener?.remove()
-    }
-    
+        
     /// Create subscription to message list update
     func subscribeOnMessagesUpdates(handler: @escaping(Result<Bool, Error>) -> Void) {
-        let channelId = self.channelId
-        var isFirstFetch = true
-        messagesListener = messagesReference.addSnapshotListener { (querySnapshot, error) in
-            if let error = error {
-                handler(.failure(error))
-            } else if let snapshot = querySnapshot {
-                if isFirstFetch {
-                    // Удалим все сообщения, на случай если канал удалён, наша бд не должна содержать сообщений
-                    // Также это поможет избежать дублирования строк в таблице
+        
+        messagesFirestoreService.subscribeOnListUpdate { [weak self] (result: Result<[Message], Error>, fetchCount) in
+            guard let self = self else { return }
+                    
+            switch result {
+            case .success(let messages):
+                if fetchCount == 1 {
                     self.deleteAllMessagesFromDB()
-                    isFirstFetch = false
                 }
                 DispatchQueue.global(qos: .default).async {
                     self.coreDataStack.performSave { context in
-                        snapshot.documentChanges.forEach { diff in
-                            switch diff.type {
-                            case .added:
-                                self.putMessageIn(context: context, document: diff.document, channelId: channelId)             
-                            case .modified:
-                                self.putMessageIn(context: context, document: diff.document, channelId: channelId)
-                            case .removed:
-                                self.putMessageIn(context: context, document: diff.document, channelId: channelId)
-                            }
+                        messages.forEach {
+                            _ = MessageDB(message: $0, in: context)
                         }
                         handler(.success(true))
                     }
                 }
-            } else {
-                handler(.failure(FirebaseError.snapshotIsNil))
+            case .failure(let error):
+                handler(.failure(error))
+            }
+        }
+    }
+    
+    func deleteAllMessages(handler: @escaping (Error?) -> Void) {
+        messagesFirestoreService.getList { [weak self] (result: Result<[Message], Error>) in
+            guard let self = self else { return }
+            switch result {
+            case .success(let messages):
+                messages.forEach { message in
+                    self.messagesFirestoreService.delete(modelWithId: message.identifier) { (error) in
+                        if let error = error {
+                            self.logger?.error("Error delete nested document: \(error.localizedDescription)")
+                        }
+                    }
+                    self.deleteAllMessagesFromDB()
+                    handler(nil)
+                }
+            case .failure(let error):
+                handler(error)
             }
         }
     }
@@ -98,27 +101,24 @@ final class MessageService: IMessageService {
     func addMessage(content: String, handler: @escaping(Result<String, Error>) -> Void) {
         guard let profile = userDataStore.profile else { return }
         
-        var ref: DocumentReference?
-        ref = messagesReference.addDocument(
-            data: [
-                "content": content,
-                "senderId": userDataStore.identifier,
-                "senderName": profile.fullName,
-                "created": Timestamp(date: Date())
-            ]) { (error) in
-            if let error = error {
+        let message = Message(channelId: channelId,
+                              content: content,
+                              senderId: userDataStore.identifier,
+                              senderName: profile.fullName)
+        
+        messagesFirestoreService.add(model: message) { (result) in
+            switch result {
+            case .success(let id):
+                handler(.success(id))
+            case .failure(let error):
                 handler(.failure(error))
-            } else if let documentId = ref?.documentID {
-                handler(.success(documentId))
-            } else {
-                handler(.failure(FirebaseError.referenceIsNil))
             }
         }
     }
     
     /// Delete message from channel
     func deleteMessage(withId identifier: String, handler: @escaping (Error?) -> Void ) {
-        messagesReference.document(identifier).delete { error in
+        messagesFirestoreService.delete(modelWithId: identifier) { (error) in
             if let error = error {
                 self.logger?.error("Error removing message, id: \(identifier). \(error.localizedDescription)")
                 handler(error)

@@ -16,6 +16,16 @@ extension MessageDB {
         return senderId == UserDataStore.shared.identifier
     }
     
+    convenience init(message: Message, in context: NSManagedObjectContext) {
+        self.init(context: context)
+        self.identifier = message.identifier
+        self.channelId = message.parentIdentifier
+        self.content = message.content
+        self.senderId = message.senderId
+        self.senderName = message.senderName
+        self.created = message.created
+    }
+    
     convenience init?(identifier: String, firestoreData: [String: Any], channelId: String, in context: NSManagedObjectContext) {
         guard let content = firestoreData["content"] as? String,
               let senderId = firestoreData["senderId"] as? String,

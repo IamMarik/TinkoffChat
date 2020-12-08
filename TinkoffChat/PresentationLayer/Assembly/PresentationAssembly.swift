@@ -15,7 +15,7 @@ protocol IPresenentationAssembly {
     
     func conversationListViewController() -> ConversationsListViewController
     
-    func conversationViewController(channelId: String) -> ConversationViewController
+    func conversationViewController(channelId: String, channelName: String) -> ConversationViewController
     
     func profileViewController(transitioningDelegate: UIViewControllerTransitioningDelegate?) -> ProfileViewController
     
@@ -54,11 +54,12 @@ class PresenentationAssembly: IPresenentationAssembly {
         return conversationListViewController
     }
         
-    func conversationViewController(channelId: String) -> ConversationViewController {
+    func conversationViewController(channelId: String, channelName: String) -> ConversationViewController {
         guard let conversationViewController = UIStoryboard(name: "Conversation", bundle: nil).instantiateInitialViewController() as? ConversationViewController else {
             fatalError("Can't instantiate ConversationViewController")
         }
         conversationViewController.channelId = channelId
+        conversationViewController.title = channelName
         conversationViewController.messageService = serviceAssembly.messageService(channelId: channelId)
         conversationViewController.fetchedResultsController = serviceAssembly.messagesFetchResultsController(channelId: channelId)
         conversationViewController.logger = serviceAssembly.logger(for: conversationViewController)

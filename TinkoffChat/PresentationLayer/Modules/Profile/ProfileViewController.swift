@@ -39,15 +39,27 @@ class ProfileViewController: UIViewController {
 
     @IBOutlet private var profileNameLabel: UILabel!
 
-    @IBOutlet private var profileNameTextField: UITextField!
+    @IBOutlet private var profileNameTextField: UITextField! {
+        didSet {
+            profileNameTextField.accessibilityIdentifier = AccessibilityIdentifiers.profileNameTextField
+        }
+    }
     
-    @IBOutlet private var profileDescriptionTextView: UITextView!
+    @IBOutlet private var profileDescriptionTextView: UITextView! {
+        didSet {
+            profileDescriptionTextView.accessibilityIdentifier = AccessibilityIdentifiers.profileDescriptionTextView
+        }
+    }
     
     @IBOutlet private var editAvatarButton: UIButton!
      
     @IBOutlet private var saveButtonsStackView: UIStackView!
     
-    @IBOutlet private var saveGCDButton: UIButton!
+    @IBOutlet private var saveGCDButton: UIButton! {
+        didSet {
+            saveGCDButton.accessibilityIdentifier = AccessibilityIdentifiers.profileEditButton
+        }
+    }
  
     /// Стейты вьюхи. Сделал String для дебага
     enum ProfileViewState: String {

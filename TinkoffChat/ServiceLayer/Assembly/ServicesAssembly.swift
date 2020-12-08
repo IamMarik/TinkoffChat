@@ -22,7 +22,7 @@ protocol IServicesAssembly {
     func messagesFetchResultsController(channelId: String) -> NSFetchedResultsController<MessageDB>
     
     func avatarService() -> IAvatarService
-   
+       
     func logger(for object: Any?) -> ILogger
 }
 
@@ -40,14 +40,26 @@ class ServicesAssembly: IServicesAssembly {
     }()
     
     func channelsService() -> IChannelsService {
-        let channelsService = ChannelsService(serviceAssembly: self,
+        let firestoreSevice = coreAssembly.observeService(parentCollection: "",
+                                                          parentIdentifier: "",
+                                                          collectionName: "channels",
+                                                          modelType: Channel.self)
+        
+        let channelsService = ChannelsService(firestoreService: firestoreSevice,
+                                              serviceAssembly: self,
                                               coreDataStack: coreAssembly.coreDataStack)
         channelsService.logger = logger(for: channelsService)
         return channelsService
     }
     
     func messageService(channelId: String) -> IMessageService {
+        let firestoreSevice = coreAssembly.observeService(parentCollection: "channels",
+                                                          parentIdentifier: channelId,
+                                                          collectionName: "messages",
+                                                          modelType: Message.self)
+        
         let messageService = MessageService(channelId: channelId,
+                                            firestoreService: firestoreSevice,
                                             userDataStore: userDataStore,
                                             coreDataStack: coreAssembly.coreDataStack)
         messageService.logger = logger(for: messageService)
