@@ -6,16 +6,16 @@ target 'TinkoffChat' do
   use_frameworks!
   pod 'Firebase/Firestore'
   pod 'SwiftLint'
-
-end
-
-target 'TinkoffChatTests' do
   
-  pod 'Firebase/Firestore'
+  target 'TinkoffChatTests' do
+    inherit! :complete
+  end
 
+  target 'TinkoffChatUITests' do
+    inherit! :complete
+  end
+  
 end
-
-
 
 post_install do |installer|
   installer.pods_project.targets.each do |target|

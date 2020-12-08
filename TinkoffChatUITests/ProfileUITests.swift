@@ -8,7 +8,7 @@
 
 import XCTest
 
-class TinkoffChatUITests: XCTestCase {
+class ProfileUITests: XCTestCase {
 
     override func setUpWithError() throws {
         continueAfterFailure = false
