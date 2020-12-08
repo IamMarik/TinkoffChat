@@ -25,14 +25,14 @@
 		EC41AF7B255A48E200B783F4 /* PresentationAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC41AF7A255A48E200B783F4 /* PresentationAssembly.swift */; };
 		EC41AF7F255A4BDA00B783F4 /* ServicesAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC41AF7E255A4BDA00B783F4 /* ServicesAssembly.swift */; };
 		EC41AF87255A515100B783F4 /* CoreAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC41AF86255A515100B783F4 /* CoreAssembly.swift */; };
+		EC4B3CA0257E261E0082F991 /* UIView + shakeAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC650D6E256EB45600098E84 /* UIView + shakeAnimation.swift */; };
+		EC4B3CA7257E26330082F991 /* UIWindow+ emitEmblems.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC650D6B256E18A200098E84 /* UIWindow+ emitEmblems.swift */; };
 		EC4D3FE025789F33006A7F69 /* AccessibilityIdentifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4D3FDF25789F33006A7F69 /* AccessibilityIdentifiers.swift */; };
 		EC4D3FED2578B0C6006A7F69 /* IRemoteStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC7E4B922573ED6F001E7090 /* IRemoteStorage.swift */; };
 		EC53DCAA252C9BF7000227E3 /* ThemesPickerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC53DCA9252C9BF7000227E3 /* ThemesPickerDelegate.swift */; };
 		EC53DCAF252C9D09000227E3 /* ThemeOptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECD9CB7B25274043003FB027 /* ThemeOptionView.swift */; };
 		EC5553EE25661F5D009F9DD4 /* LoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC5553EC25661F5D009F9DD4 /* LoadingViewController.swift */; };
 		EC5553EF25661F5D009F9DD4 /* LoadingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EC5553ED25661F5D009F9DD4 /* LoadingViewController.xib */; };
-		EC650D6C256E18A200098E84 /* UIWindow+ emitEmblems.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC650D6B256E18A200098E84 /* UIWindow+ emitEmblems.swift */; };
-		EC650D6F256EB45600098E84 /* UIView + shakeAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC650D6E256EB45600098E84 /* UIView + shakeAnimation.swift */; };
 		EC6794632520295000DB8002 /* Conversation.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EC6794622520295000DB8002 /* Conversation.storyboard */; };
 		EC6794662520298000DB8002 /* ConversationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC6794652520298000DB8002 /* ConversationViewController.swift */; };
 		EC67946B252029B600DB8002 /* MessageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC679469252029B600DB8002 /* MessageTableViewCell.swift */; };
@@ -1058,6 +1058,7 @@
 				EC845899253C62C100EEBCA3 /* UserDataStore.swift in Sources */,
 				EC885EF0255B9ADA0078F656 /* RootAssembly.swift in Sources */,
 				EC14A87B25307BD1007AEB5F /* GCDProfileDataManager.swift in Sources */,
+				EC4B3CA7257E26330082F991 /* UIWindow+ emitEmblems.swift in Sources */,
 				EC4D3FED2578B0C6006A7F69 /* IRemoteStorage.swift in Sources */,
 				EC885F45255C4E9E0078F656 /* ChannelDB+CoreDataClass.swift in Sources */,
 				ECCC90C625249979001C68F9 /* Date + RandomTime.swift in Sources */,
@@ -1087,7 +1088,6 @@
 				ECAB8611251F80D600BA7845 /* DateFormatter + dateOrNow.swift in Sources */,
 				ECED1CAD2518E5270069EB71 /* UIColor + hex.swift in Sources */,
 				EC885F4C255C4EAC0078F656 /* MessageDB+CoreDataClass.swift in Sources */,
-				EC650D6C256E18A200098E84 /* UIWindow+ emitEmblems.swift in Sources */,
 				ECF5BBCD252B5B8C00B829B0 /* ClassicTheme.swift in Sources */,
 				EC9C347D253306D100932552 /* OperationProfileDataManager.swift in Sources */,
 				EC3B4958251F662E002A93A8 /* ConfigurableView.swift in Sources */,
@@ -1105,7 +1105,6 @@
 				ECE295C22528AE2100F30BAA /* RootNavigationController.swift in Sources */,
 				ECF5BBC8252B485700B829B0 /* Themes.swift in Sources */,
 				ECDE779425637C2A000300D2 /* ResponseParser.swift in Sources */,
-				EC650D6F256EB45600098E84 /* UIView + shakeAnimation.swift in Sources */,
 				EC7E4BA62573F077001E7090 /* FirestoreModel.swift in Sources */,
 				ECDE77AA25638A32000300D2 /* PixabayImageInfo.swift in Sources */,
 				EC53DCAA252C9BF7000227E3 /* ThemesPickerDelegate.swift in Sources */,
@@ -1116,6 +1115,7 @@
 				ECB798082564D57C008DFB61 /* ImageRequest.swift in Sources */,
 				EC84589D253C717A00EEBCA3 /* MessageService.swift in Sources */,
 				ECC26949250C77D2001C08A0 /* Logger.swift in Sources */,
+				EC4B3CA0257E261E0082F991 /* UIView + shakeAnimation.swift in Sources */,
 				ECDE77A62563880F000300D2 /* ImageListRequest.swift in Sources */,
 				ECDF966B2547DE0C00928A3F /* ChannelDB + init.swift in Sources */,
 				EC14A88025309EFB007AEB5F /* DataManagerProtocol.swift in Sources */,
