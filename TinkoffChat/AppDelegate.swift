@@ -29,8 +29,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let rootNavigationController = rootAssembly.presentationAssembly
             .rootNavigationViewController(conversationsViewController)
         window?.rootViewController = rootNavigationController
-//        let avatarListViewController = rootAssembly.presentationAssembly.avatarListViewController()
-//        window?.rootViewController = avatarListViewController
+        window?.emitEmblemOnTouch()
         window?.makeKeyAndVisible()
         
         return true

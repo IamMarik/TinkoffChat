@@ -161,6 +161,7 @@ class ProfileViewController: UIViewController {
             profileDescriptionTextView.isEditable = false
             profileDescriptionTextView.isSelectable = false
             loadingViewController.hide()
+            saveButtonsStackView.animateShaking(false)
         case .editing:
             editAvatarButton.isHidden = false
             saveGCDButton.isEnabled = false
@@ -170,12 +171,14 @@ class ProfileViewController: UIViewController {
             profileNameTextField.text = profile?.fullName
             profileDescriptionTextView.isEditable = true
             profileDescriptionTextView.isSelectable = true
+            saveButtonsStackView.animateShaking(true)
         case .hasChanges:
             saveGCDButton.isEnabled = true
         case .saving:
             loadingViewController.show(in: view)
             saveGCDButton.isEnabled = false
         }
+     
     }
   
     private func saveProfileChanges() {

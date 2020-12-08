@@ -20,7 +20,7 @@ class ConversationsListViewController: UIViewController {
     var presentationAssembly: IPresenentationAssembly?
  
     var fetchedResultsController: NSFetchedResultsController<ChannelDB>?
-    
+        
     private let cellId = String(describing: ConversationTableViewCell.self)
     
     private var fetchesCount = 0
@@ -56,6 +56,7 @@ class ConversationsListViewController: UIViewController {
         setupTheme()
         loadProfile()
         fetchChannels()
+       // emitEmblemOnTouch()
     }
         
     private func setupTableView() {
@@ -151,7 +152,7 @@ class ConversationsListViewController: UIViewController {
     
     @objc private func profileItemDidTap() {
         guard let profile = userDataStore?.profile else { return }
-        guard let profileViewController = presentationAssembly?.profileViewController() else { return }
+        guard let profileViewController = presentationAssembly?.profileViewController(transitioningDelegate: self) else { return }
         profileViewController.profile = profile
         profileViewController.onProfileChanged = { [weak self] (profile) in
             DispatchQueue.main.async {
