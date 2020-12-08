@@ -24,6 +24,8 @@
 		EC41AF7B255A48E200B783F4 /* PresentationAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC41AF7A255A48E200B783F4 /* PresentationAssembly.swift */; };
 		EC41AF7F255A4BDA00B783F4 /* ServicesAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC41AF7E255A4BDA00B783F4 /* ServicesAssembly.swift */; };
 		EC41AF87255A515100B783F4 /* CoreAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC41AF86255A515100B783F4 /* CoreAssembly.swift */; };
+		EC4B3CA0257E261E0082F991 /* UIView + shakeAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC650D6E256EB45600098E84 /* UIView + shakeAnimation.swift */; };
+		EC4B3CA7257E26330082F991 /* UIWindow+ emitEmblems.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC650D6B256E18A200098E84 /* UIWindow+ emitEmblems.swift */; };
 		EC4D3FE025789F33006A7F69 /* AccessibilityIdentifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4D3FDF25789F33006A7F69 /* AccessibilityIdentifiers.swift */; };
 		EC4D3FED2578B0C6006A7F69 /* IRemoteStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC7E4B922573ED6F001E7090 /* IRemoteStorage.swift */; };
 		EC4B3CCE257E29E80082F991 /* ConversationListViewController + transitioning.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4B3CCD257E29E50082F991 /* ConversationListViewController + transitioning.swift */; };
@@ -1059,6 +1061,7 @@
 				EC845899253C62C100EEBCA3 /* UserDataStore.swift in Sources */,
 				EC885EF0255B9ADA0078F656 /* RootAssembly.swift in Sources */,
 				EC14A87B25307BD1007AEB5F /* GCDProfileDataManager.swift in Sources */,
+				EC4B3CA7257E26330082F991 /* UIWindow+ emitEmblems.swift in Sources */,
 				EC4D3FED2578B0C6006A7F69 /* IRemoteStorage.swift in Sources */,
 				EC885F45255C4E9E0078F656 /* ChannelDB+CoreDataClass.swift in Sources */,
 				ECCC90C625249979001C68F9 /* Date + RandomTime.swift in Sources */,
@@ -1115,7 +1118,6 @@
 				ECB798082564D57C008DFB61 /* ImageRequest.swift in Sources */,
 				EC84589D253C717A00EEBCA3 /* MessageService.swift in Sources */,
 				ECC26949250C77D2001C08A0 /* Logger.swift in Sources */,
-				EC4B3CCE257E29E80082F991 /* ConversationListViewController + transitioning.swift in Sources */,
 				ECDE77A62563880F000300D2 /* ImageListRequest.swift in Sources */,
 				ECDF966B2547DE0C00928A3F /* ChannelDB + init.swift in Sources */,
 				EC14A88025309EFB007AEB5F /* DataManagerProtocol.swift in Sources */,
