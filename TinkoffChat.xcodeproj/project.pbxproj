@@ -16,7 +16,6 @@
 		EC175EE425404B8E00B06B1F /* MessageInputView.xib in Resources */ = {isa = PBXBuildFile; fileRef = EC175EE325404B8E00B06B1F /* MessageInputView.xib */; };
 		EC17F38325235EF000C6C2A7 /* ProfileNavigationBar.xib in Resources */ = {isa = PBXBuildFile; fileRef = EC17F38225235EF000C6C2A7 /* ProfileNavigationBar.xib */; };
 		EC17F3862523601F00C6C2A7 /* ProfileNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC17F3852523601F00C6C2A7 /* ProfileNavigationBar.swift */; };
-		EC2CC1EB256F6B53006A6012 /* ConversationListViewController + transitioning.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC2CC1EA256F6B53006A6012 /* ConversationListViewController + transitioning.swift */; };
 		EC3B4951251F659E002A93A8 /* Conversations.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EC3B4950251F659E002A93A8 /* Conversations.storyboard */; };
 		EC3B4954251F65C4002A93A8 /* ConversationsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC3B4953251F65C4002A93A8 /* ConversationsListViewController.swift */; };
 		EC3B4958251F662E002A93A8 /* ConfigurableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC3B4957251F662E002A93A8 /* ConfigurableView.swift */; };
@@ -27,12 +26,13 @@
 		EC41AF87255A515100B783F4 /* CoreAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC41AF86255A515100B783F4 /* CoreAssembly.swift */; };
 		EC4D3FE025789F33006A7F69 /* AccessibilityIdentifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4D3FDF25789F33006A7F69 /* AccessibilityIdentifiers.swift */; };
 		EC4D3FED2578B0C6006A7F69 /* IRemoteStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC7E4B922573ED6F001E7090 /* IRemoteStorage.swift */; };
+		EC4B3CCE257E29E80082F991 /* ConversationListViewController + transitioning.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4B3CCD257E29E50082F991 /* ConversationListViewController + transitioning.swift */; };
+		EC4B3CD2257E2A200082F991 /* UIView + shakeAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4B3CD0257E2A200082F991 /* UIView + shakeAnimation.swift */; };
+		EC4B3CD3257E2A200082F991 /* UIWindow+ emitEmblems.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4B3CD1257E2A200082F991 /* UIWindow+ emitEmblems.swift */; };
 		EC53DCAA252C9BF7000227E3 /* ThemesPickerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC53DCA9252C9BF7000227E3 /* ThemesPickerDelegate.swift */; };
 		EC53DCAF252C9D09000227E3 /* ThemeOptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECD9CB7B25274043003FB027 /* ThemeOptionView.swift */; };
 		EC5553EE25661F5D009F9DD4 /* LoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC5553EC25661F5D009F9DD4 /* LoadingViewController.swift */; };
 		EC5553EF25661F5D009F9DD4 /* LoadingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EC5553ED25661F5D009F9DD4 /* LoadingViewController.xib */; };
-		EC650D6C256E18A200098E84 /* UIWindow+ emitEmblems.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC650D6B256E18A200098E84 /* UIWindow+ emitEmblems.swift */; };
-		EC650D6F256EB45600098E84 /* UIView + shakeAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC650D6E256EB45600098E84 /* UIView + shakeAnimation.swift */; };
 		EC6794632520295000DB8002 /* Conversation.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EC6794622520295000DB8002 /* Conversation.storyboard */; };
 		EC6794662520298000DB8002 /* ConversationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC6794652520298000DB8002 /* ConversationViewController.swift */; };
 		EC67946B252029B600DB8002 /* MessageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC679469252029B600DB8002 /* MessageTableViewCell.swift */; };
@@ -103,6 +103,7 @@
 		ECF5BBD5252B5BCF00B829B0 /* NightTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECF5BBD4252B5BCF00B829B0 /* NightTheme.swift */; };
 		ECF7B6A225177781006DDB81 /* ProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECF7B6A125177781006DDB81 /* ProfileModel.swift */; };
 		ECF7B6A625177A4B006DDB81 /* Roboto-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = ECF7B6A525177A4B006DDB81 /* Roboto-Medium.ttf */; };
+		F4DF4F6CCD8F85B005F51E32 /* Pods_TinkoffChat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A5F01C3B2F9CCB38CD04D24 /* Pods_TinkoffChat.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -136,7 +137,6 @@
 		EC175EE325404B8E00B06B1F /* MessageInputView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MessageInputView.xib; sourceTree = "<group>"; };
 		EC17F38225235EF000C6C2A7 /* ProfileNavigationBar.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProfileNavigationBar.xib; sourceTree = "<group>"; };
 		EC17F3852523601F00C6C2A7 /* ProfileNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileNavigationBar.swift; sourceTree = "<group>"; };
-		EC2CC1EA256F6B53006A6012 /* ConversationListViewController + transitioning.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationListViewController + transitioning.swift"; sourceTree = "<group>"; };
 		EC3B4950251F659E002A93A8 /* Conversations.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Conversations.storyboard; sourceTree = "<group>"; };
 		EC3B4953251F65C4002A93A8 /* ConversationsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationsListViewController.swift; sourceTree = "<group>"; };
 		EC3B4957251F662E002A93A8 /* ConfigurableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurableView.swift; sourceTree = "<group>"; };
@@ -146,11 +146,12 @@
 		EC41AF7E255A4BDA00B783F4 /* ServicesAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServicesAssembly.swift; sourceTree = "<group>"; };
 		EC41AF86255A515100B783F4 /* CoreAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreAssembly.swift; sourceTree = "<group>"; };
 		EC4D3FDF25789F33006A7F69 /* AccessibilityIdentifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessibilityIdentifiers.swift; sourceTree = "<group>"; };
+		EC4B3CCD257E29E50082F991 /* ConversationListViewController + transitioning.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ConversationListViewController + transitioning.swift"; sourceTree = "<group>"; };
+		EC4B3CD0257E2A200082F991 /* UIView + shakeAnimation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView + shakeAnimation.swift"; sourceTree = "<group>"; };
+		EC4B3CD1257E2A200082F991 /* UIWindow+ emitEmblems.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIWindow+ emitEmblems.swift"; sourceTree = "<group>"; };
 		EC53DCA9252C9BF7000227E3 /* ThemesPickerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemesPickerDelegate.swift; sourceTree = "<group>"; };
 		EC5553EC25661F5D009F9DD4 /* LoadingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingViewController.swift; sourceTree = "<group>"; };
 		EC5553ED25661F5D009F9DD4 /* LoadingViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoadingViewController.xib; sourceTree = "<group>"; };
-		EC650D6B256E18A200098E84 /* UIWindow+ emitEmblems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIWindow+ emitEmblems.swift"; sourceTree = "<group>"; };
-		EC650D6E256EB45600098E84 /* UIView + shakeAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView + shakeAnimation.swift"; sourceTree = "<group>"; };
 		EC6794622520295000DB8002 /* Conversation.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Conversation.storyboard; sourceTree = "<group>"; };
 		EC6794652520298000DB8002 /* ConversationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationViewController.swift; sourceTree = "<group>"; };
 		EC679469252029B600DB8002 /* MessageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageTableViewCell.swift; sourceTree = "<group>"; };
@@ -300,18 +301,10 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
-		EC2CC1E9256F6B2C006A6012 /* Transitioning */ = {
-			isa = PBXGroup;
-			children = (
-				EC2CC1EA256F6B53006A6012 /* ConversationListViewController + transitioning.swift */,
-			);
-			path = Transitioning;
-			sourceTree = "<group>";
-		};
 		EC3B494F251F6587002A93A8 /* ConversationList */ = {
 			isa = PBXGroup;
 			children = (
-				EC2CC1E9256F6B2C006A6012 /* Transitioning */,
+				EC4B3CCC257E29E50082F991 /* Transitioning */,
 				EC3B4965251F6924002A93A8 /* Views */,
 				EC3B4953251F65C4002A93A8 /* ConversationsListViewController.swift */,
 				EC3B4950251F659E002A93A8 /* Conversations.storyboard */,
@@ -419,6 +412,14 @@
 				EC9C347C253306D100932552 /* OperationProfileDataManager.swift */,
 			);
 			path = Profile;
+			sourceTree = "<group>";
+		};
+		EC4B3CCC257E29E50082F991 /* Transitioning */ = {
+			isa = PBXGroup;
+			children = (
+				EC4B3CCD257E29E50082F991 /* ConversationListViewController + transitioning.swift */,
+			);
+			path = Transitioning;
 			sourceTree = "<group>";
 		};
 		EC53DCAC252C9CBD000227E3 /* Views */ = {
@@ -656,14 +657,14 @@
 		ECC26944250C768D001C08A0 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				EC4B3CD0257E2A200082F991 /* UIView + shakeAnimation.swift */,
+				EC4B3CD1257E2A200082F991 /* UIWindow+ emitEmblems.swift */,
 				ECC26945250C76BE001C08A0 /* UIApplication.State + description.swift */,
 				ECED1CAC2518E5270069EB71 /* UIColor + hex.swift */,
 				ECAB8610251F80D600BA7845 /* DateFormatter + dateOrNow.swift */,
 				ECAB8615251F85E900BA7845 /* DateFormatter + init.swift */,
 				ECCC90C525249979001C68F9 /* Date + RandomTime.swift */,
 				ECE22DE52537055B00A6AD76 /* UIAlert + changeColors.swift */,
-				EC650D6B256E18A200098E84 /* UIWindow+ emitEmblems.swift */,
-				EC650D6E256EB45600098E84 /* UIView + shakeAnimation.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -978,7 +979,7 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-TinkoffChatTests/Pods-TinkoffChatTests-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			name = "[CP] Copy Pods Resources";
+			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-TinkoffChatTests/Pods-TinkoffChatTests-resources-${CONFIGURATION}-output-files.xcfilelist",
 			);
@@ -1067,6 +1068,7 @@
 				EC41AF87255A515100B783F4 /* CoreAssembly.swift in Sources */,
 				EC41AF7B255A48E200B783F4 /* PresentationAssembly.swift in Sources */,
 				EC885F46255C4E9E0078F656 /* ChannelDB+CoreDataProperties.swift in Sources */,
+				EC4B3CD3257E2A200082F991 /* UIWindow+ emitEmblems.swift in Sources */,
 				ECC12B5E25622AC000328158 /* ImagePickerViewController.swift in Sources */,
 				ECC26946250C76BE001C08A0 /* UIApplication.State + description.swift in Sources */,
 				EC885F4D255C4EAC0078F656 /* MessageDB+CoreDataProperties.swift in Sources */,
@@ -1082,12 +1084,10 @@
 				ECAB8616251F85E900BA7845 /* DateFormatter + init.swift in Sources */,
 				EC03E9BC25491FE100D73B2B /* MessageDB + init.swift in Sources */,
 				ECD9CB822527566D003FB027 /* ThemeModel.swift in Sources */,
-				EC2CC1EB256F6B53006A6012 /* ConversationListViewController + transitioning.swift in Sources */,
 				EC73CFC6253EF602001C5CB6 /* FirebaseError.swift in Sources */,
 				ECAB8611251F80D600BA7845 /* DateFormatter + dateOrNow.swift in Sources */,
 				ECED1CAD2518E5270069EB71 /* UIColor + hex.swift in Sources */,
 				EC885F4C255C4EAC0078F656 /* MessageDB+CoreDataClass.swift in Sources */,
-				EC650D6C256E18A200098E84 /* UIWindow+ emitEmblems.swift in Sources */,
 				ECF5BBCD252B5B8C00B829B0 /* ClassicTheme.swift in Sources */,
 				EC9C347D253306D100932552 /* OperationProfileDataManager.swift in Sources */,
 				EC3B4958251F662E002A93A8 /* ConfigurableView.swift in Sources */,
@@ -1105,9 +1105,8 @@
 				ECE295C22528AE2100F30BAA /* RootNavigationController.swift in Sources */,
 				ECF5BBC8252B485700B829B0 /* Themes.swift in Sources */,
 				ECDE779425637C2A000300D2 /* ResponseParser.swift in Sources */,
-				EC650D6F256EB45600098E84 /* UIView + shakeAnimation.swift in Sources */,
-				EC7E4BA62573F077001E7090 /* FirestoreModel.swift in Sources */,
 				ECDE77AA25638A32000300D2 /* PixabayImageInfo.swift in Sources */,
+				EC4B3CD2257E2A200082F991 /* UIView + shakeAnimation.swift in Sources */,
 				EC53DCAA252C9BF7000227E3 /* ThemesPickerDelegate.swift in Sources */,
 				EC845894253C4F0B00EEBCA3 /* ChannelsService.swift in Sources */,
 				ECDE779725637E41000300D2 /* IRequest.swift in Sources */,
@@ -1116,6 +1115,7 @@
 				ECB798082564D57C008DFB61 /* ImageRequest.swift in Sources */,
 				EC84589D253C717A00EEBCA3 /* MessageService.swift in Sources */,
 				ECC26949250C77D2001C08A0 /* Logger.swift in Sources */,
+				EC4B3CCE257E29E80082F991 /* ConversationListViewController + transitioning.swift in Sources */,
 				ECDE77A62563880F000300D2 /* ImageListRequest.swift in Sources */,
 				ECDF966B2547DE0C00928A3F /* ChannelDB + init.swift in Sources */,
 				EC14A88025309EFB007AEB5F /* DataManagerProtocol.swift in Sources */,
