@@ -24,7 +24,7 @@
 		EC41AF7B255A48E200B783F4 /* PresentationAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC41AF7A255A48E200B783F4 /* PresentationAssembly.swift */; };
 		EC41AF7F255A4BDA00B783F4 /* ServicesAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC41AF7E255A4BDA00B783F4 /* ServicesAssembly.swift */; };
 		EC41AF87255A515100B783F4 /* CoreAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC41AF86255A515100B783F4 /* CoreAssembly.swift */; };
-		EC4B3CA7257E26330082F991 /* BuildFile in Sources */ = {isa = PBXBuildFile; };
+		EC4B3CA7257E26330082F991 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		EC4B3CD2257E2A200082F991 /* UIView + shakeAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4B3CD0257E2A200082F991 /* UIView + shakeAnimation.swift */; };
 		EC4B3CD3257E2A200082F991 /* UIWindow+ emitEmblems.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4B3CD1257E2A200082F991 /* UIWindow+ emitEmblems.swift */; };
 		EC4D3FE025789F33006A7F69 /* AccessibilityIdentifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4D3FDF25789F33006A7F69 /* AccessibilityIdentifiers.swift */; };
@@ -42,7 +42,6 @@
 		EC73E3052514AF57006D5ADF /* Profile.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EC73E3042514AF57006D5ADF /* Profile.storyboard */; };
 		EC73E3082514AF6C006D5ADF /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC73E3072514AF6C006D5ADF /* ProfileViewController.swift */; };
 		EC793CA32531605E005F6E08 /* FileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC793CA22531605E005F6E08 /* FileManager.swift */; };
-		EC7E4B352573D5E2001E7090 /* TinkoffChatUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC7E4B342573D5E2001E7090 /* TinkoffChatUITests.swift */; };
 		EC7E4B452573D6F4001E7090 /* MessageServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC7E4B442573D6F4001E7090 /* MessageServiceTests.swift */; };
 		EC7E4B6F2573D8B5001E7090 /* MockCoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC7E4B6E2573D8B5001E7090 /* MockCoreDataStack.swift */; };
 		EC7E4B802573DA44001E7090 /* MockUserDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC7E4B7F2573DA44001E7090 /* MockUserDataStore.swift */; };
@@ -62,6 +61,7 @@
 		EC9C347D253306D100932552 /* OperationProfileDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC9C347C253306D100932552 /* OperationProfileDataManager.swift */; };
 		ECA38075257FE94300166BF3 /* FirestoreModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC7E4BA52573F077001E7090 /* FirestoreModel.swift */; };
 		ECA38079257FE96200166BF3 /* ConversationListViewController + transitioning.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4B3CCD257E29E50082F991 /* ConversationListViewController + transitioning.swift */; };
+		ECA380AE257FF52200166BF3 /* ProfileUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA380AD257FF52200166BF3 /* ProfileUITests.swift */; };
 		ECAB8611251F80D600BA7845 /* DateFormatter + dateOrNow.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECAB8610251F80D600BA7845 /* DateFormatter + dateOrNow.swift */; };
 		ECAB8616251F85E900BA7845 /* DateFormatter + init.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECAB8615251F85E900BA7845 /* DateFormatter + init.swift */; };
 		ECB798082564D57C008DFB61 /* ImageRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECB798072564D57C008DFB61 /* ImageRequest.swift */; };
@@ -168,7 +168,6 @@
 		EC7E4B222573D5CF001E7090 /* TinkoffChatTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TinkoffChatTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EC7E4B262573D5CF001E7090 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EC7E4B322573D5E2001E7090 /* TinkoffChatUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TinkoffChatUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		EC7E4B342573D5E2001E7090 /* TinkoffChatUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TinkoffChatUITests.swift; sourceTree = "<group>"; };
 		EC7E4B362573D5E2001E7090 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EC7E4B442573D6F4001E7090 /* MessageServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageServiceTests.swift; sourceTree = "<group>"; };
 		EC7E4B6E2573D8B5001E7090 /* MockCoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockCoreDataStack.swift; sourceTree = "<group>"; };
@@ -189,6 +188,7 @@
 		EC885F4B255C4EAC0078F656 /* MessageDB+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "MessageDB+CoreDataProperties.swift"; path = "TinkoffChat/Entities/Database/MessageDB+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		EC89FDC5250E07CF00B22EC4 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		EC9C347C253306D100932552 /* OperationProfileDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperationProfileDataManager.swift; sourceTree = "<group>"; };
+		ECA380AD257FF52200166BF3 /* ProfileUITests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileUITests.swift; sourceTree = "<group>"; };
 		ECAB8610251F80D600BA7845 /* DateFormatter + dateOrNow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter + dateOrNow.swift"; sourceTree = "<group>"; };
 		ECAB8615251F85E900BA7845 /* DateFormatter + init.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter + init.swift"; sourceTree = "<group>"; };
 		ECB798072564D57C008DFB61 /* ImageRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageRequest.swift; sourceTree = "<group>"; };
@@ -505,7 +505,7 @@
 		EC7E4B332573D5E2001E7090 /* TinkoffChatUITests */ = {
 			isa = PBXGroup;
 			children = (
-				EC7E4B342573D5E2001E7090 /* TinkoffChatUITests.swift */,
+				ECA380AD257FF52200166BF3 /* ProfileUITests.swift */,
 				EC7E4B362573D5E2001E7090 /* Info.plist */,
 			);
 			path = TinkoffChatUITests;
@@ -806,7 +806,6 @@
 				EC7E4B1E2573D5CF001E7090 /* Sources */,
 				EC7E4B1F2573D5CF001E7090 /* Frameworks */,
 				EC7E4B202573D5CF001E7090 /* Resources */,
-				5441FEAC8843F24E31F94585 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -826,7 +825,6 @@
 				EC7E4B2E2573D5E2001E7090 /* Sources */,
 				EC7E4B2F2573D5E2001E7090 /* Frameworks */,
 				EC7E4B302573D5E2001E7090 /* Resources */,
-				FF28E0461814F31F5C52602F /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -964,23 +962,6 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		5441FEAC8843F24E31F94585 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-TinkoffChatTests/Pods-TinkoffChatTests-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-TinkoffChatTests/Pods-TinkoffChatTests-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TinkoffChatTests/Pods-TinkoffChatTests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		65AC09DFFB5DDD20C3C00552 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1059,23 +1040,6 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/SwiftLint/swiftlint\"\n";
 		};
-		FF28E0461814F31F5C52602F /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-TinkoffChatUITests/Pods-TinkoffChatUITests-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-TinkoffChatUITests/Pods-TinkoffChatUITests-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TinkoffChatUITests/Pods-TinkoffChatUITests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -1097,7 +1061,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EC7E4B352573D5E2001E7090 /* TinkoffChatUITests.swift in Sources */,
+				ECA380AE257FF52200166BF3 /* ProfileUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1108,7 +1072,7 @@
 				EC845899253C62C100EEBCA3 /* UserDataStore.swift in Sources */,
 				EC885EF0255B9ADA0078F656 /* RootAssembly.swift in Sources */,
 				EC14A87B25307BD1007AEB5F /* GCDProfileDataManager.swift in Sources */,
-				EC4B3CA7257E26330082F991 /* BuildFile in Sources */,
+				EC4B3CA7257E26330082F991 /* (null) in Sources */,
 				EC4D3FED2578B0C6006A7F69 /* IRemoteStorage.swift in Sources */,
 				EC885F45255C4E9E0078F656 /* ChannelDB+CoreDataClass.swift in Sources */,
 				ECCC90C625249979001C68F9 /* Date + RandomTime.swift in Sources */,
@@ -1343,6 +1307,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "$(inherited)/**";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -1398,6 +1363,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "$(inherited)/**";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;

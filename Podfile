@@ -10,18 +10,12 @@ target 'TinkoffChat' do
 end
 
 target 'TinkoffChatTests' do
-  
-  pod 'Firebase/Firestore'
-
+  inherit! :search_paths
 end
 
 target 'TinkoffChatUITests' do
-  
-  pod 'Firebase/Firestore'
-
+  inherit! :search_paths
 end
-
-
 
 post_install do |installer|
   installer.pods_project.targets.each do |target|
