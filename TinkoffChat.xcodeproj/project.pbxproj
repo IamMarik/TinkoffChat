@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		6996478E5C12D91E53FAFDA5 /* libPods-TinkoffChatUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 032D9DE858DD3A67C2C65157 /* libPods-TinkoffChatUITests.a */; };
 		DBE1A06AFE135851619B4988 /* libPods-TinkoffChatTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 971174EE4F35C175312103DC /* libPods-TinkoffChatTests.a */; };
 		E79031BED610C9E527CF963B /* Pods_TinkoffChat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 11B9C0B97B42898FF35FA32A /* Pods_TinkoffChat.framework */; };
 		EC03E9BC25491FE100D73B2B /* MessageDB + init.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC03E9BB25491FE100D73B2B /* MessageDB + init.swift */; };
@@ -17,7 +16,6 @@
 		EC175EE425404B8E00B06B1F /* MessageInputView.xib in Resources */ = {isa = PBXBuildFile; fileRef = EC175EE325404B8E00B06B1F /* MessageInputView.xib */; };
 		EC17F38325235EF000C6C2A7 /* ProfileNavigationBar.xib in Resources */ = {isa = PBXBuildFile; fileRef = EC17F38225235EF000C6C2A7 /* ProfileNavigationBar.xib */; };
 		EC17F3862523601F00C6C2A7 /* ProfileNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC17F3852523601F00C6C2A7 /* ProfileNavigationBar.swift */; };
-		EC2CC1EB256F6B53006A6012 /* ConversationListViewController + transitioning.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC2CC1EA256F6B53006A6012 /* ConversationListViewController + transitioning.swift */; };
 		EC3B4951251F659E002A93A8 /* Conversations.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EC3B4950251F659E002A93A8 /* Conversations.storyboard */; };
 		EC3B4954251F65C4002A93A8 /* ConversationsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC3B4953251F65C4002A93A8 /* ConversationsListViewController.swift */; };
 		EC3B4958251F662E002A93A8 /* ConfigurableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC3B4957251F662E002A93A8 /* ConfigurableView.swift */; };
@@ -26,14 +24,15 @@
 		EC41AF7B255A48E200B783F4 /* PresentationAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC41AF7A255A48E200B783F4 /* PresentationAssembly.swift */; };
 		EC41AF7F255A4BDA00B783F4 /* ServicesAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC41AF7E255A4BDA00B783F4 /* ServicesAssembly.swift */; };
 		EC41AF87255A515100B783F4 /* CoreAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC41AF86255A515100B783F4 /* CoreAssembly.swift */; };
+		EC4B3CA7257E26330082F991 /* (null) in Sources */ = {isa = PBXBuildFile; };
+		EC4B3CD2257E2A200082F991 /* UIView + shakeAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4B3CD0257E2A200082F991 /* UIView + shakeAnimation.swift */; };
+		EC4B3CD3257E2A200082F991 /* UIWindow+ emitEmblems.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4B3CD1257E2A200082F991 /* UIWindow+ emitEmblems.swift */; };
 		EC4D3FE025789F33006A7F69 /* AccessibilityIdentifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4D3FDF25789F33006A7F69 /* AccessibilityIdentifiers.swift */; };
 		EC4D3FED2578B0C6006A7F69 /* IRemoteStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC7E4B922573ED6F001E7090 /* IRemoteStorage.swift */; };
 		EC53DCAA252C9BF7000227E3 /* ThemesPickerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC53DCA9252C9BF7000227E3 /* ThemesPickerDelegate.swift */; };
 		EC53DCAF252C9D09000227E3 /* ThemeOptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECD9CB7B25274043003FB027 /* ThemeOptionView.swift */; };
 		EC5553EE25661F5D009F9DD4 /* LoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC5553EC25661F5D009F9DD4 /* LoadingViewController.swift */; };
 		EC5553EF25661F5D009F9DD4 /* LoadingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EC5553ED25661F5D009F9DD4 /* LoadingViewController.xib */; };
-		EC650D6C256E18A200098E84 /* UIWindow+ emitEmblems.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC650D6B256E18A200098E84 /* UIWindow+ emitEmblems.swift */; };
-		EC650D6F256EB45600098E84 /* UIView + shakeAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC650D6E256EB45600098E84 /* UIView + shakeAnimation.swift */; };
 		EC6794632520295000DB8002 /* Conversation.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EC6794622520295000DB8002 /* Conversation.storyboard */; };
 		EC6794662520298000DB8002 /* ConversationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC6794652520298000DB8002 /* ConversationViewController.swift */; };
 		EC67946B252029B600DB8002 /* MessageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC679469252029B600DB8002 /* MessageTableViewCell.swift */; };
@@ -43,14 +42,13 @@
 		EC73E3052514AF57006D5ADF /* Profile.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EC73E3042514AF57006D5ADF /* Profile.storyboard */; };
 		EC73E3082514AF6C006D5ADF /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC73E3072514AF6C006D5ADF /* ProfileViewController.swift */; };
 		EC793CA32531605E005F6E08 /* FileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC793CA22531605E005F6E08 /* FileManager.swift */; };
-		EC7E4B352573D5E2001E7090 /* ProfileUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC7E4B342573D5E2001E7090 /* ProfileUITests.swift */; };
+		EC7E4B352573D5E2001E7090 /* TinkoffChatUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC7E4B342573D5E2001E7090 /* TinkoffChatUITests.swift */; };
 		EC7E4B452573D6F4001E7090 /* MessageServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC7E4B442573D6F4001E7090 /* MessageServiceTests.swift */; };
 		EC7E4B6F2573D8B5001E7090 /* MockCoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC7E4B6E2573D8B5001E7090 /* MockCoreDataStack.swift */; };
 		EC7E4B802573DA44001E7090 /* MockUserDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC7E4B7F2573DA44001E7090 /* MockUserDataStore.swift */; };
 		EC7E4B852573E49E001E7090 /* UserServiceDataStoreTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC7E4B842573E49E001E7090 /* UserServiceDataStoreTest.swift */; };
 		EC7E4B8A2573E513001E7090 /* MockProfileDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC7E4B892573E513001E7090 /* MockProfileDataManager.swift */; };
 		EC7E4BA12573EE67001E7090 /* FireStoreObserveService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC7E4BA02573EE67001E7090 /* FireStoreObserveService.swift */; };
-		EC7E4BA62573F077001E7090 /* FirestoreModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC7E4BA52573F077001E7090 /* FirestoreModel.swift */; };
 		EC7E4BAC2573FBB6001E7090 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC7E4BAB2573FBB6001E7090 /* Message.swift */; };
 		EC845894253C4F0B00EEBCA3 /* ChannelsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC845893253C4F0B00EEBCA3 /* ChannelsService.swift */; };
 		EC845899253C62C100EEBCA3 /* UserDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC845898253C62C100EEBCA3 /* UserDataStore.swift */; };
@@ -62,6 +60,8 @@
 		EC885F4D255C4EAC0078F656 /* MessageDB+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC885F4B255C4EAC0078F656 /* MessageDB+CoreDataProperties.swift */; };
 		EC89FDC6250E07CF00B22EC4 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = EC89FDC5250E07CF00B22EC4 /* README.md */; };
 		EC9C347D253306D100932552 /* OperationProfileDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC9C347C253306D100932552 /* OperationProfileDataManager.swift */; };
+		ECA38075257FE94300166BF3 /* FirestoreModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC7E4BA52573F077001E7090 /* FirestoreModel.swift */; };
+		ECA38079257FE96200166BF3 /* ConversationListViewController + transitioning.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4B3CCD257E29E50082F991 /* ConversationListViewController + transitioning.swift */; };
 		ECAB8611251F80D600BA7845 /* DateFormatter + dateOrNow.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECAB8610251F80D600BA7845 /* DateFormatter + dateOrNow.swift */; };
 		ECAB8616251F85E900BA7845 /* DateFormatter + init.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECAB8615251F85E900BA7845 /* DateFormatter + init.swift */; };
 		ECB798082564D57C008DFB61 /* ImageRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECB798072564D57C008DFB61 /* ImageRequest.swift */; };
@@ -124,15 +124,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		032D9DE858DD3A67C2C65157 /* libPods-TinkoffChatUITests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TinkoffChatUITests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0CAC4ED939047A1509758ABD /* Pods-TinkoffChat.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TinkoffChat.release.xcconfig"; path = "Target Support Files/Pods-TinkoffChat/Pods-TinkoffChat.release.xcconfig"; sourceTree = "<group>"; };
 		0CE4FE4EC6794B49C7E49012 /* Pods-TinkoffChat.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TinkoffChat.debug.xcconfig"; path = "Target Support Files/Pods-TinkoffChat/Pods-TinkoffChat.debug.xcconfig"; sourceTree = "<group>"; };
 		11B9C0B97B42898FF35FA32A /* Pods_TinkoffChat.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TinkoffChat.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		634C2333047183DE3148F06D /* Pods-TinkoffChatTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TinkoffChatTests.debug.xcconfig"; path = "Target Support Files/Pods-TinkoffChatTests/Pods-TinkoffChatTests.debug.xcconfig"; sourceTree = "<group>"; };
 		971174EE4F35C175312103DC /* libPods-TinkoffChatTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TinkoffChatTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		9A2664823F53A65A0515A1D2 /* Pods-TinkoffChatUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TinkoffChatUITests.debug.xcconfig"; path = "Target Support Files/Pods-TinkoffChatUITests/Pods-TinkoffChatUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		9DD839927BC6F7E02ABC9D25 /* Pods-TinkoffChatTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TinkoffChatTests.release.xcconfig"; path = "Target Support Files/Pods-TinkoffChatTests/Pods-TinkoffChatTests.release.xcconfig"; sourceTree = "<group>"; };
-		CA55C8915228D1C74717EA43 /* Pods-TinkoffChatUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TinkoffChatUITests.release.xcconfig"; path = "Target Support Files/Pods-TinkoffChatUITests/Pods-TinkoffChatUITests.release.xcconfig"; sourceTree = "<group>"; };
 		EC03E9BB25491FE100D73B2B /* MessageDB + init.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessageDB + init.swift"; sourceTree = "<group>"; };
 		EC14A87A25307BD1007AEB5F /* GCDProfileDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GCDProfileDataManager.swift; sourceTree = "<group>"; };
 		EC14A87F25309EFB007AEB5F /* DataManagerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManagerProtocol.swift; sourceTree = "<group>"; };
@@ -140,7 +137,6 @@
 		EC175EE325404B8E00B06B1F /* MessageInputView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MessageInputView.xib; sourceTree = "<group>"; };
 		EC17F38225235EF000C6C2A7 /* ProfileNavigationBar.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProfileNavigationBar.xib; sourceTree = "<group>"; };
 		EC17F3852523601F00C6C2A7 /* ProfileNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileNavigationBar.swift; sourceTree = "<group>"; };
-		EC2CC1EA256F6B53006A6012 /* ConversationListViewController + transitioning.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationListViewController + transitioning.swift"; sourceTree = "<group>"; };
 		EC3B4950251F659E002A93A8 /* Conversations.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Conversations.storyboard; sourceTree = "<group>"; };
 		EC3B4953251F65C4002A93A8 /* ConversationsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationsListViewController.swift; sourceTree = "<group>"; };
 		EC3B4957251F662E002A93A8 /* ConfigurableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurableView.swift; sourceTree = "<group>"; };
@@ -149,12 +145,13 @@
 		EC41AF7A255A48E200B783F4 /* PresentationAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentationAssembly.swift; sourceTree = "<group>"; };
 		EC41AF7E255A4BDA00B783F4 /* ServicesAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServicesAssembly.swift; sourceTree = "<group>"; };
 		EC41AF86255A515100B783F4 /* CoreAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreAssembly.swift; sourceTree = "<group>"; };
+		EC4B3CCD257E29E50082F991 /* ConversationListViewController + transitioning.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ConversationListViewController + transitioning.swift"; sourceTree = "<group>"; };
+		EC4B3CD0257E2A200082F991 /* UIView + shakeAnimation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView + shakeAnimation.swift"; sourceTree = "<group>"; };
+		EC4B3CD1257E2A200082F991 /* UIWindow+ emitEmblems.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIWindow+ emitEmblems.swift"; sourceTree = "<group>"; };
 		EC4D3FDF25789F33006A7F69 /* AccessibilityIdentifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessibilityIdentifiers.swift; sourceTree = "<group>"; };
 		EC53DCA9252C9BF7000227E3 /* ThemesPickerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemesPickerDelegate.swift; sourceTree = "<group>"; };
 		EC5553EC25661F5D009F9DD4 /* LoadingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingViewController.swift; sourceTree = "<group>"; };
 		EC5553ED25661F5D009F9DD4 /* LoadingViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoadingViewController.xib; sourceTree = "<group>"; };
-		EC650D6B256E18A200098E84 /* UIWindow+ emitEmblems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIWindow+ emitEmblems.swift"; sourceTree = "<group>"; };
-		EC650D6E256EB45600098E84 /* UIView + shakeAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView + shakeAnimation.swift"; sourceTree = "<group>"; };
 		EC6794622520295000DB8002 /* Conversation.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Conversation.storyboard; sourceTree = "<group>"; };
 		EC6794652520298000DB8002 /* ConversationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationViewController.swift; sourceTree = "<group>"; };
 		EC679469252029B600DB8002 /* MessageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageTableViewCell.swift; sourceTree = "<group>"; };
@@ -167,7 +164,7 @@
 		EC7E4B222573D5CF001E7090 /* TinkoffChatTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TinkoffChatTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EC7E4B262573D5CF001E7090 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EC7E4B322573D5E2001E7090 /* TinkoffChatUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TinkoffChatUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		EC7E4B342573D5E2001E7090 /* ProfileUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileUITests.swift; sourceTree = "<group>"; };
+		EC7E4B342573D5E2001E7090 /* TinkoffChatUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TinkoffChatUITests.swift; sourceTree = "<group>"; };
 		EC7E4B362573D5E2001E7090 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EC7E4B442573D6F4001E7090 /* MessageServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageServiceTests.swift; sourceTree = "<group>"; };
 		EC7E4B6E2573D8B5001E7090 /* MockCoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockCoreDataStack.swift; sourceTree = "<group>"; };
@@ -248,7 +245,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6996478E5C12D91E53FAFDA5 /* libPods-TinkoffChatUITests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -270,8 +266,6 @@
 				0CAC4ED939047A1509758ABD /* Pods-TinkoffChat.release.xcconfig */,
 				634C2333047183DE3148F06D /* Pods-TinkoffChatTests.debug.xcconfig */,
 				9DD839927BC6F7E02ABC9D25 /* Pods-TinkoffChatTests.release.xcconfig */,
-				9A2664823F53A65A0515A1D2 /* Pods-TinkoffChatUITests.debug.xcconfig */,
-				CA55C8915228D1C74717EA43 /* Pods-TinkoffChatUITests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -281,7 +275,6 @@
 			children = (
 				11B9C0B97B42898FF35FA32A /* Pods_TinkoffChat.framework */,
 				971174EE4F35C175312103DC /* libPods-TinkoffChatTests.a */,
-				032D9DE858DD3A67C2C65157 /* libPods-TinkoffChatUITests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -308,18 +301,10 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
-		EC2CC1E9256F6B2C006A6012 /* Transitioning */ = {
-			isa = PBXGroup;
-			children = (
-				EC2CC1EA256F6B53006A6012 /* ConversationListViewController + transitioning.swift */,
-			);
-			path = Transitioning;
-			sourceTree = "<group>";
-		};
 		EC3B494F251F6587002A93A8 /* ConversationList */ = {
 			isa = PBXGroup;
 			children = (
-				EC2CC1E9256F6B2C006A6012 /* Transitioning */,
+				EC4B3CCC257E29E50082F991 /* Transitioning */,
 				EC3B4965251F6924002A93A8 /* Views */,
 				EC3B4953251F65C4002A93A8 /* ConversationsListViewController.swift */,
 				EC3B4950251F659E002A93A8 /* Conversations.storyboard */,
@@ -429,6 +414,14 @@
 			path = Profile;
 			sourceTree = "<group>";
 		};
+		EC4B3CCC257E29E50082F991 /* Transitioning */ = {
+			isa = PBXGroup;
+			children = (
+				EC4B3CCD257E29E50082F991 /* ConversationListViewController + transitioning.swift */,
+			);
+			path = Transitioning;
+			sourceTree = "<group>";
+		};
 		EC53DCAC252C9CBD000227E3 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -504,7 +497,7 @@
 		EC7E4B332573D5E2001E7090 /* TinkoffChatUITests */ = {
 			isa = PBXGroup;
 			children = (
-				EC7E4B342573D5E2001E7090 /* ProfileUITests.swift */,
+				EC7E4B342573D5E2001E7090 /* TinkoffChatUITests.swift */,
 				EC7E4B362573D5E2001E7090 /* Info.plist */,
 			);
 			path = TinkoffChatUITests;
@@ -664,14 +657,14 @@
 		ECC26944250C768D001C08A0 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				EC4B3CD0257E2A200082F991 /* UIView + shakeAnimation.swift */,
+				EC4B3CD1257E2A200082F991 /* UIWindow+ emitEmblems.swift */,
 				ECC26945250C76BE001C08A0 /* UIApplication.State + description.swift */,
 				ECED1CAC2518E5270069EB71 /* UIColor + hex.swift */,
 				ECAB8610251F80D600BA7845 /* DateFormatter + dateOrNow.swift */,
 				ECAB8615251F85E900BA7845 /* DateFormatter + init.swift */,
 				ECCC90C525249979001C68F9 /* Date + RandomTime.swift */,
 				ECE22DE52537055B00A6AD76 /* UIAlert + changeColors.swift */,
-				EC650D6B256E18A200098E84 /* UIWindow+ emitEmblems.swift */,
-				EC650D6E256EB45600098E84 /* UIView + shakeAnimation.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -805,7 +798,7 @@
 				EC7E4B1E2573D5CF001E7090 /* Sources */,
 				EC7E4B1F2573D5CF001E7090 /* Frameworks */,
 				EC7E4B202573D5CF001E7090 /* Resources */,
-				A841CB43C0C0F46A1A7C3154 /* [CP] Copy Pods Resources */,
+				5441FEAC8843F24E31F94585 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -821,11 +814,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = EC7E4B392573D5E2001E7090 /* Build configuration list for PBXNativeTarget "TinkoffChatUITests" */;
 			buildPhases = (
-				AC4DBCD093BE16B1A4DF297C /* [CP] Check Pods Manifest.lock */,
 				EC7E4B2E2573D5E2001E7090 /* Sources */,
 				EC7E4B2F2573D5E2001E7090 /* Frameworks */,
 				EC7E4B302573D5E2001E7090 /* Resources */,
-				56AA8682154B29824A311CB0 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -963,21 +954,21 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		56AA8682154B29824A311CB0 /* [CP] Copy Pods Resources */ = {
+		5441FEAC8843F24E31F94585 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-TinkoffChatUITests/Pods-TinkoffChatUITests-resources-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-TinkoffChatTests/Pods-TinkoffChatTests-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-TinkoffChatUITests/Pods-TinkoffChatUITests-resources-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-TinkoffChatTests/Pods-TinkoffChatTests-resources-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TinkoffChatUITests/Pods-TinkoffChatUITests-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TinkoffChatTests/Pods-TinkoffChatTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		65AC09DFFB5DDD20C3C00552 /* [CP] Embed Pods Frameworks */ = {
@@ -995,45 +986,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TinkoffChat/Pods-TinkoffChat-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		A841CB43C0C0F46A1A7C3154 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-TinkoffChatTests/Pods-TinkoffChatTests-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-TinkoffChatTests/Pods-TinkoffChatTests-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TinkoffChatTests/Pods-TinkoffChatTests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		AC4DBCD093BE16B1A4DF297C /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-TinkoffChatUITests-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		EBB875CB677018DDCA60EC81 /* [CP] Check Pods Manifest.lock */ = {
@@ -1096,7 +1048,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EC7E4B352573D5E2001E7090 /* ProfileUITests.swift in Sources */,
+				EC7E4B352573D5E2001E7090 /* TinkoffChatUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1107,6 +1059,7 @@
 				EC845899253C62C100EEBCA3 /* UserDataStore.swift in Sources */,
 				EC885EF0255B9ADA0078F656 /* RootAssembly.swift in Sources */,
 				EC14A87B25307BD1007AEB5F /* GCDProfileDataManager.swift in Sources */,
+				EC4B3CA7257E26330082F991 /* (null) in Sources */,
 				EC4D3FED2578B0C6006A7F69 /* IRemoteStorage.swift in Sources */,
 				EC885F45255C4E9E0078F656 /* ChannelDB+CoreDataClass.swift in Sources */,
 				ECCC90C625249979001C68F9 /* Date + RandomTime.swift in Sources */,
@@ -1116,6 +1069,7 @@
 				EC41AF87255A515100B783F4 /* CoreAssembly.swift in Sources */,
 				EC41AF7B255A48E200B783F4 /* PresentationAssembly.swift in Sources */,
 				EC885F46255C4E9E0078F656 /* ChannelDB+CoreDataProperties.swift in Sources */,
+				EC4B3CD3257E2A200082F991 /* UIWindow+ emitEmblems.swift in Sources */,
 				ECC12B5E25622AC000328158 /* ImagePickerViewController.swift in Sources */,
 				ECC26946250C76BE001C08A0 /* UIApplication.State + description.swift in Sources */,
 				EC885F4D255C4EAC0078F656 /* MessageDB+CoreDataProperties.swift in Sources */,
@@ -1131,12 +1085,10 @@
 				ECAB8616251F85E900BA7845 /* DateFormatter + init.swift in Sources */,
 				EC03E9BC25491FE100D73B2B /* MessageDB + init.swift in Sources */,
 				ECD9CB822527566D003FB027 /* ThemeModel.swift in Sources */,
-				EC2CC1EB256F6B53006A6012 /* ConversationListViewController + transitioning.swift in Sources */,
 				EC73CFC6253EF602001C5CB6 /* FirebaseError.swift in Sources */,
 				ECAB8611251F80D600BA7845 /* DateFormatter + dateOrNow.swift in Sources */,
 				ECED1CAD2518E5270069EB71 /* UIColor + hex.swift in Sources */,
 				EC885F4C255C4EAC0078F656 /* MessageDB+CoreDataClass.swift in Sources */,
-				EC650D6C256E18A200098E84 /* UIWindow+ emitEmblems.swift in Sources */,
 				ECF5BBCD252B5B8C00B829B0 /* ClassicTheme.swift in Sources */,
 				EC9C347D253306D100932552 /* OperationProfileDataManager.swift in Sources */,
 				EC3B4958251F662E002A93A8 /* ConfigurableView.swift in Sources */,
@@ -1149,14 +1101,15 @@
 				EC53DCAF252C9D09000227E3 /* ThemeOptionView.swift in Sources */,
 				ECDF96392547CE3200928A3F /* CoreDataStack.swift in Sources */,
 				ECF7B6A225177781006DDB81 /* ProfileModel.swift in Sources */,
+				ECA38079257FE96200166BF3 /* ConversationListViewController + transitioning.swift in Sources */,
 				EC3B4968251F6940002A93A8 /* ConversationTableViewCell.swift in Sources */,
 				EC175EE12540468400B06B1F /* MessageInputView.swift in Sources */,
+				ECA38075257FE94300166BF3 /* FirestoreModel.swift in Sources */,
 				ECE295C22528AE2100F30BAA /* RootNavigationController.swift in Sources */,
 				ECF5BBC8252B485700B829B0 /* Themes.swift in Sources */,
 				ECDE779425637C2A000300D2 /* ResponseParser.swift in Sources */,
-				EC650D6F256EB45600098E84 /* UIView + shakeAnimation.swift in Sources */,
-				EC7E4BA62573F077001E7090 /* FirestoreModel.swift in Sources */,
 				ECDE77AA25638A32000300D2 /* PixabayImageInfo.swift in Sources */,
+				EC4B3CD2257E2A200082F991 /* UIView + shakeAnimation.swift in Sources */,
 				EC53DCAA252C9BF7000227E3 /* ThemesPickerDelegate.swift in Sources */,
 				EC845894253C4F0B00EEBCA3 /* ChannelsService.swift in Sources */,
 				ECDE779725637E41000300D2 /* IRequest.swift in Sources */,
@@ -1250,7 +1203,6 @@
 		};
 		EC7E4B3A2573D5E2001E7090 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 9A2664823F53A65A0515A1D2 /* Pods-TinkoffChatUITests.debug.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = VJTA597XSC;
@@ -1271,7 +1223,6 @@
 		};
 		EC7E4B3B2573D5E2001E7090 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CA55C8915228D1C74717EA43 /* Pods-TinkoffChatUITests.release.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = VJTA597XSC;
