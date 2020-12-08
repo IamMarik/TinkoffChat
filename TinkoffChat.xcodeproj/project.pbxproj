@@ -7,7 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		DBE1A06AFE135851619B4988 /* libPods-TinkoffChatTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 971174EE4F35C175312103DC /* libPods-TinkoffChatTests.a */; };
+		586192973F65DB8893257616 /* Pods_TinkoffChat_TinkoffChatTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 042DD5ABE6111C6A9D8F3C18 /* Pods_TinkoffChat_TinkoffChatTests.framework */; };
+		94198D1DD1AC1EAE7E97CC32 /* Pods_TinkoffChat_TinkoffChatUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9EA6520C4147789244032BBA /* Pods_TinkoffChat_TinkoffChatUITests.framework */; };
 		E79031BED610C9E527CF963B /* Pods_TinkoffChat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 11B9C0B97B42898FF35FA32A /* Pods_TinkoffChat.framework */; };
 		EC03E9BC25491FE100D73B2B /* MessageDB + init.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC03E9BB25491FE100D73B2B /* MessageDB + init.swift */; };
 		EC14A87B25307BD1007AEB5F /* GCDProfileDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC14A87A25307BD1007AEB5F /* GCDProfileDataManager.swift */; };
@@ -24,7 +25,7 @@
 		EC41AF7B255A48E200B783F4 /* PresentationAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC41AF7A255A48E200B783F4 /* PresentationAssembly.swift */; };
 		EC41AF7F255A4BDA00B783F4 /* ServicesAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC41AF7E255A4BDA00B783F4 /* ServicesAssembly.swift */; };
 		EC41AF87255A515100B783F4 /* CoreAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC41AF86255A515100B783F4 /* CoreAssembly.swift */; };
-		EC4B3CA7257E26330082F991 /* (null) in Sources */ = {isa = PBXBuildFile; };
+		EC4B3CA7257E26330082F991 /* BuildFile in Sources */ = {isa = PBXBuildFile; };
 		EC4B3CD2257E2A200082F991 /* UIView + shakeAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4B3CD0257E2A200082F991 /* UIView + shakeAnimation.swift */; };
 		EC4B3CD3257E2A200082F991 /* UIWindow+ emitEmblems.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4B3CD1257E2A200082F991 /* UIWindow+ emitEmblems.swift */; };
 		EC4D3FE025789F33006A7F69 /* AccessibilityIdentifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4D3FDF25789F33006A7F69 /* AccessibilityIdentifiers.swift */; };
@@ -104,7 +105,6 @@
 		ECF5BBD5252B5BCF00B829B0 /* NightTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECF5BBD4252B5BCF00B829B0 /* NightTheme.swift */; };
 		ECF7B6A225177781006DDB81 /* ProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECF7B6A125177781006DDB81 /* ProfileModel.swift */; };
 		ECF7B6A625177A4B006DDB81 /* Roboto-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = ECF7B6A525177A4B006DDB81 /* Roboto-Medium.ttf */; };
-		F42D99BC962D345A31F8C0F1 /* libPods-TinkoffChatUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87E0533A9606F4F601F18498 /* libPods-TinkoffChatUITests.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -125,15 +125,19 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		042DD5ABE6111C6A9D8F3C18 /* Pods_TinkoffChat_TinkoffChatTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TinkoffChat_TinkoffChatTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0CAC4ED939047A1509758ABD /* Pods-TinkoffChat.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TinkoffChat.release.xcconfig"; path = "Target Support Files/Pods-TinkoffChat/Pods-TinkoffChat.release.xcconfig"; sourceTree = "<group>"; };
 		0CE4FE4EC6794B49C7E49012 /* Pods-TinkoffChat.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TinkoffChat.debug.xcconfig"; path = "Target Support Files/Pods-TinkoffChat/Pods-TinkoffChat.debug.xcconfig"; sourceTree = "<group>"; };
 		11B9C0B97B42898FF35FA32A /* Pods_TinkoffChat.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TinkoffChat.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1EBECEE8A271CFFA60BF6AFB /* Pods-TinkoffChatUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TinkoffChatUITests.release.xcconfig"; path = "Target Support Files/Pods-TinkoffChatUITests/Pods-TinkoffChatUITests.release.xcconfig"; sourceTree = "<group>"; };
+		20F710DD4508C51A2A8F11E4 /* Pods-TinkoffChat-TinkoffChatTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TinkoffChat-TinkoffChatTests.release.xcconfig"; path = "Target Support Files/Pods-TinkoffChat-TinkoffChatTests/Pods-TinkoffChat-TinkoffChatTests.release.xcconfig"; sourceTree = "<group>"; };
+		289B8EB0608C11362DAF3BF0 /* Pods-TinkoffChat-TinkoffChatUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TinkoffChat-TinkoffChatUITests.debug.xcconfig"; path = "Target Support Files/Pods-TinkoffChat-TinkoffChatUITests/Pods-TinkoffChat-TinkoffChatUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		38CC42A0A492166F635C9471 /* Pods-TinkoffChat-TinkoffChatUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TinkoffChat-TinkoffChatUITests.release.xcconfig"; path = "Target Support Files/Pods-TinkoffChat-TinkoffChatUITests/Pods-TinkoffChat-TinkoffChatUITests.release.xcconfig"; sourceTree = "<group>"; };
+		5CBAF3E171B3DD618879E10D /* Pods-TinkoffChat-TinkoffChatTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TinkoffChat-TinkoffChatTests.debug.xcconfig"; path = "Target Support Files/Pods-TinkoffChat-TinkoffChatTests/Pods-TinkoffChat-TinkoffChatTests.debug.xcconfig"; sourceTree = "<group>"; };
 		634C2333047183DE3148F06D /* Pods-TinkoffChatTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TinkoffChatTests.debug.xcconfig"; path = "Target Support Files/Pods-TinkoffChatTests/Pods-TinkoffChatTests.debug.xcconfig"; sourceTree = "<group>"; };
 		78F7232FF8E5D83332593362 /* Pods-TinkoffChatUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TinkoffChatUITests.debug.xcconfig"; path = "Target Support Files/Pods-TinkoffChatUITests/Pods-TinkoffChatUITests.debug.xcconfig"; sourceTree = "<group>"; };
-		87E0533A9606F4F601F18498 /* libPods-TinkoffChatUITests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TinkoffChatUITests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		971174EE4F35C175312103DC /* libPods-TinkoffChatTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TinkoffChatTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9DD839927BC6F7E02ABC9D25 /* Pods-TinkoffChatTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TinkoffChatTests.release.xcconfig"; path = "Target Support Files/Pods-TinkoffChatTests/Pods-TinkoffChatTests.release.xcconfig"; sourceTree = "<group>"; };
+		9EA6520C4147789244032BBA /* Pods_TinkoffChat_TinkoffChatUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TinkoffChat_TinkoffChatUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EC03E9BB25491FE100D73B2B /* MessageDB + init.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessageDB + init.swift"; sourceTree = "<group>"; };
 		EC14A87A25307BD1007AEB5F /* GCDProfileDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GCDProfileDataManager.swift; sourceTree = "<group>"; };
 		EC14A87F25309EFB007AEB5F /* DataManagerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManagerProtocol.swift; sourceTree = "<group>"; };
@@ -241,7 +245,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DBE1A06AFE135851619B4988 /* libPods-TinkoffChatTests.a in Frameworks */,
+				586192973F65DB8893257616 /* Pods_TinkoffChat_TinkoffChatTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -249,7 +253,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F42D99BC962D345A31F8C0F1 /* libPods-TinkoffChatUITests.a in Frameworks */,
+				94198D1DD1AC1EAE7E97CC32 /* Pods_TinkoffChat_TinkoffChatUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -273,6 +277,10 @@
 				9DD839927BC6F7E02ABC9D25 /* Pods-TinkoffChatTests.release.xcconfig */,
 				78F7232FF8E5D83332593362 /* Pods-TinkoffChatUITests.debug.xcconfig */,
 				1EBECEE8A271CFFA60BF6AFB /* Pods-TinkoffChatUITests.release.xcconfig */,
+				5CBAF3E171B3DD618879E10D /* Pods-TinkoffChat-TinkoffChatTests.debug.xcconfig */,
+				20F710DD4508C51A2A8F11E4 /* Pods-TinkoffChat-TinkoffChatTests.release.xcconfig */,
+				289B8EB0608C11362DAF3BF0 /* Pods-TinkoffChat-TinkoffChatUITests.debug.xcconfig */,
+				38CC42A0A492166F635C9471 /* Pods-TinkoffChat-TinkoffChatUITests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -281,8 +289,8 @@
 			isa = PBXGroup;
 			children = (
 				11B9C0B97B42898FF35FA32A /* Pods_TinkoffChat.framework */,
-				971174EE4F35C175312103DC /* libPods-TinkoffChatTests.a */,
-				87E0533A9606F4F601F18498 /* libPods-TinkoffChatUITests.a */,
+				042DD5ABE6111C6A9D8F3C18 /* Pods_TinkoffChat_TinkoffChatTests.framework */,
+				9EA6520C4147789244032BBA /* Pods_TinkoffChat_TinkoffChatUITests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -806,6 +814,7 @@
 				EC7E4B1E2573D5CF001E7090 /* Sources */,
 				EC7E4B1F2573D5CF001E7090 /* Frameworks */,
 				EC7E4B202573D5CF001E7090 /* Resources */,
+				B718A67B3FCC660F589F24DC /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -825,6 +834,7 @@
 				EC7E4B2E2573D5E2001E7090 /* Sources */,
 				EC7E4B2F2573D5E2001E7090 /* Frameworks */,
 				EC7E4B302573D5E2001E7090 /* Resources */,
+				A75CC1DCB7207B4A44170205 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -979,6 +989,23 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TinkoffChat/Pods-TinkoffChat-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		A75CC1DCB7207B4A44170205 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-TinkoffChat-TinkoffChatUITests/Pods-TinkoffChat-TinkoffChatUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-TinkoffChat-TinkoffChatUITests/Pods-TinkoffChat-TinkoffChatUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TinkoffChat-TinkoffChatUITests/Pods-TinkoffChat-TinkoffChatUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		B64A4FFB35B8018F2AF2A9FC /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -994,11 +1021,28 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-TinkoffChatUITests-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-TinkoffChat-TinkoffChatUITests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B718A67B3FCC660F589F24DC /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-TinkoffChat-TinkoffChatTests/Pods-TinkoffChat-TinkoffChatTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-TinkoffChat-TinkoffChatTests/Pods-TinkoffChat-TinkoffChatTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TinkoffChat-TinkoffChatTests/Pods-TinkoffChat-TinkoffChatTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		EBB875CB677018DDCA60EC81 /* [CP] Check Pods Manifest.lock */ = {
@@ -1016,7 +1060,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-TinkoffChatTests-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-TinkoffChat-TinkoffChatTests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1072,7 +1116,7 @@
 				EC845899253C62C100EEBCA3 /* UserDataStore.swift in Sources */,
 				EC885EF0255B9ADA0078F656 /* RootAssembly.swift in Sources */,
 				EC14A87B25307BD1007AEB5F /* GCDProfileDataManager.swift in Sources */,
-				EC4B3CA7257E26330082F991 /* (null) in Sources */,
+				EC4B3CA7257E26330082F991 /* BuildFile in Sources */,
 				EC4D3FED2578B0C6006A7F69 /* IRemoteStorage.swift in Sources */,
 				EC885F45255C4E9E0078F656 /* ChannelDB+CoreDataClass.swift in Sources */,
 				ECCC90C625249979001C68F9 /* Date + RandomTime.swift in Sources */,
@@ -1172,11 +1216,12 @@
 /* Begin XCBuildConfiguration section */
 		EC7E4B292573D5CF001E7090 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 634C2333047183DE3148F06D /* Pods-TinkoffChatTests.debug.xcconfig */;
+			baseConfigurationReference = 5CBAF3E171B3DD618879E10D /* Pods-TinkoffChat-TinkoffChatTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = VJTA597XSC;
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = TinkoffChatTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1184,6 +1229,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.marik.TinkoffChatTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -1194,11 +1240,12 @@
 		};
 		EC7E4B2A2573D5CF001E7090 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 9DD839927BC6F7E02ABC9D25 /* Pods-TinkoffChatTests.release.xcconfig */;
+			baseConfigurationReference = 20F710DD4508C51A2A8F11E4 /* Pods-TinkoffChat-TinkoffChatTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = VJTA597XSC;
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = TinkoffChatTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1206,6 +1253,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.marik.TinkoffChatTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -1216,7 +1264,7 @@
 		};
 		EC7E4B3A2573D5E2001E7090 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 78F7232FF8E5D83332593362 /* Pods-TinkoffChatUITests.debug.xcconfig */;
+			baseConfigurationReference = 289B8EB0608C11362DAF3BF0 /* Pods-TinkoffChat-TinkoffChatUITests.debug.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = VJTA597XSC;
@@ -1237,7 +1285,7 @@
 		};
 		EC7E4B3B2573D5E2001E7090 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1EBECEE8A271CFFA60BF6AFB /* Pods-TinkoffChatUITests.release.xcconfig */;
+			baseConfigurationReference = 38CC42A0A492166F635C9471 /* Pods-TinkoffChat-TinkoffChatUITests.release.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = VJTA597XSC;
@@ -1307,7 +1355,10 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = "$(inherited)/**";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)/**",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/FirebaseCore/FirebaseCore.framework/Headers\"",
+				);
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -1363,7 +1414,10 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = "$(inherited)/**";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)/**",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/FirebaseCore/FirebaseCore.framework/Headers\"",
+				);
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -1381,6 +1435,23 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = VJTA597XSC;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/BoringSSL-GRPC/openssl_grpc.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/FirebaseCore/FirebaseCore.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/FirebaseCoreDiagnostics/FirebaseCoreDiagnostics.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/FirebaseFirestore/FirebaseFirestore.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/GoogleDataTransport/GoogleDataTransport.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/GoogleUtilities/GoogleUtilities.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/PromisesObjC/FBLPromises.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/abseil/absl.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/gRPC-C++/grpcpp.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/gRPC-Core/grpc.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/leveldb-library/leveldb.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/nanopb/nanopb.framework/Headers\"",
+					"\"${PODS_ROOT}/Headers/Public\"",
+					"\"${PODS_ROOT}/Headers/Public/Firebase\"",
+				);
 				INFOPLIST_FILE = TinkoffChat/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1401,6 +1472,23 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = VJTA597XSC;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/BoringSSL-GRPC/openssl_grpc.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/FirebaseCore/FirebaseCore.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/FirebaseCoreDiagnostics/FirebaseCoreDiagnostics.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/FirebaseFirestore/FirebaseFirestore.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/GoogleDataTransport/GoogleDataTransport.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/GoogleUtilities/GoogleUtilities.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/PromisesObjC/FBLPromises.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/abseil/absl.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/gRPC-C++/grpcpp.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/gRPC-Core/grpc.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/leveldb-library/leveldb.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/nanopb/nanopb.framework/Headers\"",
+					"\"${PODS_ROOT}/Headers/Public\"",
+					"\"${PODS_ROOT}/Headers/Public/Firebase\"",
+				);
 				INFOPLIST_FILE = TinkoffChat/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
